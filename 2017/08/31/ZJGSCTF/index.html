@@ -5,17 +5,17 @@
   
   <title>ZJGSCTF | Err0r</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="ZJGSCTF 部分writeup##哇 黑进服务器题目链接：http://218.76.35.74:20129 进去之后老规矩先右键看源码，提示说，去到include.php之后提示说需要file，应该是文件包含，用filter协议”php://filter/read=convert.base64-encode/resource=”读取upload.php1234567891011121314">
+  <meta name="description" content="zjgsctf平台上的部分wp">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ZJGSCTF">
 <meta property="og:url" content="http://Err0rzz.github.io/2017/08/31/ZJGSCTF/index.html">
 <meta property="og:site_name" content="Err0r">
-<meta property="og:description" content="ZJGSCTF 部分writeup##哇 黑进服务器题目链接：http://218.76.35.74:20129 进去之后老规矩先右键看源码，提示说，去到include.php之后提示说需要file，应该是文件包含，用filter协议”php://filter/read=convert.base64-encode/resource=”读取upload.php1234567891011121314">
+<meta property="og:description" content="zjgsctf平台上的部分wp">
 <meta property="og:image" content="http://i.imgur.com/5EXKQSk.png">
-<meta property="og:updated_time" content="2017-08-31T12:44:38.143Z">
+<meta property="og:updated_time" content="2017-08-31T12:46:36.498Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ZJGSCTF">
-<meta name="twitter:description" content="ZJGSCTF 部分writeup##哇 黑进服务器题目链接：http://218.76.35.74:20129 进去之后老规矩先右键看源码，提示说，去到include.php之后提示说需要file，应该是文件包含，用filter协议”php://filter/read=convert.base64-encode/resource=”读取upload.php1234567891011121314">
+<meta name="twitter:description" content="zjgsctf平台上的部分wp">
 <meta name="twitter:image" content="http://i.imgur.com/5EXKQSk.png">
   
     <link rel="alternative" href="/atom.xml" title="Err0r" type="application/atom+xml">
@@ -248,7 +248,7 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <a id="more"></a>
+        <p>zjgsctf平台上的部分wp<br><a id="more"></a></p>
 <h1 id="ZJGSCTF-部分writeup"><a href="#ZJGSCTF-部分writeup" class="headerlink" title="ZJGSCTF 部分writeup"></a>ZJGSCTF 部分writeup</h1><p>##哇 黑进服务器<br>题目链接：<a href="http://218.76.35.74:20129" target="_blank" rel="external">http://218.76.35.74:20129</a></p>
 <p>进去之后老规矩先右键看源码，提示说，去到include.php之后提示说需要file，应该是文件包含，用filter协议”php://filter/read=convert.base64-encode/resource=”读取upload.php<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">****upload.php</div><div class="line">&lt;form action=&quot;&quot; enctype=&quot;multipart/form-data&quot; method=&quot;post&quot; </div><div class="line">name=&quot;upload&quot;&gt;file:&lt;input type=&quot;file&quot; name=&quot;file&quot; /&gt;&lt;br&gt; </div><div class="line">&lt;input type=&quot;submit&quot; value=&quot;upload&quot; /&gt;&lt;/form&gt;</div><div class="line"></div><div class="line">&lt;?php</div><div class="line">if(!empty($_FILES[&quot;file&quot;]))</div><div class="line">&#123;</div><div class="line">    echo $_FILES[&quot;file&quot;];</div><div class="line">    $allowedExts = array(&quot;gif&quot;, &quot;jpeg&quot;, &quot;jpg&quot;, &quot;png&quot;);</div><div class="line">    @$temp = explode(&quot;.&quot;, $_FILES[&quot;file&quot;][&quot;name&quot;]);</div><div class="line">    $extension = end($temp);</div><div class="line">    if (((@$_FILES[&quot;file&quot;][&quot;type&quot;] == &quot;image/gif&quot;) || (@$_FILES[&quot;file&quot;][&quot;type&quot;] == &quot;image/jpeg&quot;)</div><div class="line">    || (@$_FILES[&quot;file&quot;][&quot;type&quot;] == &quot;image/jpg&quot;) || (@$_FILES[&quot;file&quot;][&quot;type&quot;] == &quot;image/pjpeg&quot;)</div><div class="line">    || (@$_FILES[&quot;file&quot;][&quot;type&quot;] == &quot;image/x-png&quot;) || (@$_FILES[&quot;file&quot;][&quot;type&quot;] == &quot;image/png&quot;))</div><div class="line">    &amp;&amp; (@$_FILES[&quot;file&quot;][&quot;size&quot;] &lt; 102400) &amp;&amp; in_array($extension, $allowedExts))</div><div class="line">    &#123;</div><div class="line">        move_uploaded_file($_FILES[&quot;file&quot;][&quot;tmp_name&quot;], &quot;upload/&quot; . $_FILES[&quot;file&quot;][&quot;name&quot;]);</div><div class="line">        echo &quot;file upload successful!Save in:  &quot; . &quot;upload/&quot; . $_FILES[&quot;file&quot;][&quot;name&quot;];</div><div class="line">    &#125;</div><div class="line">    else</div><div class="line">    &#123;</div><div class="line">        echo &quot;upload failed!&quot;;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">?&gt;</div></pre></td></tr></table></figure></p>
 <p>绕过方式很简单，只要后缀是<strong><em>jpg</em></strong>，且content-type是<strong>image/jpeg</strong>即可。</p>
@@ -319,7 +319,7 @@
         <p><span>本文标题:</span><a href="/2017/08/31/ZJGSCTF/">ZJGSCTF</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 Err0r 的个人博客">Err0r</a></p>
         <p><span>发布时间:</span>2017年08月31日 - 18时50分</p>
-        <p><span>最后更新:</span>2017年08月31日 - 20时44分</p>
+        <p><span>最后更新:</span>2017年08月31日 - 20时46分</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2017/08/31/ZJGSCTF/" title="ZJGSCTF">http://Err0rzz.github.io/2017/08/31/ZJGSCTF/</a>
             <span class="copy-path" data-clipboard-text="原文: http://Err0rzz.github.io/2017/08/31/ZJGSCTF/　　作者: Err0r" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
