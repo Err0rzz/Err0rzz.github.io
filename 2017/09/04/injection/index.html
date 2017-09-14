@@ -3,19 +3,23 @@
 <head>
   <meta charset="utf-8">
   
-  <title>测试篇 | Err0r</title>
+  <title>各种注入姿势 | Err0r</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="信息安全">
+  <meta name="description" content="LDAP注入ldap注入详解 例题是第二届xctf-zctf的一个web题: Web150-Injection一个注入，其实不难。。。主要是不太熟悉罢了，LDAP注入在乌云有这么一篇文章写得很详细：http://drops.wooyun.org/tips/967根据LDAP的特性，我们可以利用特殊符“*”去替换过滤器中的一个或多个字符，经过测试：admin *，进入search页面：输入test后">
 <meta property="og:type" content="article">
-<meta property="og:title" content="测试篇">
-<meta property="og:url" content="http://Err0rzz.github.io/2017/08/16/test/index.html">
+<meta property="og:title" content="各种注入姿势">
+<meta property="og:url" content="http://Err0rzz.github.io/2017/09/04/injection/index.html">
 <meta property="og:site_name" content="Err0r">
-<meta property="og:description" content="信息安全">
+<meta property="og:description" content="LDAP注入ldap注入详解 例题是第二届xctf-zctf的一个web题: Web150-Injection一个注入，其实不难。。。主要是不太熟悉罢了，LDAP注入在乌云有这么一篇文章写得很详细：http://drops.wooyun.org/tips/967根据LDAP的特性，我们可以利用特殊符“*”去替换过滤器中的一个或多个字符，经过测试：admin *，进入search页面：输入test后">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-08-31T12:12:46.006Z">
+<meta property="og:image" content="https://i.imgur.com/qoSXWfK.png">
+<meta property="og:image" content="https://i.imgur.com/0yLr7Vv.png">
+<meta property="og:image" content="https://i.imgur.com/6TLryPd.png">
+<meta property="og:updated_time" content="2017-09-04T04:38:36.378Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="测试篇">
-<meta name="twitter:description" content="信息安全">
+<meta name="twitter:title" content="各种注入姿势">
+<meta name="twitter:description" content="LDAP注入ldap注入详解 例题是第二届xctf-zctf的一个web题: Web150-Injection一个注入，其实不难。。。主要是不太熟悉罢了，LDAP注入在乌云有这么一篇文章写得很详细：http://drops.wooyun.org/tips/967根据LDAP的特性，我们可以利用特殊符“*”去替换过滤器中的一个或多个字符，经过测试：admin *，进入search页面：输入test后">
+<meta name="twitter:image" content="https://i.imgur.com/qoSXWfK.png">
   
     <link rel="alternative" href="/atom.xml" title="Err0r" type="application/atom+xml">
   
@@ -163,11 +167,11 @@
         </header>                
     </div>
 </nav>
-      <div class="body-wrap"><article id="post-test" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-injection" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2017/08/16/test/" class="article-date">
-      <time datetime="2017-08-16T10:57:24.000Z" itemprop="datePublished">2017-08-16</time>
+      <a href="/2017/09/04/injection/" class="article-date">
+      <time datetime="2017-09-04T04:32:00.000Z" itemprop="datePublished">2017-09-04</time>
 </a>
     </div>
   
@@ -180,7 +184,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      测试篇
+      各种注入姿势
     </h1>
   
 
@@ -197,7 +201,11 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        
+        <h1 id="LDAP注入"><a href="#LDAP注入" class="headerlink" title="LDAP注入"></a>LDAP注入</h1><p><a href="http://www.cnblogs.com/bendawang/p/5156562.html" target="_blank" rel="external">ldap注入详解</a></p>
+<p>例题是第二届xctf-zctf的一个web题:</p>
+<p><strong>Web150-Injection</strong><br>一个注入，其实不难。。。主要是不太熟悉罢了，LDAP注入<br>在乌云有这么一篇文章写得很详细：<a href="http://drops.wooyun.org/tips/967" target="_blank" rel="external">http://drops.wooyun.org/tips/967</a><br>根据LDAP的特性，我们可以利用特殊符“*”去替换过滤器中的一个或多个字符，经过测试：<br>admin *，进入search页面：<br>输入test后发现<br><img src="https://i.imgur.com/qoSXWfK.png" alt=""><br>再次发现通配符*，发现正确可以回显，不正确不能回显，并且输入有长度限制。<br>令uid=*，构造)(2=，以形成(|(uid=*)(2=*))<br><img src="https://i.imgur.com/0yLr7Vv.png" alt=""><br>然后看了下cookie，有东西：<br><img src="https://i.imgur.com/6TLryPd.png" alt=""><br>猜测description是一个参数，于是构造：test)(description=<br>随机输入字符，当test)(description=z时有正确回显，于是利用burp诸位爆破：</p>
+<p>得到flag：zctf{303a61ace0204a2d5f352771d6f1bba2}</p>
+
       
       
         <div class="page-reward">
@@ -252,13 +260,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2017/08/16/test/">测试篇</a></p>
+        <p><span>本文标题:</span><a href="/2017/09/04/injection/">各种注入姿势</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 Err0r 的个人博客">Err0r</a></p>
-        <p><span>发布时间:</span>2017年08月16日 - 18时57分</p>
-        <p><span>最后更新:</span>2017年08月31日 - 20时12分</p>
+        <p><span>发布时间:</span>2017年09月04日 - 12时32分</p>
+        <p><span>最后更新:</span>2017年09月04日 - 12时38分</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2017/08/16/test/" title="测试篇">http://Err0rzz.github.io/2017/08/16/test/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://Err0rzz.github.io/2017/08/16/test/　　作者: Err0r" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2017/09/04/injection/" title="各种注入姿势">http://Err0rzz.github.io/2017/09/04/injection/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://Err0rzz.github.io/2017/09/04/injection/　　作者: Err0r" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script src="/js/clipboard.min.js"></script>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
@@ -271,15 +279,20 @@
 
 <nav id="article-nav">
   
-    <a href="/2017/08/25/blind-SQL-injection-script/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2017/09/11/jarvisoj/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption"><</strong>
       <div class="article-nav-title">
         
-          blind_SQL_injection script
+          javrisoj的web题
         
       </div>
     </a>
   
+  
+    <a href="/2017/08/31/file_include/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">文件包含一些常识</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
   
 </nav>
 
@@ -288,7 +301,7 @@
 
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#LDAP注入"><span class="toc-number">1.</span> <span class="toc-text">LDAP注入</span></a></li></ol>
 </div>
 <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
 
@@ -354,13 +367,15 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2017/08/25/blind-SQL-injection-script/" title="上一篇: blind_SQL_injection script">
+            <a href="/2017/09/11/jarvisoj/" title="上一篇: javrisoj的web题">
                 <i class="fa fa-angle-left"></i>
             </a>
         
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
         
-            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+            <a href="/2017/08/31/file_include/" title="下一篇: 文件包含一些常识">
+                <i class="fa fa-angle-right"></i>
+            </a>
         
     </div>
     <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/09/11/jarvisoj/">javrisoj的web题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/04/injection/">各种注入姿势</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/31/file_include/">文件包含一些常识</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/31/XMAN/">xman个人排位赛(纪念第一个xss)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/31/ZJGSCTF/">ZJGSCTF</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/25/blind-SQL-injection-script/">blind_SQL_injection script</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/16/test/">测试篇</a></li></ul>
