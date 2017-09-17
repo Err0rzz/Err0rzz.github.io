@@ -167,6 +167,70 @@
 </nav>
       <div class="body-wrap">
   
+    <article id="post-问鼎杯" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/09/16/问鼎杯/" class="article-date">
+      <time datetime="2017-09-16T11:32:00.000Z" itemprop="datePublished">2017-09-16</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/09/16/问鼎杯/">问鼎杯writeup</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <a id="more"></a>
+<h1 id="2-2"><a href="#2-2" class="headerlink" title="2-2"></a>2-2</h1><p>注入点应该在username,先测试一下过滤了哪些,发现过滤了空格,单引号,and,or…<br>单引号用双引号绕,直接构造一个四则运算:<code>a&quot;^0^&quot;^1</code>,发现还真的绕过了<img src="https://i.imgur.com/6hi0AH2.png" alt="">然后开始构造注入语句。这个时候发现一个很坑的点,因为过滤了<code>or</code>,所以无法使用<code>information_schema</code>。所以只能猜表名了。</p>
+<ul>
+<li><strong>猜表</strong><br>先试了试<code>admin</code>表<img src="https://i.imgur.com/QIgxCuw.png" alt="">不存在<br>再试试<code>user</code>表<img src="https://i.imgur.com/y2wgcnQ.png" alt="">也不存在<br>再试试<code>users</code>表<img src="https://i.imgur.com/q4pt7XX.png" alt="">发现存在</li>
+<li><strong>猜列</strong><br>先试试<code>username</code>列<img src="https://i.imgur.com/yydvP6j.png" alt="">发现存在<br>然后试试<code>password</code>,这时候又发现坑了,<code>password</code>也有<code>or</code>,绝望..<br>最后试出来是<code>pass</code>列。<br>直接上盲注脚本<img src="https://i.imgur.com/WRzN5fz.png" alt=""><br>跑出来密码之后登陆，发现cookie变了,再去访问admin.php即可拿到flag<img src="https://i.imgur.com/OjtBLRV.png" alt=""></li>
+</ul>
+<h1 id="3-1"><a href="#3-1" class="headerlink" title="3-1"></a>3-1</h1><p>file看一下文件<img src="https://i.imgur.com/NVtJHUf.png" alt=""><br>解压后还是没后缀,再去file一下<img src="https://i.imgur.com/j2WOEC1.png" alt=""><br>用wireshake打开,导出http对象可以直接看到flag.rar文件,导出后发现有密码。<br>再回去找一下password<img src="https://i.imgur.com/l91WKHL.png" alt=""><br>发现一个py的aes加密脚本和一串密文:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"># coding:utf-8</div><div class="line">__author__ = &apos;YFP&apos;</div><div class="line">from Crypto import Random</div><div class="line">from Crypto.Cipher import AES</div><div class="line">import sys</div><div class="line">import base64</div><div class="line">IV = &apos;QWERTYUIOPASDFGH&apos;</div><div class="line">def decrypt(encrypted):</div><div class="line">  aes = AES.new(IV, AES.MODE_CBC, IV)</div><div class="line">  return aes.decrypt(encrypted)</div><div class="line"></div><div class="line">def encrypt(message):</div><div class="line">  length = 16</div><div class="line">  count = len(message)</div><div class="line">  padding = length - (count % length)</div><div class="line">  message = message + &apos;\0&apos; * padding</div><div class="line">  aes = AES.new(IV, AES.MODE_CBC, IV)</div><div class="line">  return aes.encrypt(message)</div><div class="line"></div><div class="line">str = &apos;this is a test&apos;</div><div class="line">example = encrypt(str)</div><div class="line">print(decrypt(example))</div></pre></td></tr></table></figure></p>
+<p><code>19aaFYsQQKr+hVX6hl2smAUQ5a767TsULEUebWSajEo=</code>,写个脚本解密就好了<img src="https://i.imgur.com/wGkvDrR.png" alt=""><br>然后解开压缩包就可得到flag:WDCTF{Seclab_CTF_2017}</p>
+<h1 id="3-2"><a href="#3-2" class="headerlink" title="3-2"></a>3-2</h1><p>用Stegsolve打开之后一帧一帧保存下来，再用stegsolve的image combiner一张一张add起来<img src="https://i.imgur.com/KCl2Px9.png" alt=""><br>最后扫出二维码是一串pyc文件的十六进制。<br>保存为pyc文件之后，使用uncompyle反编译(这里有个坑，一开始我用的是在线反编译，发现死活做不出来，然后队友拿去编译之后发现和在线反编译出来的有点区别的..),<img src="https://i.imgur.com/THp2kTI.png" alt=""><br>把这个py文件放到它给的路径下编译吧<img src="https://i.imgur.com/FoTdWnN.png" alt=""><img src="https://i.imgur.com/6cU8KIc.png" alt=""></p>
+<h1 id="4-1"><a href="#4-1" class="headerlink" title="4-1"></a>4-1</h1><p>看到一张图片，先放到binwalk看一下<img src="https://i.imgur.com/azIYjtE.png" alt="">解压出来是两张看起来一样的图片，然后提示说图二比图一多东西。想起第十届全国信息安全大赛原题<a href="http://bobao.360.cn/ctf/detail/205.html" target="_blank" rel="external">http://bobao.360.cn/ctf/detail/205.html</a><br>猜测盲水印<br><a href="https://github.com/chishaxie/BlindWaterMark" target="_blank" rel="external">https://github.com/chishaxie/BlindWaterMark</a><br><img src="https://i.imgur.com/oqjgS8P.png" alt=""><br><img src="https://i.imgur.com/fP5Zuqy.png" alt=""></p>
+<h1 id="5-1"><a href="#5-1" class="headerlink" title="5-1"></a>5-1</h1>
+      
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+
+      
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-jarvisoj" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">

@@ -3,23 +3,38 @@
 <head>
   <meta charset="utf-8">
   
-  <title>各种注入姿势 | Err0r</title>
+  <title>问鼎杯writeup | Err0r</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="例题是第二届xctf-zctf的一个web题:">
+  <meta name="description" content="2-2注入点应该在username,先测试一下过滤了哪些,发现过滤了空格,单引号,and,or…单引号用双引号绕,直接构造一个四则运算:a&amp;quot;^0^&amp;quot;^1,发现还真的绕过了然后开始构造注入语句。这个时候发现一个很坑的点,因为过滤了or,所以无法使用information_schema。所以只能猜表名了。  猜表先试了试admin表不存在再试试user表也不存在再试试users表">
 <meta property="og:type" content="article">
-<meta property="og:title" content="各种注入姿势">
-<meta property="og:url" content="http://Err0rzz.github.io/2017/09/04/injection/index.html">
+<meta property="og:title" content="问鼎杯writeup">
+<meta property="og:url" content="http://Err0rzz.github.io/2017/09/16/问鼎杯/index.html">
 <meta property="og:site_name" content="Err0r">
-<meta property="og:description" content="例题是第二届xctf-zctf的一个web题:">
+<meta property="og:description" content="2-2注入点应该在username,先测试一下过滤了哪些,发现过滤了空格,单引号,and,or…单引号用双引号绕,直接构造一个四则运算:a&amp;quot;^0^&amp;quot;^1,发现还真的绕过了然后开始构造注入语句。这个时候发现一个很坑的点,因为过滤了or,所以无法使用information_schema。所以只能猜表名了。  猜表先试了试admin表不存在再试试user表也不存在再试试users表">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://i.imgur.com/qoSXWfK.png">
-<meta property="og:image" content="https://i.imgur.com/0yLr7Vv.png">
-<meta property="og:image" content="https://i.imgur.com/6TLryPd.png">
-<meta property="og:updated_time" content="2017-09-14T08:36:28.823Z">
+<meta property="og:image" content="https://i.imgur.com/6hi0AH2.png">
+<meta property="og:image" content="https://i.imgur.com/QIgxCuw.png">
+<meta property="og:image" content="https://i.imgur.com/y2wgcnQ.png">
+<meta property="og:image" content="https://i.imgur.com/q4pt7XX.png">
+<meta property="og:image" content="https://i.imgur.com/yydvP6j.png">
+<meta property="og:image" content="https://i.imgur.com/WRzN5fz.png">
+<meta property="og:image" content="https://i.imgur.com/OjtBLRV.png">
+<meta property="og:image" content="https://i.imgur.com/NVtJHUf.png">
+<meta property="og:image" content="https://i.imgur.com/j2WOEC1.png">
+<meta property="og:image" content="https://i.imgur.com/l91WKHL.png">
+<meta property="og:image" content="https://i.imgur.com/wGkvDrR.png">
+<meta property="og:image" content="https://i.imgur.com/KCl2Px9.png">
+<meta property="og:image" content="https://i.imgur.com/THp2kTI.png">
+<meta property="og:image" content="https://i.imgur.com/FoTdWnN.png">
+<meta property="og:image" content="https://i.imgur.com/6cU8KIc.png">
+<meta property="og:image" content="https://i.imgur.com/azIYjtE.png">
+<meta property="og:image" content="https://i.imgur.com/oqjgS8P.png">
+<meta property="og:image" content="https://i.imgur.com/fP5Zuqy.png">
+<meta property="og:updated_time" content="2017-09-17T10:54:10.097Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="各种注入姿势">
-<meta name="twitter:description" content="例题是第二届xctf-zctf的一个web题:">
-<meta name="twitter:image" content="https://i.imgur.com/qoSXWfK.png">
+<meta name="twitter:title" content="问鼎杯writeup">
+<meta name="twitter:description" content="2-2注入点应该在username,先测试一下过滤了哪些,发现过滤了空格,单引号,and,or…单引号用双引号绕,直接构造一个四则运算:a&amp;quot;^0^&amp;quot;^1,发现还真的绕过了然后开始构造注入语句。这个时候发现一个很坑的点,因为过滤了or,所以无法使用information_schema。所以只能猜表名了。  猜表先试了试admin表不存在再试试user表也不存在再试试users表">
+<meta name="twitter:image" content="https://i.imgur.com/6hi0AH2.png">
   
     <link rel="alternative" href="/atom.xml" title="Err0r" type="application/atom+xml">
   
@@ -167,11 +182,11 @@
         </header>                
     </div>
 </nav>
-      <div class="body-wrap"><article id="post-injection" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-问鼎杯" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2017/09/04/injection/" class="article-date">
-      <time datetime="2017-09-04T04:32:00.000Z" itemprop="datePublished">2017-09-04</time>
+      <a href="/2017/09/16/问鼎杯/" class="article-date">
+      <time datetime="2017-09-16T11:32:00.000Z" itemprop="datePublished">2017-09-16</time>
 </a>
     </div>
   
@@ -184,7 +199,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      各种注入姿势
+      问鼎杯writeup
     </h1>
   
 
@@ -201,11 +216,17 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>例题是第二届xctf-zctf的一个web题:<br><a id="more"></a></p>
-<h1 id="LDAP注入"><a href="#LDAP注入" class="headerlink" title="LDAP注入"></a>LDAP注入</h1><p><a href="http://www.cnblogs.com/bendawang/p/5156562.html" target="_blank" rel="external">ldap注入详解</a></p>
-<p><strong>Web150-Injection</strong><br>一个注入，其实不难。。。主要是不太熟悉罢了，LDAP注入<br>在乌云有这么一篇文章写得很详细：<a href="http://drops.wooyun.org/tips/967" target="_blank" rel="external">http://drops.wooyun.org/tips/967</a><br>根据LDAP的特性，我们可以利用特殊符“*”去替换过滤器中的一个或多个字符，经过测试：<br>admin *，进入search页面：<br>输入test后发现<br><img src="https://i.imgur.com/qoSXWfK.png" alt=""><br>再次发现通配符*，发现正确可以回显，不正确不能回显，并且输入有长度限制。<br>令uid=*，构造)(2=，以形成(|(uid=*)(2=*))<br><img src="https://i.imgur.com/0yLr7Vv.png" alt=""><br>然后看了下cookie，有东西：<br><img src="https://i.imgur.com/6TLryPd.png" alt=""><br>猜测description是一个参数，于是构造：test)(description=<br>随机输入字符，当test)(description=z时有正确回显，于是利用burp诸位爆破：</p>
-<p>得到flag：zctf{303a61ace0204a2d5f352771d6f1bba2}</p>
-
+        <a id="more"></a>
+<h1 id="2-2"><a href="#2-2" class="headerlink" title="2-2"></a>2-2</h1><p>注入点应该在username,先测试一下过滤了哪些,发现过滤了空格,单引号,and,or…<br>单引号用双引号绕,直接构造一个四则运算:<code>a&quot;^0^&quot;^1</code>,发现还真的绕过了<img src="https://i.imgur.com/6hi0AH2.png" alt="">然后开始构造注入语句。这个时候发现一个很坑的点,因为过滤了<code>or</code>,所以无法使用<code>information_schema</code>。所以只能猜表名了。</p>
+<ul>
+<li><strong>猜表</strong><br>先试了试<code>admin</code>表<img src="https://i.imgur.com/QIgxCuw.png" alt="">不存在<br>再试试<code>user</code>表<img src="https://i.imgur.com/y2wgcnQ.png" alt="">也不存在<br>再试试<code>users</code>表<img src="https://i.imgur.com/q4pt7XX.png" alt="">发现存在</li>
+<li><strong>猜列</strong><br>先试试<code>username</code>列<img src="https://i.imgur.com/yydvP6j.png" alt="">发现存在<br>然后试试<code>password</code>,这时候又发现坑了,<code>password</code>也有<code>or</code>,绝望..<br>最后试出来是<code>pass</code>列。<br>直接上盲注脚本<img src="https://i.imgur.com/WRzN5fz.png" alt=""><br>跑出来密码之后登陆，发现cookie变了,再去访问admin.php即可拿到flag<img src="https://i.imgur.com/OjtBLRV.png" alt=""></li>
+</ul>
+<h1 id="3-1"><a href="#3-1" class="headerlink" title="3-1"></a>3-1</h1><p>file看一下文件<img src="https://i.imgur.com/NVtJHUf.png" alt=""><br>解压后还是没后缀,再去file一下<img src="https://i.imgur.com/j2WOEC1.png" alt=""><br>用wireshake打开,导出http对象可以直接看到flag.rar文件,导出后发现有密码。<br>再回去找一下password<img src="https://i.imgur.com/l91WKHL.png" alt=""><br>发现一个py的aes加密脚本和一串密文:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"># coding:utf-8</div><div class="line">__author__ = &apos;YFP&apos;</div><div class="line">from Crypto import Random</div><div class="line">from Crypto.Cipher import AES</div><div class="line">import sys</div><div class="line">import base64</div><div class="line">IV = &apos;QWERTYUIOPASDFGH&apos;</div><div class="line">def decrypt(encrypted):</div><div class="line">  aes = AES.new(IV, AES.MODE_CBC, IV)</div><div class="line">  return aes.decrypt(encrypted)</div><div class="line"></div><div class="line">def encrypt(message):</div><div class="line">  length = 16</div><div class="line">  count = len(message)</div><div class="line">  padding = length - (count % length)</div><div class="line">  message = message + &apos;\0&apos; * padding</div><div class="line">  aes = AES.new(IV, AES.MODE_CBC, IV)</div><div class="line">  return aes.encrypt(message)</div><div class="line"></div><div class="line">str = &apos;this is a test&apos;</div><div class="line">example = encrypt(str)</div><div class="line">print(decrypt(example))</div></pre></td></tr></table></figure></p>
+<p><code>19aaFYsQQKr+hVX6hl2smAUQ5a767TsULEUebWSajEo=</code>,写个脚本解密就好了<img src="https://i.imgur.com/wGkvDrR.png" alt=""><br>然后解开压缩包就可得到flag:WDCTF{Seclab_CTF_2017}</p>
+<h1 id="3-2"><a href="#3-2" class="headerlink" title="3-2"></a>3-2</h1><p>用Stegsolve打开之后一帧一帧保存下来，再用stegsolve的image combiner一张一张add起来<img src="https://i.imgur.com/KCl2Px9.png" alt=""><br>最后扫出二维码是一串pyc文件的十六进制。<br>保存为pyc文件之后，使用uncompyle反编译(这里有个坑，一开始我用的是在线反编译，发现死活做不出来，然后队友拿去编译之后发现和在线反编译出来的有点区别的..),<img src="https://i.imgur.com/THp2kTI.png" alt=""><br>把这个py文件放到它给的路径下编译吧<img src="https://i.imgur.com/FoTdWnN.png" alt=""><img src="https://i.imgur.com/6cU8KIc.png" alt=""></p>
+<h1 id="4-1"><a href="#4-1" class="headerlink" title="4-1"></a>4-1</h1><p>看到一张图片，先放到binwalk看一下<img src="https://i.imgur.com/azIYjtE.png" alt="">解压出来是两张看起来一样的图片，然后提示说图二比图一多东西。想起第十届全国信息安全大赛原题<a href="http://bobao.360.cn/ctf/detail/205.html" target="_blank" rel="external">http://bobao.360.cn/ctf/detail/205.html</a><br>猜测盲水印<br><a href="https://github.com/chishaxie/BlindWaterMark" target="_blank" rel="external">https://github.com/chishaxie/BlindWaterMark</a><br><img src="https://i.imgur.com/oqjgS8P.png" alt=""><br><img src="https://i.imgur.com/fP5Zuqy.png" alt=""></p>
+<h1 id="5-1"><a href="#5-1" class="headerlink" title="5-1"></a>5-1</h1>
       
       
         <div class="page-reward">
@@ -260,13 +281,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2017/09/04/injection/">各种注入姿势</a></p>
+        <p><span>本文标题:</span><a href="/2017/09/16/问鼎杯/">问鼎杯writeup</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 Err0r 的个人博客">Err0r</a></p>
-        <p><span>发布时间:</span>2017年09月04日 - 12时32分</p>
-        <p><span>最后更新:</span>2017年09月14日 - 16时36分</p>
+        <p><span>发布时间:</span>2017年09月16日 - 19时32分</p>
+        <p><span>最后更新:</span>2017年09月17日 - 18时54分</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2017/09/04/injection/" title="各种注入姿势">http://Err0rzz.github.io/2017/09/04/injection/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://Err0rzz.github.io/2017/09/04/injection/　　作者: Err0r" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2017/09/16/问鼎杯/" title="问鼎杯writeup">http://Err0rzz.github.io/2017/09/16/问鼎杯/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://Err0rzz.github.io/2017/09/16/问鼎杯/　　作者: Err0r" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script src="/js/clipboard.min.js"></script>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
@@ -279,18 +300,9 @@
 
 <nav id="article-nav">
   
-    <a href="/2017/09/11/jarvisoj/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption"><</strong>
-      <div class="article-nav-title">
-        
-          javrisoj的web题
-        
-      </div>
-    </a>
   
-  
-    <a href="/2017/08/31/file_include/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">文件包含一些常识</div>
+    <a href="/2017/09/11/jarvisoj/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">javrisoj的web题</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
@@ -301,7 +313,7 @@
 
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#LDAP注入"><span class="toc-number">1.</span> <span class="toc-text">LDAP注入</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#2-2"><span class="toc-number">1.</span> <span class="toc-text">2-2</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-1"><span class="toc-number">2.</span> <span class="toc-text">3-1</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-2"><span class="toc-number">3.</span> <span class="toc-text">3-2</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4-1"><span class="toc-number">4.</span> <span class="toc-text">4-1</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#5-1"><span class="toc-number">5.</span> <span class="toc-text">5-1</span></a></li></ol>
 </div>
 <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
 
@@ -367,13 +379,11 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2017/09/11/jarvisoj/" title="上一篇: javrisoj的web题">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
         
-            <a href="/2017/08/31/file_include/" title="下一篇: 文件包含一些常识">
+            <a href="/2017/09/11/jarvisoj/" title="下一篇: javrisoj的web题">
                 <i class="fa fa-angle-right"></i>
             </a>
         
