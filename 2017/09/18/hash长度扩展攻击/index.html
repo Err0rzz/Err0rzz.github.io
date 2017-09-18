@@ -14,7 +14,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://i.imgur.com/05WwBNT.png">
 <meta property="og:image" content="https://i.imgur.com/aMNrhqG.png">
-<meta property="og:updated_time" content="2017-09-18T09:12:59.099Z">
+<meta property="og:updated_time" content="2017-09-18T11:44:40.798Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="hash长度扩展攻击">
 <meta name="twitter:description" content="md5和sha1分组长度都是512比特，不够的用0b10*填充到448比特，最后的64位为原长度。然后多个分组的话，前一个分组生成的向量用于后一个向量的运算，第一个向量为初始向量，最后一个向量为hash值。 这样的话，假设secret只知道位数的话，将其填充成secret1，其中n=hash(secret)=hash(secret1)已知，则hash(secret1+任意数据)都可以求出，因为(">
@@ -278,7 +278,7 @@
         <p><span>本文标题:</span><a href="/2017/09/18/hash长度扩展攻击/">hash长度扩展攻击</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 Err0r 的个人博客">Err0r</a></p>
         <p><span>发布时间:</span>2017年09月18日 - 16时22分</p>
-        <p><span>最后更新:</span>2017年09月18日 - 17时12分</p>
+        <p><span>最后更新:</span>2017年09月18日 - 19时44分</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2017/09/18/hash长度扩展攻击/" title="hash长度扩展攻击">http://Err0rzz.github.io/2017/09/18/hash长度扩展攻击/</a>
             <span class="copy-path" data-clipboard-text="原文: http://Err0rzz.github.io/2017/09/18/hash长度扩展攻击/　　作者: Err0r" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
@@ -293,6 +293,15 @@
 
 
 <nav id="article-nav">
+  
+    <a href="/2017/09/18/常用正则表达式/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          常用正则表达式
+        
+      </div>
+    </a>
   
   
     <a href="/2017/09/11/jarvisoj/" id="article-nav-older" class="article-nav-link-wrap">
@@ -373,7 +382,9 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+            <a href="/2017/09/18/常用正则表达式/" title="上一篇: 常用正则表达式">
+                <i class="fa fa-angle-left"></i>
+            </a>
         
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
         
@@ -382,7 +393,7 @@
             </a>
         
     </div>
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/09/18/hash长度扩展攻击/">hash长度扩展攻击</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/11/jarvisoj/">javrisoj的web题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/04/injection/">各种注入姿势</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/31/file_include/">文件包含一些常识</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/31/XMAN/">xman个人排位赛(纪念第一个xss)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/31/ZJGSCTF/">ZJGSCTF</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/25/blind-SQL-injection-script/">blind_SQL_injection script</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/09/18/常用正则表达式/">常用正则表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/18/hash长度扩展攻击/">hash长度扩展攻击</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/11/jarvisoj/">javrisoj的web题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/04/injection/">各种注入姿势</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/31/file_include/">文件包含一些常识</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/31/XMAN/">xman个人排位赛(纪念第一个xss)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/31/ZJGSCTF/">ZJGSCTF</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/25/blind-SQL-injection-script/">blind_SQL_injection script</a></li></ul>
     <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
     <script>
         $(".post-list").addClass("toc-article");
