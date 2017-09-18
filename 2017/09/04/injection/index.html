@@ -5,22 +5,22 @@
   
   <title>各种注入姿势 | Err0r</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="LDAP注入ldap注入详解 Web150-Injection一个注入，其实不难。。。主要是不太熟悉罢了，LDAP注入在乌云有这么一篇文章写得很详细：http://drops.wooyun.org/tips/967根据LDAP的特性，我们可以利用特殊符“*”去替换过滤器中的一个或多个字符，经过测试：admin *，进入search页面：输入test后发现再次发现通配符*，发现正确可以回显，不正确">
+  <meta name="description" content="各种神奇的姿势">
 <meta property="og:type" content="article">
 <meta property="og:title" content="各种注入姿势">
 <meta property="og:url" content="http://Err0rzz.github.io/2017/09/04/injection/index.html">
 <meta property="og:site_name" content="Err0r">
-<meta property="og:description" content="LDAP注入ldap注入详解 Web150-Injection一个注入，其实不难。。。主要是不太熟悉罢了，LDAP注入在乌云有这么一篇文章写得很详细：http://drops.wooyun.org/tips/967根据LDAP的特性，我们可以利用特殊符“*”去替换过滤器中的一个或多个字符，经过测试：admin *，进入search页面：输入test后发现再次发现通配符*，发现正确可以回显，不正确">
+<meta property="og:description" content="各种神奇的姿势">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://i.imgur.com/qoSXWfK.png">
 <meta property="og:image" content="https://i.imgur.com/0yLr7Vv.png">
 <meta property="og:image" content="https://i.imgur.com/6TLryPd.png">
 <meta property="og:image" content="https://i.imgur.com/iuyxBPK.png">
 <meta property="og:image" content="https://i.imgur.com/LFacyRo.png">
-<meta property="og:updated_time" content="2017-09-18T11:45:02.417Z">
+<meta property="og:updated_time" content="2017-09-18T11:47:22.148Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="各种注入姿势">
-<meta name="twitter:description" content="LDAP注入ldap注入详解 Web150-Injection一个注入，其实不难。。。主要是不太熟悉罢了，LDAP注入在乌云有这么一篇文章写得很详细：http://drops.wooyun.org/tips/967根据LDAP的特性，我们可以利用特殊符“*”去替换过滤器中的一个或多个字符，经过测试：admin *，进入search页面：输入test后发现再次发现通配符*，发现正确可以回显，不正确">
+<meta name="twitter:description" content="各种神奇的姿势">
 <meta name="twitter:image" content="https://i.imgur.com/qoSXWfK.png">
   
     <link rel="alternative" href="/atom.xml" title="Err0r" type="application/atom+xml">
@@ -203,7 +203,8 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <a id="more"></a>
+        <p>各种神奇的姿势</p>
+<a id="more"></a>
 <h1 id="LDAP注入"><a href="#LDAP注入" class="headerlink" title="LDAP注入"></a>LDAP注入</h1><p><a href="http://www.cnblogs.com/bendawang/p/5156562.html" target="_blank" rel="external">ldap注入详解</a></p>
 <p><strong>Web150-Injection</strong><br>一个注入，其实不难。。。主要是不太熟悉罢了，LDAP注入<br>在乌云有这么一篇文章写得很详细：<a href="http://drops.wooyun.org/tips/967" target="_blank" rel="external">http://drops.wooyun.org/tips/967</a><br>根据LDAP的特性，我们可以利用特殊符“*”去替换过滤器中的一个或多个字符，经过测试：<br>admin *，进入search页面：<br>输入test后发现<br><img src="https://i.imgur.com/qoSXWfK.png" alt=""><br>再次发现通配符*，发现正确可以回显，不正确不能回显，并且输入有长度限制。<br>令uid=*，构造)(2=，以形成(|(uid=*)(2=*))<br><img src="https://i.imgur.com/0yLr7Vv.png" alt=""><br>然后看了下cookie，有东西：<br><img src="https://i.imgur.com/6TLryPd.png" alt=""><br>猜测description是一个参数，于是构造：test)(description=<br>随机输入字符，当test)(description=z时有正确回显，于是利用burp诸位爆破：</p>
 <p>得到flag：zctf{303a61ace0204a2d5f352771d6f1bba2}</p>
@@ -274,7 +275,7 @@
         <p><span>本文标题:</span><a href="/2017/09/04/injection/">各种注入姿势</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 Err0r 的个人博客">Err0r</a></p>
         <p><span>发布时间:</span>2017年09月04日 - 12时32分</p>
-        <p><span>最后更新:</span>2017年09月18日 - 19时45分</p>
+        <p><span>最后更新:</span>2017年09月18日 - 19时47分</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2017/09/04/injection/" title="各种注入姿势">http://Err0rzz.github.io/2017/09/04/injection/</a>
             <span class="copy-path" data-clipboard-text="原文: http://Err0rzz.github.io/2017/09/04/injection/　　作者: Err0r" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>

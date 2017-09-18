@@ -5,19 +5,19 @@
   
   <title>hash长度扩展攻击 | Err0r</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="md5和sha1分组长度都是512比特，不够的用0b10*填充到448比特，最后的64位为原长度。然后多个分组的话，前一个分组生成的向量用于后一个向量的运算，第一个向量为初始向量，最后一个向量为hash值。 这样的话，假设secret只知道位数的话，将其填充成secret1，其中n=hash(secret)=hash(secret1)已知，则hash(secret1+任意数据)都可以求出，因为(">
+  <meta name="description" content="感觉挺有用就加了进来">
 <meta property="og:type" content="article">
 <meta property="og:title" content="hash长度扩展攻击">
 <meta property="og:url" content="http://Err0rzz.github.io/2017/09/18/hash长度扩展攻击/index.html">
 <meta property="og:site_name" content="Err0r">
-<meta property="og:description" content="md5和sha1分组长度都是512比特，不够的用0b10*填充到448比特，最后的64位为原长度。然后多个分组的话，前一个分组生成的向量用于后一个向量的运算，第一个向量为初始向量，最后一个向量为hash值。 这样的话，假设secret只知道位数的话，将其填充成secret1，其中n=hash(secret)=hash(secret1)已知，则hash(secret1+任意数据)都可以求出，因为(">
+<meta property="og:description" content="感觉挺有用就加了进来">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://i.imgur.com/05WwBNT.png">
 <meta property="og:image" content="https://i.imgur.com/aMNrhqG.png">
-<meta property="og:updated_time" content="2017-09-18T11:44:40.798Z">
+<meta property="og:updated_time" content="2017-09-18T11:47:23.660Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="hash长度扩展攻击">
-<meta name="twitter:description" content="md5和sha1分组长度都是512比特，不够的用0b10*填充到448比特，最后的64位为原长度。然后多个分组的话，前一个分组生成的向量用于后一个向量的运算，第一个向量为初始向量，最后一个向量为hash值。 这样的话，假设secret只知道位数的话，将其填充成secret1，其中n=hash(secret)=hash(secret1)已知，则hash(secret1+任意数据)都可以求出，因为(">
+<meta name="twitter:description" content="感觉挺有用就加了进来">
 <meta name="twitter:image" content="https://i.imgur.com/05WwBNT.png">
   
     <link rel="alternative" href="/atom.xml" title="Err0r" type="application/atom+xml">
@@ -200,7 +200,8 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <a id="more"></a>
+        <p>感觉挺有用就加了进来</p>
+<a id="more"></a>
 <p>md5和sha1分组长度都是<code>512</code>比特，不够的用<code>0b10*</code>填充到<code>448</code>比特，最后的<code>64</code>位为原长度。然后多个分组的话，<strong>前一个分组生成的向量用于后一个向量的运算</strong>，第一个向量为初始向量，最后一个向量为hash值。</p>
 <p>这样的话，假设secret只知道位数的话，将其填充成secret1，其中n=hash(secret)=hash(secret1)已知，则hash(secret1+任意数据)都可以求出，因为(secret1+任意数据)会被分为很多组，第一组为secret1，则<strong>第一组生成的向量即为n</strong>,直接用于接下来的运算即可。所以hash扩展长度攻击我理解就是，已知<strong>secret长度和hash值，就可以求出(secret+任意数据)的hash值</strong></p>
 <p>题目：<a href="http://www.shiyanbar.com/ctf/1848" title="http://www.shiyanbar.com/ctf/1848" target="_blank" rel="external">http://www.shiyanbar.com/ctf/1848</a></p>
@@ -278,7 +279,7 @@
         <p><span>本文标题:</span><a href="/2017/09/18/hash长度扩展攻击/">hash长度扩展攻击</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 Err0r 的个人博客">Err0r</a></p>
         <p><span>发布时间:</span>2017年09月18日 - 16时22分</p>
-        <p><span>最后更新:</span>2017年09月18日 - 19时44分</p>
+        <p><span>最后更新:</span>2017年09月18日 - 19时47分</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2017/09/18/hash长度扩展攻击/" title="hash长度扩展攻击">http://Err0rzz.github.io/2017/09/18/hash长度扩展攻击/</a>
             <span class="copy-path" data-clipboard-text="原文: http://Err0rzz.github.io/2017/09/18/hash长度扩展攻击/　　作者: Err0r" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
