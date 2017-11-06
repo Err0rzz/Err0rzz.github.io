@@ -462,6 +462,103 @@
 
 
   
+    <article id="post-问鼎杯线上" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/09/16/问鼎杯线上/" class="article-date">
+      <time datetime="2017-09-16T11:32:00.000Z" itemprop="datePublished">2017-09-16</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/09/16/问鼎杯线上/">问鼎杯writeup</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <a id="more"></a>
+<h3 id="1-1"><a href="#1-1" class="headerlink" title="1-1"></a>1-1</h3><p>简单测试发现它是先判断是否存在7然后判断是否等于2017，直接使用精度问题即可绕过。</p>
+<h3 id="1-2"><a href="#1-2" class="headerlink" title="1-2"></a>1-2</h3><p>测试没任何反应，后来发现可以直接打开<code>admin.php</code>，右键发现一个十分可疑的js，打开后发现里面是个json请求，里面有个<code>key</code>，于是构造此请求，data为这里的key，url为这里的action，结果没反应，查看burpsuite发现是302跳转，得到flag。</p>
+<h3 id="2-1"><a href="#2-1" class="headerlink" title="2-1"></a>2-1</h3><p>拿到发现是wephone事件，开始以为是<code>樱桃小丸子</code>那个微博，发现名字改了，后来找到后发现微博删光了，找到备份没找到任何相关内容，后来发现后台页面，用过typecho知道登录账号是邮箱形式，测试发现她的邮箱账号已被注册，猜测不是其他队伍注册的那么这就是正确的账号，尝试了各种弱密码无果，最后使用车牌通过，在留言里面看到敏感链接，打开即见flag。</p>
+<h3 id="2-2"><a href="#2-2" class="headerlink" title="2-2"></a>2-2</h3><p>注入点应该在username,先测试一下过滤了哪些,发现过滤了空格,单引号,and,or…<br>但是它使用的是双引号而双引号没有被过滤,直接构造一个四则运算:<code>a&quot;^0^&quot;^1</code>,发现还真的绕过了</p>
+<p><img src="https://i.imgur.com/6hi0AH2.png" alt=""></p>
+<p>然后开始构造注入语句。这个时候发现一个很坑的点,因为过滤了<code>or</code>,所以无法使用<code>information_schema</code>。所以只能猜表名了。<br><strong>猜表</strong><br>先试了试<code>admin</code>表</p>
+<p><img src="https://i.imgur.com/QIgxCuw.png" alt=""></p>
+<p>不存在，再试试<code>user</code>表</p>
+<p><img src="https://i.imgur.com/y2wgcnQ.png" alt=""></p>
+<p>也不存在，再试试<code>users</code>表</p>
+<p><img src="https://i.imgur.com/q4pt7XX.png" alt=""><br>发现存在<br><strong>猜列</strong><br>先试试<code>username</code>列</p>
+<p><img src="https://i.imgur.com/yydvP6j.png" alt=""></p>
+<p>发现存在，然后试试<code>password</code>,这时候又发现坑了,<code>password</code>也有<code>or</code>,绝望..最后试出来是<code>pass</code>列。直接上盲注脚本</p>
+<p><img src="https://i.imgur.com/WRzN5fz.png" alt=""></p>
+<p>跑出来密码之后登陆，发现不显示密码错误了，但是没有其他可用信息，这是另一个队友说访问显示<code>where is flag?</code>，一问发现他访问的<code>admin.php</code>页面，于是再去访问admin.php即可拿到flag</p>
+<p><img src="https://i.imgur.com/OjtBLRV.png" alt=""></p>
+<h3 id="3-1"><a href="#3-1" class="headerlink" title="3-1"></a>3-1</h3><p>file看一下文件</p>
+<p><img src="https://i.imgur.com/NVtJHUf.png" alt=""></p>
+<p>解压后还是没后缀,再去file一下</p>
+<p><img src="https://i.imgur.com/j2WOEC1.png" alt=""></p>
+<p>用wireshake打开,导出http对象可以直接看到flag.rar文件,导出后发现有密码。<br>再回去找一下password</p>
+<p><img src="https://i.imgur.com/l91WKHL.png" alt=""></p>
+<p>发现一个py的aes加密脚本和一串密文:<br><figure class="highlight py"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># coding:utf-8</span></div><div class="line">__author__ = <span class="string">'YFP'</span></div><div class="line"><span class="keyword">from</span> Crypto <span class="keyword">import</span> Random</div><div class="line"><span class="keyword">from</span> Crypto.Cipher <span class="keyword">import</span> AES</div><div class="line"><span class="keyword">import</span> sys</div><div class="line"><span class="keyword">import</span> base64</div><div class="line">IV = <span class="string">'QWERTYUIOPASDFGH'</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">decrypt</span><span class="params">(encrypted)</span>:</span></div><div class="line">  aes = AES.new(IV, AES.MODE_CBC, IV)</div><div class="line">  <span class="keyword">return</span> aes.decrypt(encrypted)</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">encrypt</span><span class="params">(message)</span>:</span></div><div class="line">  length = <span class="number">16</span></div><div class="line">  count = len(message)</div><div class="line">  padding = length - (count % length)</div><div class="line">  message = message + <span class="string">'\0'</span> * padding</div><div class="line">  aes = AES.new(IV, AES.MODE_CBC, IV)</div><div class="line">  <span class="keyword">return</span> aes.encrypt(message)</div><div class="line"></div><div class="line">str = <span class="string">'this is a test'</span></div><div class="line">example = encrypt(str)</div><div class="line">print(decrypt(example))</div></pre></td></tr></table></figure></p>
+<p><code>19aaFYsQQKr+hVX6hl2smAUQ5a767TsULEUebWSajEo=</code>,写个脚本解密就好了</p>
+<p><img src="https://i.imgur.com/wGkvDrR.png" alt=""></p>
+<p>然后解开压缩包就可得到flag:WDCTF{Seclab_CTF_2017}</p>
+<h3 id="3-2"><a href="#3-2" class="headerlink" title="3-2"></a>3-2</h3><p>用Stegsolve打开之后一帧一帧保存下来，再用stegsolve的image combiner一张一张add起来</p>
+<p><img src="https://i.imgur.com/KCl2Px9.png" alt=""></p>
+<p>最后扫出二维码是一串pyc文件的十六进制。<br>保存为pyc文件之后，使用uncompyle反编译(这里有个坑，一开始我用的是在线反编译，发现死活做不出来，然后队友拿去编译之后发现和在线反编译出来的有点区别的..)</p>
+<p><img src="https://i.imgur.com/THp2kTI.png" alt=""></p>
+<p>把这个py文件放到它给的路径下编译吧</p>
+<p><img src="https://i.imgur.com/FoTdWnN.png" alt=""></p>
+<p><img src="https://i.imgur.com/6cU8KIc.png" alt=""></p>
+<h3 id="4-1"><a href="#4-1" class="headerlink" title="4-1"></a>4-1</h3><p>看到一张图片，先放到binwalk看一下<img src="https://i.imgur.com/azIYjtE.png" alt="">解压出来是两张看起来一样的图片，然后提示说图二比图一多东西。想起第十届全国信息安全大赛原题<a href="http://bobao.360.cn/ctf/detail/205.html" target="_blank" rel="external">http://bobao.360.cn/ctf/detail/205.html</a><br>猜测盲水印<br><a href="https://github.com/chishaxie/BlindWaterMark" target="_blank" rel="external">https://github.com/chishaxie/BlindWaterMark</a></p>
+<p><img src="https://i.imgur.com/oqjgS8P.png" alt=""></p>
+<p><img src="https://i.imgur.com/fP5Zuqy.png" alt=""></p>
+<h3 id="4-2"><a href="#4-2" class="headerlink" title="4-2"></a>4-2</h3><p>很长的字符串，猜测古典密码，直接扔<a href="https://quipqiup.com/" target="_blank" rel="external">quipqiup</a>即可解密。</p>
+<h3 id="5-1"><a href="#5-1" class="headerlink" title="5-1"></a>5-1</h3><p>按题目就是xor，但是不知道和谁异或，才开始猜测是和一字节，题目真真假假，那就<code>0b1100</code>结果失败，接着跑<code>0-255</code>，都没有发现可疑字样也没发现生成的文件是可识别格式，于是百度<code>xor ctf</code>发现了<code>xortool</code>这个工具，按照GitHub上的用法，对于二进制文件使用<code>-c 00</code>发现了大量可见字符，再使用<code>-c 20</code>发现了密码是<code>Good\tuckToYou</code>，再看明文很像答案了，可是还有些乱字符，仔细看密码把\t换成L即<code>GoodLuckToYou</code>即可解密。</p>
+
+      
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CTFWP/">CTFWP</a></li></ul>
+    </div>
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-jarvisoj" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -680,65 +777,6 @@
       
         <p class="article-more-link">
           <a  href="/2017/08/31/XMAN/#more">大航海 >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-ZJGSCTF" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2017/08/31/ZJGSCTF/" class="article-date">
-      <time datetime="2017-08-31T10:50:00.000Z" itemprop="datePublished">2017-08-31</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/08/31/ZJGSCTF/">ZJGSCTF</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <p>zjgsctf平台上的部分wp</p>
-          
-      
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-
-      
-      
-        <p class="article-more-link">
-          <a  href="/2017/08/31/ZJGSCTF/#more">大航海 >></a>
         </p>
       
       <div class="clearfix"></div>

