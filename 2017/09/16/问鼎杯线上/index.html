@@ -5,13 +5,13 @@
   
   <title>问鼎杯writeup | Err0r</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="1-1简单测试发现它是先判断是否存在7然后判断是否等于2017，直接使用精度问题即可绕过。 1-2测试没任何反应，后来发现可以直接打开admin.php，右键发现一个十分可疑的js，打开后发现里面是个json请求，里面有个key，于是构造此请求，data为这里的key，url为这里的action，结果没反应，查看burpsuite发现是302跳转，得到flag。 2-1拿到发现是wephone事">
+  <meta name="description" content="划水式">
 <meta name="keywords" content="CTFWP">
 <meta property="og:type" content="article">
 <meta property="og:title" content="问鼎杯writeup">
 <meta property="og:url" content="http://Err0rzz.github.io/2017/09/16/问鼎杯线上/index.html">
 <meta property="og:site_name" content="Err0r">
-<meta property="og:description" content="1-1简单测试发现它是先判断是否存在7然后判断是否等于2017，直接使用精度问题即可绕过。 1-2测试没任何反应，后来发现可以直接打开admin.php，右键发现一个十分可疑的js，打开后发现里面是个json请求，里面有个key，于是构造此请求，data为这里的key，url为这里的action，结果没反应，查看burpsuite发现是302跳转，得到flag。 2-1拿到发现是wephone事">
+<meta property="og:description" content="划水式">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://i.imgur.com/6hi0AH2.png">
 <meta property="og:image" content="https://i.imgur.com/QIgxCuw.png">
@@ -31,10 +31,10 @@
 <meta property="og:image" content="https://i.imgur.com/azIYjtE.png">
 <meta property="og:image" content="https://i.imgur.com/oqjgS8P.png">
 <meta property="og:image" content="https://i.imgur.com/fP5Zuqy.png">
-<meta property="og:updated_time" content="2017-09-18T06:04:58.518Z">
+<meta property="og:updated_time" content="2017-11-10T08:16:07.802Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="问鼎杯writeup">
-<meta name="twitter:description" content="1-1简单测试发现它是先判断是否存在7然后判断是否等于2017，直接使用精度问题即可绕过。 1-2测试没任何反应，后来发现可以直接打开admin.php，右键发现一个十分可疑的js，打开后发现里面是个json请求，里面有个key，于是构造此请求，data为这里的key，url为这里的action，结果没反应，查看burpsuite发现是302跳转，得到flag。 2-1拿到发现是wephone事">
+<meta name="twitter:description" content="划水式">
 <meta name="twitter:image" content="https://i.imgur.com/6hi0AH2.png">
   
     <link rel="alternative" href="/atom.xml" title="Err0r" type="application/atom+xml">
@@ -221,7 +221,8 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <a id="more"></a>
+        <p>划水式</p>
+<a id="more"></a>
 <h3 id="1-1"><a href="#1-1" class="headerlink" title="1-1"></a>1-1</h3><p>简单测试发现它是先判断是否存在7然后判断是否等于2017，直接使用精度问题即可绕过。</p>
 <h3 id="1-2"><a href="#1-2" class="headerlink" title="1-2"></a>1-2</h3><p>测试没任何反应，后来发现可以直接打开<code>admin.php</code>，右键发现一个十分可疑的js，打开后发现里面是个json请求，里面有个<code>key</code>，于是构造此请求，data为这里的key，url为这里的action，结果没反应，查看burpsuite发现是302跳转，得到flag。</p>
 <h3 id="2-1"><a href="#2-1" class="headerlink" title="2-1"></a>2-1</h3><p>拿到发现是wephone事件，开始以为是<code>樱桃小丸子</code>那个微博，发现名字改了，后来找到后发现微博删光了，找到备份没找到任何相关内容，后来发现后台页面，用过typecho知道登录账号是邮箱形式，测试发现她的邮箱账号已被注册，猜测不是其他队伍注册的那么这就是正确的账号，尝试了各种弱密码无果，最后使用车牌通过，在留言里面看到敏感链接，打开即见flag。</p>
@@ -318,7 +319,7 @@
         <p><span>本文标题:</span><a href="/2017/09/16/问鼎杯线上/">问鼎杯writeup</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 Err0r 的个人博客">Err0r</a></p>
         <p><span>发布时间:</span>2017年09月16日 - 19时32分</p>
-        <p><span>最后更新:</span>2017年09月18日 - 14时04分</p>
+        <p><span>最后更新:</span>2017年11月10日 - 16时16分</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2017/09/16/问鼎杯线上/" title="问鼎杯writeup">http://Err0rzz.github.io/2017/09/16/问鼎杯线上/</a>
             <span class="copy-path" data-clipboard-text="原文: http://Err0rzz.github.io/2017/09/16/问鼎杯线上/　　作者: Err0r" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
