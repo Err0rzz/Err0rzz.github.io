@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Padding_Oracle 攻击 | Err0r</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="道哥的《白帽子讲web安全》有一章提到Padding Oracle Attack的攻击方式，据说这货在2011年的Pwnie Rewards上还被评为”最具价值的服务器漏洞”。而且比赛中经常遇到，而且一般都是混在web题里的crypto。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Padding_Oracle 攻击">
+<meta property="og:url" content="http://Err0rzz.github.io/2017/11/23/Padding-Oracle-攻击/index.html">
+<meta property="og:site_name" content="Err0r">
+<meta property="og:description" content="道哥的《白帽子讲web安全》有一章提到Padding Oracle Attack的攻击方式，据说这货在2011年的Pwnie Rewards上还被评为”最具价值的服务器漏洞”。而且比赛中经常遇到，而且一般都是混在web题里的crypto。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://i.imgur.com/tEDJE9a.png">
+<meta property="og:image" content="https://i.imgur.com/DYj0ER5.png">
+<meta property="og:image" content="https://i.imgur.com/hjOCP8v.png">
+<meta property="og:image" content="https://i.imgur.com/kTMKZtS.png">
+<meta property="og:image" content="https://i.imgur.com/ReYlu4x.png">
+<meta property="og:image" content="https://i.imgur.com/slMWJfU.png">
+<meta property="og:image" content="https://i.imgur.com/SIUNy2R.png">
+<meta property="og:updated_time" content="2017-11-23T11:41:42.096Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Padding_Oracle 攻击">
+<meta name="twitter:description" content="道哥的《白帽子讲web安全》有一章提到Padding Oracle Attack的攻击方式，据说这货在2011年的Pwnie Rewards上还被评为”最具价值的服务器漏洞”。而且比赛中经常遇到，而且一般都是混在web题里的crypto。">
+<meta name="twitter:image" content="https://i.imgur.com/tEDJE9a.png">
+  
+    <link rel="alternative" href="/atom.xml" title="Err0r" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/img/favicon.png">
+  
+  
+      <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  
+  
+      <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  
+  <!-- 加载特效 -->
+    <script src="/js/pace.js"></script>
+    <link href="/css/pace/pace-theme-flash.css" rel="stylesheet" />
+  <script>
+      var yiliaConfig = {
+          rootUrl: '/',
+          fancybox: true,
+          animate: true,
+          isHome: false,
+          isPost: true,
+          isArchive: false,
+          isTag: false,
+          isCategory: false,
+          open_in_new: false
+      }
+  </script>
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            
+            <img lazy-src="/img/head.jpg" class="js-avatar">
+            
+        </a>
+
+        <hgroup>
+          <h1 class="header-author"><a href="/" title="Hi Mate">Err0r</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">壮壮&#39; home</p>
+        
+        
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">博客首页</a></li>
+                        
+                            <li><a href="/archives/">个人档案</a></li>
+                        
+                            <li><a href="/links/">友情链接</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fl github" target="_blank" href="https://github.com/Err0rzz" title="github">github</a>
+                            
+                                <a class="fl weibo" target="_blank" href="http://weibo.com/5693631701/profile?topnav=1&wvr=6" title="weibo">weibo</a>
+                            
+                                <a class="fl linkedin" target="_blank" href="https://betamao.me/" title="linkedin">linkedin</a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                
+                
+
+                
+                
+                <section class="switch-part switch-part3">
+                
+                    <div id="js-aboutme">爱游戏爱妹子</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="Me">Err0r</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                
+                    <img lazy-src="/img/head.jpg" class="js-avatar">
+                
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="Me">Err0r</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">壮壮&#39; home</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">博客首页</a></li>
+                
+                    <li><a href="/archives/">个人档案</a></li>
+                
+                    <li><a href="/links/">友情链接</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a class="github" target="_blank" href="https://github.com/Err0rzz" title="github">github</a>
+                    
+                        <a class="weibo" target="_blank" href="http://weibo.com/5693631701/profile?topnav=1&wvr=6" title="weibo">weibo</a>
+                    
+                        <a class="linkedin" target="_blank" href="https://betamao.me/" title="linkedin">linkedin</a>
+                    
+                </div>
+            </nav>
+        </header>                
+    </div>
+</nav>
+      <div class="body-wrap"><article id="post-Padding-Oracle-攻击" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/11/23/Padding-Oracle-攻击/" class="article-date">
+      <time datetime="2017-11-23T05:52:35.000Z" itemprop="datePublished">2017-11-23</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Padding_Oracle 攻击
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+
+        
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>道哥的《白帽子讲web安全》有一章提到Padding Oracle Attack的攻击方式，据说这货在2011年的Pwnie Rewards上还被评为”最具价值的服务器漏洞”。而且比赛中经常遇到，而且一般都是混在<code>web</code>题里的<code>crypto</code>。</p>
+<a id="more"></a>
+<p><code>PS：ms10-070</code></p>
+<p>适用于<strong>CBC</strong>模式下的<code>AES</code>，<code>DES</code>，<code>3DES</code>等分组密码</p>
+<p>攻击成立的条件：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">1. 攻击者能够获得密文（Ciphertext），以及附带在密文前面的IV（初始化向量）</div><div class="line">2. 攻击者能够触发密文的解密过程，且能够知道密文的解密结果</div></pre></td></tr></table></figure></p>
+<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>尽量去看《白帽子讲web安全》，网上有些讲解原理有些问题，我看了半天才发现，而且后来虽然看懂了，但是代码实现又有些难度，就结合一些题目的wp中别人的代码去理解，然后自己实现一遍之后发现对原理理解更加深刻。</p>
+<p>首先要介绍一下<strong>padding</strong>原理：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">1个字节的Padding为0x01</div><div class="line">2个字节的Padding为0x02</div><div class="line">3个字节的Padding为0x03</div><div class="line">4个字节的Padding为0x04</div><div class="line">5个字节的Padding为0x05</div><div class="line">6个字节的Padding为0x06</div><div class="line">7个字节的Padding为0x07</div><div class="line">8个字节的Padding为0x08(当原始的明文正好是分组的整数倍的时候，Padding一个整组的填充值)</div></pre></td></tr></table></figure></p>
+<p>just like:<br><img src="https://i.imgur.com/tEDJE9a.png" alt=""></p>
+<p><strong>cbc</strong>模式下加解密：<br><img src="https://i.imgur.com/DYj0ER5.png" alt=""><br><img src="https://i.imgur.com/hjOCP8v.png" alt=""></p>
+<p>这里要注意，前几个分组的解密结果对我们都没有意义，我们重点关注的是最后一个分组的解密结果。看这张图可能会清楚一点:<br><img src="https://i.imgur.com/kTMKZtS.png" alt=""></p>
+<h2 id="攻击原理："><a href="#攻击原理：" class="headerlink" title="攻击原理："></a>攻击原理：</h2><p>在<strong>Padding Oracle Attack</strong>攻击中，攻击者输入的参数是<code>IV+Cipher</code>，我们要通过对IV的”穷举”来请求服务器端对我们指定的Cipher进行解密，并对返回的结果进行判断。 </p>
+<p>当提交参数时，服务端的返回结果会有下面3种情况：</p>
+<ul>
+<li>参数是一串正确的密文，分组、填充、加密都是对的(程序运行本身没出问题)，包含的内容也是正确的(业务逻辑是对的)，那么服务端解密、检测用户权限都没有问题，返回HTTP 200。</li>
+<li>参数是一串错误的密文，包含不正确的bit填充(程序运行本身出现致命错误)，那么服务端解密时就会抛出异常，返回HTTP 500 server error。</li>
+<li>参数是一串正确的密文(程序运行本身没出问题)，包含的用户名是错误的(业务逻辑是错的)，那么服务端解密之后检测权限不通过，但是依旧会返回HTTP 200戒者HTTP 302，而不是HTTP 500。 </li>
+</ul>
+<p>因此慢慢调整IV的值，以此希望解密后，最后一个字节的值为正确的<strong>padding byte</strong>，比如一个0x01。</p>
+<h1 id="破解密文得到明文"><a href="#破解密文得到明文" class="headerlink" title="破解密文得到明文"></a>破解密文得到明文</h1><p><strong>先爆破出最后字节</strong>：<br>因为<code>Intermediray Value</code>是固定不变的，所以我们可以通过遍历<code>Initialization Vector</code>的最后一个字节(从0x00带0xFF)，有且只有一个的值与<code>Intermediray Value</code>进行XOR后结果是0x01。通过遍历这255个值，我们得到了那个我们所需的IV，<strong>此时解密系统返回的是一个乱码，而不是解密失败，可以根据返回值来确定那个IV。</strong><br><code>PS：下面这图就是我开始说的网上有问题的地方，黄色应该是0x3c,蓝色的地方应该是0x3d,可以参考书本</code><br><img src="https://i.imgur.com/ReYlu4x.png" alt=""><br>然后将我们现在得到的<code>IV</code>与目前填充的值通过XOR运算，我们可以算出<code>Intermediray Value</code>的最后一个字节，根据解密过程，将这个字节和真实的IV最后一个字节XOR，则是明文的最后一个字节~~<br><img src="https://i.imgur.com/slMWJfU.png" alt=""></p>
+<p><strong>爆破倒数第二个字节</strong>：<br>在正确匹配了padding “0x01”后，需要做的是继续推导出剩下的<code>Intermediary Byte</code>。根据padding标准，当需要padding两个字节的时候，其值应该为<strong>0x02,0x02</strong>。而此时我们知道了<code>Intermediary Byte</code>为0x3d，因此我们可以先更新IV的最后一个字节为<strong>0x3d^0x02=0x3f</strong>(这样等会做XOR的时候，最后一位肯定一直为0x02,我们就只需要关注倒数第二位即可)，此时可以开始遍历IV倒数第二个字节了(0x00-0xFF),跟前面步骤一样。</p>
+<p>接下来依次类推，就可以推导出所有<code>Intermediary Byte</code>，我们这时候就完成了不需要密钥来解密爆破得到了明文。</p>
+<h1 id="构造任意明文对应的密文"><a href="#构造任意明文对应的密文" class="headerlink" title="构造任意明文对应的密文"></a>构造任意明文对应的密文</h1><p>根据上面的解法，我们可以得到<code>Intermediary Value</code>，而在这个前提下，而且我们可以控制IV，所以我们可以通过改变IV来使得XOR的结果为任意明文，还是观察这张图：<br><img src="https://i.imgur.com/SIUNy2R.png" alt=""></p>
+<p>对于多个分组的密文来说，从最后一组密文开始往前推。以两个分组为例，当我们推出第二个分组的IV(我们通过改变IV来改变解密出来的明文)，而此时这个IV是第一个分组的密文，所以我们需要将这个IV作为第一个分组的密文再进行推导。</p>
+<h2 id="例题"><a href="#例题" class="headerlink" title="例题"></a>例题</h2><p>虽然上面的原理理解起来不难，但是具体情境中代码实现起来还是挺难的，所以还是用例题来详细说明吧</p>
+<h1 id="is-aes-secure"><a href="#is-aes-secure" class="headerlink" title="is_aes_secure"></a>is_aes_secure</h1><p>题目是第三届上海市网络安全大赛的题目，题目源码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div></pre></td><td class="code"><pre><div class="line">#!/usr/bin/ruby -w</div><div class="line">require &apos;openssl&apos;</div><div class="line">require &apos;base64&apos;</div><div class="line"></div><div class="line">def banner()</div><div class="line">    puts &apos; ____________________________________________&apos;</div><div class="line">    puts &apos;|                                            |&apos;</div><div class="line">    puts &apos;| Welcome to our secure communication system |&apos;</div><div class="line">    puts &apos;| Our system is secured by AES               |&apos;    </div><div class="line">    puts &apos;| So...No key! No Message!                   |&apos;</div><div class="line">    puts &apos;|____________________________________________|&apos;</div><div class="line">    puts &apos;&apos;</div><div class="line">end</div><div class="line"></div><div class="line">def option()</div><div class="line">    puts &apos;1. Get the secret message.&apos;</div><div class="line">    puts &apos;2. Encrypt the message&apos;</div><div class="line">    puts &apos;3. Decrypt the message.&apos;</div><div class="line">    puts &apos;Give your option:&apos;</div><div class="line">    STDOUT.flush</div><div class="line">    op=gets</div><div class="line">    return op.to_i</div><div class="line">end</div><div class="line"></div><div class="line">def init()</div><div class="line">    file_key=File.new(&quot;./aeskey&quot;,&quot;r&quot;)</div><div class="line">    $key=file_key.gets</div><div class="line">    file_key.close()</div><div class="line">end</div><div class="line">def aes_encrypt(iv,data)</div><div class="line">    cipher = OpenSSL::Cipher::AES.new(256, :CBC)</div><div class="line">    cipher.encrypt</div><div class="line">    cipher.key = $key</div><div class="line">    cipher.iv  = iv</div><div class="line">    cipher.update(data) &lt;&lt; cipher.final</div><div class="line">end</div><div class="line"></div><div class="line">def aes_decrypt(iv,data)</div><div class="line">    cipher = OpenSSL::Cipher::AES.new(256, :CBC)</div><div class="line">    cipher.decrypt</div><div class="line">    cipher.key = $key</div><div class="line">    cipher.iv  = iv</div><div class="line">    data = cipher.update(data) &lt;&lt; cipher.final</div><div class="line">end</div><div class="line"></div><div class="line">def output_secret()</div><div class="line">    file_secret=File.new(&quot;./flag&quot;,&quot;r&quot;)</div><div class="line">    secret=file_secret.gets</div><div class="line">    file_secret.close</div><div class="line">    secret_enc=aes_encrypt(&quot;A&quot;*16,secret)</div><div class="line">    secret_enc_b64=Base64.encode64(secret_enc)</div><div class="line">    puts secret_enc_b64 </div><div class="line">end</div><div class="line"></div><div class="line">init</div><div class="line">banner</div><div class="line">while true do</div><div class="line">    begin</div><div class="line">        op=option</div><div class="line">        if op==1</div><div class="line">            output_secret</div><div class="line">        elsif op==2</div><div class="line">            puts &quot;IV:&quot;</div><div class="line">            STDOUT.flush</div><div class="line">            iv=Base64.decode64(gets)</div><div class="line">            puts &quot;Data:&quot;</div><div class="line">            STDOUT.flush</div><div class="line">            data=Base64.decode64(gets)</div><div class="line">            data_enc=aes_encrypt iv,data</div><div class="line">            puts Base64.encode64(data_enc)</div><div class="line">            puts &quot;Encrytion Done&quot;    </div><div class="line">            STDOUT.flush</div><div class="line">        elsif op==3</div><div class="line">            puts &quot;IV:&quot;</div><div class="line">            STDOUT.flush</div><div class="line">            iv=Base64.decode64(gets)</div><div class="line">            puts &quot;Data:&quot;</div><div class="line">            STDOUT.flush</div><div class="line">            data=Base64.decode64(gets)</div><div class="line">            data_dec=aes_decrypt iv,data</div><div class="line">            puts &quot;Decrpytion Done&quot;</div><div class="line">            STDOUT.flush</div><div class="line">        else</div><div class="line">            puts &apos;Wrong Option&apos;</div><div class="line">            STDOUT.flush</div><div class="line">        end</div><div class="line">    rescue Exception =&gt; e  </div><div class="line">        puts e.message</div><div class="line">        STDOUT.flush</div><div class="line">        retry</div><div class="line">    end</div><div class="line">end</div></pre></td></tr></table></figure></p>
+<p>这个题是<code>aes</code>的<code>cbc 256bit</code>加密方式，从给出的脚本可以看出，我们可以得到flag的密文，而且我们可以通过操作3得知我们输入的iv和密文是否符合格式，所以，可以使用<strong>padding oracle attack</strong>。这个密文长48个字节，所以，这是分成3块的cbc加密，第一块密文原本使用原来的iv: <code>AAAAAAAAAAAAAAAA</code>作为iv来进行解密，第二块它使用第一块密文来进行解密，第三块使用第二块密文进行解密。这个加密过程，我们要不断更换iv，因为我们知道cbc模式是密文使用key进行加密得到一个中间值，中间值与iv逐位异或得到明文。根据padding的原理，我们只要一位一位进行爆破，求出中间值就好。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div></pre></td><td class="code"><pre><div class="line"># coding=utf-8</div><div class="line">from pwn import *</div><div class="line"></div><div class="line">Cipher_Text = &apos;s\xf8\x804*S=\x06\x9b=,3\xea,E*\xaa\xc1\xcd\xf6\xcc\xb8\x1eQ\xf0\x81\xa9\x0e\xa4\x11\xfe\x9e\xdb\xd6\xbfm\xe7\xba\xb5\x02\xda\xbd\xb9\xc5\x1b\x7f\xb4\x90&apos;</div><div class="line">block1 = Cipher_Text[:16]</div><div class="line">block2 = Cipher_Text[16:32]</div><div class="line">block3 = Cipher_Text[32:]</div><div class="line">Origin_IV = &apos;A&apos;*16</div><div class="line">#Origin_IV = block1</div><div class="line">#Origin_IV = block2</div><div class="line"></div><div class="line">p = remote(&apos;106.75.98.74&apos;,10010)</div><div class="line"></div><div class="line">def Padding_Oracle_Attack(New_IV):</div><div class="line">    p.recvuntil(&apos;option:\n&apos;)</div><div class="line">    p.send(&apos;3\n&apos;)</div><div class="line">    p.recvuntil(&apos;IV:\n&apos;)</div><div class="line">    p.send(New_IV)</div><div class="line">    p.recvuntil(&quot;Data:\n&quot;)</div><div class="line">    p.send(block1.encode(&apos;base64&apos;))</div><div class="line">    response = p.recvline()</div><div class="line">    print response</div><div class="line">    if &quot;Decrpytion Done&quot; in response:</div><div class="line">        print &apos;find true iv byte&apos;</div><div class="line">        print New_IV</div><div class="line">        return 1</div><div class="line">    else:</div><div class="line">        print &apos;false&apos;</div><div class="line"></div><div class="line">Clear_Text = &apos;&apos;</div><div class="line">Known_Byte_IV = &apos;&apos;</div><div class="line">Known_Byte_Intermediary = &apos;&apos;</div><div class="line"></div><div class="line">#因为AES分组长度为16，所以Padding可以达到0x0f，而不是像DES的0x08</div><div class="line">for Now_Padding in xrange(1,17):</div><div class="line">    #将已知的Intermediary Byte与当前需要构造的填充进行XOR,来构造出后面几位的IV</div><div class="line">    for byte in Known_Byte_Intermediary:</div><div class="line">        Known_Byte_IV += chr(ord(byte)^Now_Padding) </div><div class="line"></div><div class="line">    #开始遍历0x00-0xFF</div><div class="line">    for i in xrange(0,256):</div><div class="line">        #未知的Intermediary Byte所对应的IV用&apos;0&apos;来补齐</div><div class="line">        Unknown_Byte_IV = (15-len(Known_Byte_Intermediary)) * chr(0)</div><div class="line">        New_IV = Unknown_Byte_IV +chr(i)+Known_Byte_IV</div><div class="line"></div><div class="line">        if Padding_Oracle_Attack(New_IV.encode(&apos;base64&apos;)):</div><div class="line">            Now_Byte_Intermediary = chr(i^Now_Padding)</div><div class="line">            Known_Byte_Intermediary = Now_Byte_Intermediary+Known_Byte_Intermediary</div><div class="line"></div><div class="line">            Clear_Text_Byte = chr(Now_Byte_Intermediary^ord(Origin_IV[16-Now_Padding]))</div><div class="line">            Clear_Text = Clear_Text_Byte+Clear_Text</div><div class="line"></div><div class="line">            print Clear_Text</div><div class="line">            Known_Byte_IV = &apos;&apos;</div><div class="line">            break</div></pre></td></tr></table></figure></p>
+<p>分三次跑出三组的值，连起来就是flag。</p>
+<h1 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h1><p>工具：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[https://github.com/mpgn/Padding-oracle-attack](https://github.com/mpgn/Padding-oracle-attack)</div><div class="line">[https://github.com/GDSSecurity/PadBuster](https://github.com/GDSSecurity/PadBuster)</div></pre></td></tr></table></figure></p>
+<p>我感觉这种题目还是不适合用工具(因为我也没看懂这些工具怎么用)</p>
+
+      
+      
+        <div class="page-reward">
+          <p><a href="javascript:void(0)" onclick="dashangToggle()" class="dashang">赏</a></p>
+          <div class="hide_box"></div>
+          <div class="shang_box">
+            <a class="shang_close" href="javascript:void(0)" onclick="dashangToggle()">×</a>
+            <div class="shang_tit">
+              <p>纯属好玩</p>
+            </div>
+            <div class="shang_payimg">
+              <img src="/img/alipayimg.jpg" alt="扫码支持" title="扫一扫" />
+            </div>
+              <div class="pay_explain">扫码打赏，你说多少就多少</div>
+            <div class="shang_payselect">
+              
+                <div class="pay_item checked" data-id="alipay">
+                  <span class="radiobox"></span>
+                  <span class="pay_logo"><img src="/img/alipay.png" alt="支付宝" /></span>
+                </div>
+              
+              
+                <div class="pay_item" data-id="wechat">
+                  <span class="radiobox"></span>
+                  <span class="pay_logo"><img src="/img/weixin.png" alt="微信" /></span>
+                </div>
+              
+            </div>
+            <div class="shang_info">
+              <p>打开<span id="shang_pay_txt">支付宝</span>扫一扫，即可进行扫码打赏哦</p>
+            </div>
+          </div>
+        </div>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/zepto/1.2.0/zepto.min.js"></script>
+        <script type="text/javascript">
+          $(".pay_item").click(function(){
+            $(this).addClass('checked').siblings('.pay_item').removeClass('checked');
+            var dataid=$(this).attr('data-id');
+            $(".shang_payimg img").attr("src","/img/"+dataid+"img.jpg");
+            $("#shang_pay_txt").text(dataid=="alipay"?"支付宝":"微信");
+          });
+          function dashangToggle(){
+            
+            $(".hide_box").fadeToggle();
+            $(".shang_box").fadeToggle();
+          }
+        </script>
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2017/11/23/Padding-Oracle-攻击/">Padding_Oracle 攻击</a></p>
+        <p><span>文章作者:</span><a href="/" title="访问 Err0r 的个人博客">Err0r</a></p>
+        <p><span>发布时间:</span>2017年11月23日 - 13时52分</p>
+        <p><span>最后更新:</span>2017年11月23日 - 19时41分</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2017/11/23/Padding-Oracle-攻击/" title="Padding_Oracle 攻击">http://Err0rzz.github.io/2017/11/23/Padding-Oracle-攻击/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://Err0rzz.github.io/2017/11/23/Padding-Oracle-攻击/　　作者: Err0r" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script src="/js/clipboard.min.js"></script>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" title="中国大陆 (CC BY-NC-SA 3.0 CN)" target = "_blank">"署名-非商用-相同方式共享 3.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+<nav id="article-nav">
+  
+  
+    <a href="/2017/11/23/爆破脚本/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">爆破脚本</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#原理"><span class="toc-number">1.</span> <span class="toc-text">原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#攻击原理："><span class="toc-number">2.</span> <span class="toc-text">攻击原理：</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#破解密文得到明文"><span class="toc-number"></span> <span class="toc-text">破解密文得到明文</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#构造任意明文对应的密文"><span class="toc-number"></span> <span class="toc-text">构造任意明文对应的密文</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#例题"><span class="toc-number">1.</span> <span class="toc-text">例题</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#is-aes-secure"><span class="toc-number"></span> <span class="toc-text">is_aes_secure</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#工具"><span class="toc-number"></span> <span class="toc-text">工具</span></a>
+</div>
+<input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script>
+    var valueHide = "隐藏目录";
+    var valueShow = "显示目录";
+
+    if ($(".left-col").is(":hidden")) {
+        $("#tocButton").attr("value", valueShow);
+    }
+    $("#tocButton").click(function() {
+        if ($("#toc").is(":hidden")) {
+            $("#tocButton").attr("value", valueHide);
+            $("#toc").slideDown(320);
+        }
+        else {
+            $("#tocButton").attr("value", valueShow);
+            $("#toc").slideUp(350);
+        }
+    })
+    if ($(".toc").length < 1) {
+        $("#toc, #tocButton").hide();
+    }
+</script>
+
+
+
+
+
+<div class="bdsharebuttonbox">
+	<a href="#" class="fx fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+	<a href="#" class="fx fa-weixin bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+	<a href="#" class="fx fa-qq bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+	<a href="#" class="fx fa-facebook-official bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+	<a href="#" class="fx fa-twitter bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+	<a href="#" class="fx fa-linkedin bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+	<a href="#" class="fx fa-files-o bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+</div>
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"2","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+
+
+
+    
+        <div id="gitments"></div>
+<script src="/js/gitment.browser.js"></script>
+<script>
+    var gitment = new Gitment({
+      id: window.location.pathname,
+      owner: 'Err0rzz',
+      repo: 'Err0rzz.github.io',
+      oauth: {
+        client_id: '',
+        client_secret: '',
+      },
+    })
+    gitment.render('gitments')
+</script>
+    
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+        
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+        
+            <a href="/2017/11/23/爆破脚本/" title="下一篇: 爆破脚本">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/11/23/Padding-Oracle-攻击/">Padding_Oracle 攻击</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/23/爆破脚本/">爆破脚本</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/16/OOB注入/">OOB注入</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/16/sage安装/">sage安装</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/14/CTF中RSA套路/">CTF中RSA套路</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/14/GET的命令执行漏洞/">GET的命令执行漏洞</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/13/ctf命令执行与绕过/">ctf命令执行与绕过</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/09/无线破解浅谈/">无线破解浅谈</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/07/浅谈php安全/">浅谈php安全</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/31/updatexml-mysql显错注入/">mysql显错注入</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/26/typecho-backdoor/">typecho backdoor</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/24/问鼎杯决赛/">问鼎杯决赛</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/18/常用正则表达式/">常用正则表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/18/hash长度扩展攻击/">hash长度扩展攻击</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/16/问鼎杯线上/">问鼎杯writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/11/jarvisoj/">javrisoj的web题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/04/injection/">各种注入姿势</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/31/file_include/">文件包含一些常识</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/31/XMAN/">xman个人排位赛(纪念第一个xss)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/31/ZJGSCTF/">ZJGSCTF</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/25/blind-SQL-injection-script/">blind_SQL_injection script</a></li></ul>
+    <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+    <script>
+        $(".post-list").addClass("toc-article");
+        $(".post-list-item a").attr("target","_blank");
+        $("#post-nav-button > a:nth-child(2)").click(function() {
+            $(".fa-bars, .fa-times").toggle();
+            $(".post-list").toggle(300);
+            if ($(".toc").length > 0) {
+                $("#toc, #tocButton").toggle(200, function() {
+                    if ($(".switch-area").is(":visible")) {
+                        $("#tocButton").attr("value", valueHide);
+                        }
+                    })
+            }
+            else {
+            }
+        })
+    </script>
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                &copy; 2017 Err0r
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/luuman/hexo-theme-spfk" target="_blank">spfk</a> by luuman
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" >海贼到访数: 
+                            <span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>, </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit">本页阅读量: 
+                            <span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+
+    </div>
+    <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var backgroundnum = 24;
+            var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+            $("#mobile-nav").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+            $(".left-col").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+        })
+    </script>
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<div class="scroll" id="scroll">
+    <a href="#"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    $(document).ready(function() {
+        if ($("#comments").length < 1) {
+            $("#scroll > a:nth-child(2)").hide();
+        };
+    })
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+  <script language="javascript">
+    $(function() {
+        $("a[title]").each(function() {
+            var a = $(this);
+            var title = a.attr('title');
+            if (title == undefined || title == "") return;
+            a.data('title', title).removeAttr('title').hover(
+
+            function() {
+                var offset = a.offset();
+                $("<div id=\"anchortitlecontainer\"></div>").appendTo($("body")).html(title).css({
+                    top: offset.top - a.outerHeight() - 15,
+                    left: offset.left + a.outerWidth()/2 + 1
+                }).fadeIn(function() {
+                    var pop = $(this);
+                    setTimeout(function() {
+                        pop.remove();
+                    }, pop.text().length * 800);
+                });
+            }, function() {
+                $("#anchortitlecontainer").remove();
+            });
+        });
+    });
+</script>
+
+
+  </div>
+</body>
+</html>
