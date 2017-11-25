@@ -12,6 +12,7 @@
 <meta property="og:site_name" content="Err0r">
 <meta property="og:description" content="道哥的《白帽子讲web安全》有一章提到Padding Oracle Attack的攻击方式，据说这货在2011年的Pwnie Rewards上还被评为”最具价值的服务器漏洞”。而且比赛中经常遇到，而且一般都是混在web题里的crypto。">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://i.imgur.com/oFrfAaJ.png">
 <meta property="og:image" content="https://i.imgur.com/tEDJE9a.png">
 <meta property="og:image" content="https://i.imgur.com/DYj0ER5.png">
 <meta property="og:image" content="https://i.imgur.com/hjOCP8v.png">
@@ -19,11 +20,11 @@
 <meta property="og:image" content="https://i.imgur.com/ReYlu4x.png">
 <meta property="og:image" content="https://i.imgur.com/slMWJfU.png">
 <meta property="og:image" content="https://i.imgur.com/SIUNy2R.png">
-<meta property="og:updated_time" content="2017-11-23T12:29:24.043Z">
+<meta property="og:updated_time" content="2017-11-23T12:42:28.445Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Padding_Oracle 攻击">
 <meta name="twitter:description" content="道哥的《白帽子讲web安全》有一章提到Padding Oracle Attack的攻击方式，据说这货在2011年的Pwnie Rewards上还被评为”最具价值的服务器漏洞”。而且比赛中经常遇到，而且一般都是混在web题里的crypto。">
-<meta name="twitter:image" content="https://i.imgur.com/tEDJE9a.png">
+<meta name="twitter:image" content="https://i.imgur.com/oFrfAaJ.png">
   
     <link rel="alternative" href="/atom.xml" title="Err0r" type="application/atom+xml">
   
@@ -212,9 +213,11 @@
 <p>攻击成立的条件：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">1. 攻击者能够获得密文（Ciphertext），以及附带在密文前面的IV（初始化向量）</div><div class="line">2. 攻击者能够触发密文的解密过程，且能够知道密文的解密结果</div></pre></td></tr></table></figure></p>
 <p><br></p>
 <h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>尽量去看《白帽子讲web安全》，网上有些讲解原理有些问题，我看了半天才发现，而且后来虽然看懂了，但是代码实现又有些难度，就结合一些题目的wp中别人的代码去理解，然后自己实现一遍之后发现对原理理解更加深刻。</p>
-<p>首先要介绍一下<strong>padding</strong>原理：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">1个字节的Padding为0x01</div><div class="line">2个字节的Padding为0x02</div><div class="line">3个字节的Padding为0x03</div><div class="line">4个字节的Padding为0x04</div><div class="line">5个字节的Padding为0x05</div><div class="line">6个字节的Padding为0x06</div><div class="line">7个字节的Padding为0x07</div><div class="line">8个字节的Padding为0x08(当原始的明文正好是分组的整数倍的时候，Padding一个整组的填充值)</div></pre></td></tr></table></figure></p>
-<p>just like:<br><img src="https://i.imgur.com/tEDJE9a.png" alt=""></p>
-<p><strong>cbc</strong>模式下加解密：<br><img src="https://i.imgur.com/DYj0ER5.png" alt=""><br><img src="https://i.imgur.com/hjOCP8v.png" alt=""></p>
+<h1 id="分组的填充-Padding"><a href="#分组的填充-Padding" class="headerlink" title="分组的填充(Padding)"></a>分组的填充(Padding)</h1><p>分组密码Block Cipher需要在加载前确保每个每组的长度都是分组长度的整数倍。一般情况下，明文的最后一个分组很有可能会出现长度不足分组的长度:<br><img src="https://i.imgur.com/oFrfAaJ.png" alt=""></p>
+<p>这个时候，普遍的做法是在最后一个分组后填充一个固定的值，这个值的大小为填充的字节总数。即假如最后还差3个字符，则填充0×03。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">1个字节的Padding为0x01</div><div class="line">2个字节的Padding为0x02</div><div class="line">3个字节的Padding为0x03</div><div class="line">4个字节的Padding为0x04</div><div class="line">5个字节的Padding为0x05</div><div class="line">6个字节的Padding为0x06</div><div class="line">7个字节的Padding为0x07</div><div class="line">8个字节的Padding为0x08(当原始的明文正好是分组的整数倍的时候，Padding一个整组的填充值)</div></pre></td></tr></table></figure>
+<p>just like:<br><img src="https://i.imgur.com/tEDJE9a.png" alt=""><br>这种Padding原则遵循的是常见的PKCS#5标准</p>
+<p><strong>cbc(Cipher Block Chaining CBC)</strong>模式下加解密：<br><img src="https://i.imgur.com/DYj0ER5.png" alt=""><br><img src="https://i.imgur.com/hjOCP8v.png" alt=""></p>
 <p>这里要注意，前几个分组的解密结果对我们都没有意义，我们重点关注的是最后一个分组的解密结果。看这张图可能会清楚一点:<br><img src="https://i.imgur.com/kTMKZtS.png" alt=""><br><br></p>
 <h2 id="攻击原理"><a href="#攻击原理" class="headerlink" title="攻击原理"></a>攻击原理</h2><p>在<strong>Padding Oracle Attack</strong>攻击中，攻击者输入的参数是<code>IV+Cipher</code>，我们要通过对IV的”穷举”来请求服务器端对我们指定的Cipher进行解密，并对返回的结果进行判断。 </p>
 <p>当提交参数时，服务端的返回结果会有下面3种情况：</p>
@@ -293,7 +296,7 @@
         <p><span>本文标题:</span><a href="/2017/11/23/Padding-Oracle-攻击/">Padding_Oracle 攻击</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 Err0r 的个人博客">Err0r</a></p>
         <p><span>发布时间:</span>2017年11月23日 - 13时52分</p>
-        <p><span>最后更新:</span>2017年11月23日 - 20时29分</p>
+        <p><span>最后更新:</span>2017年11月23日 - 20时42分</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2017/11/23/Padding-Oracle-攻击/" title="Padding_Oracle 攻击">http://Err0rzz.github.io/2017/11/23/Padding-Oracle-攻击/</a>
             <span class="copy-path" data-clipboard-text="原文: http://Err0rzz.github.io/2017/11/23/Padding-Oracle-攻击/　　作者: Err0r" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
@@ -322,7 +325,7 @@
 
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#原理"><span class="toc-number">1.</span> <span class="toc-text">原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#攻击原理"><span class="toc-number">2.</span> <span class="toc-text">攻击原理</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#破解密文得到明文"><span class="toc-number"></span> <span class="toc-text">破解密文得到明文</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#构造任意明文对应的密文"><span class="toc-number"></span> <span class="toc-text">构造任意明文对应的密文</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#例题"><span class="toc-number">1.</span> <span class="toc-text">例题</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#is-aes-secure"><span class="toc-number"></span> <span class="toc-text">is_aes_secure</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#工具"><span class="toc-number"></span> <span class="toc-text">工具</span></a>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#原理"><span class="toc-number">1.</span> <span class="toc-text">原理</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#分组的填充-Padding"><span class="toc-number"></span> <span class="toc-text">分组的填充(Padding)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#攻击原理"><span class="toc-number">1.</span> <span class="toc-text">攻击原理</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#破解密文得到明文"><span class="toc-number"></span> <span class="toc-text">破解密文得到明文</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#构造任意明文对应的密文"><span class="toc-number"></span> <span class="toc-text">构造任意明文对应的密文</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#例题"><span class="toc-number">1.</span> <span class="toc-text">例题</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#is-aes-secure"><span class="toc-number"></span> <span class="toc-text">is_aes_secure</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#工具"><span class="toc-number"></span> <span class="toc-text">工具</span></a>
 </div>
 <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
 
