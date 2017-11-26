@@ -12,17 +12,20 @@
 <meta property="og:site_name" content="Err0r">
 <meta property="og:description" content="感觉挺有用就加了进来">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://i.imgur.com/zgiAeaj.png">
+<meta property="og:image" content="https://i.imgur.com/o3nzjOh.png">
+<meta property="og:image" content="https://i.imgur.com/lbLj4PE.png">
 <meta property="og:image" content="https://i.imgur.com/05WwBNT.png">
 <meta property="og:image" content="https://i.imgur.com/aMNrhqG.png">
 <meta property="og:image" content="https://i.imgur.com/aidEFvL.png">
 <meta property="og:image" content="https://i.imgur.com/fbUhj2n.png">
 <meta property="og:image" content="https://i.imgur.com/r1pkG1f.png">
 <meta property="og:image" content="https://i.imgur.com/lEoM2Ek.png">
-<meta property="og:updated_time" content="2017-09-21T12:01:52.814Z">
+<meta property="og:updated_time" content="2017-11-26T03:47:22.705Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="hash长度扩展攻击">
 <meta name="twitter:description" content="感觉挺有用就加了进来">
-<meta name="twitter:image" content="https://i.imgur.com/05WwBNT.png">
+<meta name="twitter:image" content="https://i.imgur.com/zgiAeaj.png">
   
     <link rel="alternative" href="/atom.xml" title="Err0r" type="application/atom+xml">
   
@@ -206,8 +209,17 @@
           
         <p>感觉挺有用就加了进来</p>
 <a id="more"></a>
-<p>md5和sha1分组长度都是<code>512</code>比特，不够的用<code>0b10*</code>填充到<code>448</code>比特，最后的<code>64</code>位为原长度。然后多个分组的话，<strong>前一个分组生成的向量用于后一个向量的运算</strong>，第一个向量为初始向量，最后一个向量为hash值。</p>
-<p>这样的话，假设secret只知道位数的话，将其填充成secret1，其中n=hash(secret)=hash(secret1)已知，则hash(secret1+任意数据)都可以求出，因为(secret1+任意数据)会被分为很多组，第一组为secret1，则<strong>第一组生成的向量即为n</strong>,直接用于接下来的运算即可。所以hash扩展长度攻击我理解就是，已知<strong>secret长度和hash值，就可以求出(secret+任意数据)的hash值</strong></p>
+<h1 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h1><p>首先要讲hash算法(例如md5)，但是也不需要太了解，只需要知道以下几点就可以了<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">1.MD5加密过程中512比特（64字节）为一组，属于分组加密，而且在运算的过程中，将512比特分为32bit*16块，分块运算 </div><div class="line">2.我们关键利用的是MD5的填充，对加密的字符串进行填充(比特第一位为1其余比特为0)，使之(二进制)补到448模512同余，即长度为512的倍数减64，最后的64位在补充为原来字符串的长度，这样刚好补满512位的倍数，如果当前明文正好是512bit倍数则再加上一个512bit的一组。 </div><div class="line">3.MD5不管怎么加密，每一块加密得到的密文作为下一次加密的初始向量IV，这一点很关键！！！</div></pre></td></tr></table></figure></p>
+<p><strong>有点绕，用个例子讲一下怎么填充</strong><br>比如说计算字符串”admin”<br>十六进制<code>0x64676d696e</code><br>这里与448模512不同余，补位后数据如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">0x61646d696e8000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002800000000000000</div></pre></td></tr></table></figure></p>
+<p><strong>注意！下图中8是怎么来的！比特第一位补位1，其余为0，那么admin后面（二进制补位1000…000）</strong><br><img src="https://i.imgur.com/zgiAeaj.png" alt=""></p>
+<p><strong>注意！下图中框框中是啥！是全部要加密明文的长度！这里长度不包含填充的长度！而且注意是比特数！而且我们需要注意一点</strong><br><img src="https://i.imgur.com/o3nzjOh.png" alt=""><br><strong>MD5中存储的都是小端方式！</strong><br><strong>MD5中存储的都是小端方式！</strong><br><strong>MD5中存储的都是小端方式！</strong><br><strong>重要的事情说三遍，举个例子：假如我们这一块值为0x12345678<br>那么在MD5运算时候存储的顺序是 0x78563412<br>这也是之所以后8字节为长度，而第1字节先有数据的原因 </strong></p>
+<h1 id="攻击原理"><a href="#攻击原理" class="headerlink" title="攻击原理"></a>攻击原理</h1><p>主要看刚才讲的第三点<br><img src="https://i.imgur.com/lbLj4PE.png" alt=""></p>
+<p>这样的话，假设secret只知道位数的话，将其填充成secret1，其中n=hash(secret)=hash(secret1)已知，则hash(secret1+任意数据)都可以求出，因为(secret1+任意数据)会被分为很多组，第一组为secret1，则<strong>第一组生成的向量即为n</strong>,直接用于接下来的运算即可。所以hash扩展长度攻击我理解就是，已知<strong>secret长度和hash值，就可以求出(secret+任意数据)的hash值</strong>。<br>如果一个应用程序是这样操作的：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">准备了一个密文和一些数据构造成一个字符串里，并且使用了MD5之类的哈希函数生成了一个哈希值（也就是所谓的signature/签名）</div><div class="line">让攻击者可以提交数据以及哈希值，虽然攻击者不知道密文</div><div class="line">服务器把提交的数据跟密文构造成字符串，并经过哈希后判断是否等同于提交上来的哈希值</div></pre></td></tr></table></figure></p>
+<p>这个时候，该应用程序就易受长度扩展攻击，攻击者可以构造出{secret || data || attacker_controlled_data}的哈希值。</p>
+<p>再比如，一个网站在用户下载文件之前需验证下载权限。这个网站会用如下的算法产生一个关于文件名的MAC：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">def create_mac(key, fileName)</div><div class="line">   return Digest::SHA1.hexdigest(key + fileName)</div><div class="line">End</div></pre></td></tr></table></figure></p>
+<p>最终产生的URL会是这样：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http://example.com/download?file=report.pdf&amp;mac=563162c9c71a17367d44c165b84b85ab59d036f9</div></pre></td></tr></table></figure></p>
+<p>用户发起请求要下载一个文件时，将会执行下面这个函数：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">def verify_mac(key, fileName, userMac)</div><div class="line">    validMac = create_mac(key, filename)</div><div class="line">    if (validMac == userMac) do</div><div class="line">        initiateDownload()</div><div class="line">    else</div><div class="line">        displayError()</div><div class="line">    end</div><div class="line">End</div></pre></td></tr></table></figure></p>
+<p>这样，只有当用户没有擅自更改文件名时服务器才会执行initiateDownload()开始下载。实际上，这种生成MAC的方式，给攻击者在文件名后添加自定义字串留下可乘之机。</p>
 <h1 id="已知salt长度"><a href="#已知salt长度" class="headerlink" title="已知salt长度"></a>已知salt长度</h1><p>题目：<a href="http://www.shiyanbar.com/ctf/1848" title="http://www.shiyanbar.com/ctf/1848" target="_blank" rel="external">http://www.shiyanbar.com/ctf/1848</a></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> (!empty(<span class="variable">$_COOKIE</span>[<span class="string">"getmein"</span>])) &#123;</div><div class="line">    <span class="keyword">if</span> (urldecode(<span class="variable">$username</span>) === <span class="string">"admin"</span> &amp;&amp; urldecode(<span class="variable">$password</span>) != <span class="string">"admin"</span>) &#123;</div><div class="line">        <span class="keyword">if</span> (<span class="variable">$COOKIE</span>[<span class="string">"getmein"</span>] === md5(<span class="variable">$secret</span> . urldecode(<span class="variable">$username</span> . <span class="variable">$password</span>))) &#123;</div><div class="line">            <span class="built_in">echo</span> <span class="string">"Congratulations! You are a registered user.\n"</span>;</div><div class="line">            die (<span class="string">"The flag is "</span>. <span class="variable">$flag</span>);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span> &#123;</div><div class="line">            die (<span class="string">"Your cookies don't match up! STOP HACKING THIS SITE."</span>);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">else</span> &#123;</div><div class="line">        die (<span class="string">"You are not an admin! LEAVE."</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">setcookie(<span class="string">"sample-hash"</span>, md5(<span class="variable">$secret</span> . urldecode(<span class="string">"admin"</span> . <span class="string">"admin"</span>)), time() + (60 * 60 * 24 * 7));</div></pre></td></tr></table></figure>
@@ -235,7 +247,7 @@
 <p>所以代码中,$hsh的值中已知的部分为<code>strrev(serialize(&#39;guest&#39;))</code>,即<code>&#39;;\&quot;tseug\&quot;:5:s&#39;,&#39;</code>,而需要填充的部分为<code>&#39;;\&quot;nimda\&quot;:5:s&#39;</code>,长度则用爆破。</p>
 <p>此时构造出来的cookie为<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">role=s%3A5%3A%22admin%22%3B%00%00%00%00%00%00%00%C0%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%80s%3A5%3A%22guest%22%3B; hsh=fcdc3840332555511c4e4323f6decb07</div></pre></td></tr></table></figure></p>
 <p>这样的cookie传到服务端,首先根据源码,会将<code>role</code>反序列化之后比较是否等于<code>admin</code>,这时候会发现php反序列化也存在%00截断<img src="https://i.imgur.com/r1pkG1f.png" alt="">,所以第一个判断过了</p>
-<p>接下来会判断<code>$hsh</code>是否等于<code>md5($salt+strrev($role))</code>,而<code>md5($salt+strrev($role))</code><br>等于<code>md5($salt+strrev(s:5:&quot;admin&quot;;%00%00%00%00%00%00%00%C0%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%80s:5:&quot;guest&quot;;))</code><br>等于<code>md5($salt+strrev(;\&quot;tseug\&quot;:5:s%80%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%C0%00%00%00%00%00%00%00;\&quot;nimda\&quot;:5:s))</code><br>,而其中<code>md5($salt+strrev(;\&quot;tseug\&quot;:5:s%80%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%C0%00%00%00%00%00%00%00)</code>等于已知的<code>3a4727d57463f122833d9e732f94e4e0</code>,而这个值也将作为下一个分组的输入,这个和hashpump的运算结果是一样的,所以运行一下代码:<img src="https://i.imgur.com/lEoM2Ek.png" alt=""></p>
+<p>接下来会判断<code>$hsh</code>是否等于<code>md5($salt+strrev($role))</code>,而<code>md5($salt+strrev($role))</code><br>等于<code>md5($salt+strrev(s:5:&quot;admin&quot;;%00%00%00%00%00%00%00%C0%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%80s:5:&quot;guest&quot;;))</code><br>等于<code>md5($salt+(;\&quot;tseug\&quot;:5:s%80%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%C0%00%00%00%00%00%00%00;\&quot;nimda\&quot;:5:s))</code><br>,而其中<code>md5($salt+(;\&quot;tseug\&quot;:5:s%80%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%C0%00%00%00%00%00%00%00)</code>等于已知的<code>3a4727d57463f122833d9e732f94e4e0</code>,而这个值也将作为下一个分组的输入,这个和hashpump的运算结果是一样的,所以运行一下代码:<img src="https://i.imgur.com/lEoM2Ek.png" alt=""></p>
 
       
       
@@ -294,7 +306,7 @@
         <p><span>本文标题:</span><a href="/2017/09/18/hash长度扩展攻击/">hash长度扩展攻击</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 Err0r 的个人博客">Err0r</a></p>
         <p><span>发布时间:</span>2017年09月18日 - 16时22分</p>
-        <p><span>最后更新:</span>2017年09月21日 - 20时01分</p>
+        <p><span>最后更新:</span>2017年11月26日 - 11时47分</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2017/09/18/hash长度扩展攻击/" title="hash长度扩展攻击">http://Err0rzz.github.io/2017/09/18/hash长度扩展攻击/</a>
             <span class="copy-path" data-clipboard-text="原文: http://Err0rzz.github.io/2017/09/18/hash长度扩展攻击/　　作者: Err0r" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
@@ -332,7 +344,7 @@
 
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#已知salt长度"><span class="toc-number">1.</span> <span class="toc-text">已知salt长度</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#未知salt长度"><span class="toc-number">2.</span> <span class="toc-text">未知salt长度</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#原理"><span class="toc-number">1.</span> <span class="toc-text">原理</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#攻击原理"><span class="toc-number">2.</span> <span class="toc-text">攻击原理</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#已知salt长度"><span class="toc-number">3.</span> <span class="toc-text">已知salt长度</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#未知salt长度"><span class="toc-number">4.</span> <span class="toc-text">未知salt长度</span></a></li></ol>
 </div>
 <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
 
