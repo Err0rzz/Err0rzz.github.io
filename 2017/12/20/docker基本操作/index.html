@@ -3,19 +3,30 @@
 <head>
   <meta charset="utf-8">
   
-  <title>常用正则表达式 | Err0r</title>
+  <title>docker基本操作 | Err0r</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="挺实用">
+  <meta name="description" content="前段时间一直在耍docker，为了防止遗忘还是记录一下这些基本命令吧。">
+<meta name="keywords" content="docker,基础命令">
 <meta property="og:type" content="article">
-<meta property="og:title" content="常用正则表达式">
-<meta property="og:url" content="http://Err0rzz.github.io/2017/09/18/常用正则表达式/index.html">
+<meta property="og:title" content="docker基本操作">
+<meta property="og:url" content="http://Err0rzz.github.io/2017/12/20/docker基本操作/index.html">
 <meta property="og:site_name" content="Err0r">
-<meta property="og:description" content="挺实用">
+<meta property="og:description" content="前段时间一直在耍docker，为了防止遗忘还是记录一下这些基本命令吧。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-09-18T11:56:19.587Z">
+<meta property="og:image" content="https://i.imgur.com/RnTbdGU.png">
+<meta property="og:image" content="https://i.imgur.com/sEUoEYz.png">
+<meta property="og:image" content="https://i.imgur.com/Yu9btFi.png">
+<meta property="og:image" content="https://i.imgur.com/mZJCJnn.png">
+<meta property="og:image" content="https://i.imgur.com/FOjuRQP.png">
+<meta property="og:image" content="https://i.imgur.com/5ubzbqQ.png">
+<meta property="og:image" content="https://i.imgur.com/ekjYWjv.png">
+<meta property="og:image" content="https://i.imgur.com/UgMplxZ.png">
+<meta property="og:image" content="https://i.imgur.com/8FGvOfl.png">
+<meta property="og:updated_time" content="2017-12-20T10:07:02.487Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="常用正则表达式">
-<meta name="twitter:description" content="挺实用">
+<meta name="twitter:title" content="docker基本操作">
+<meta name="twitter:description" content="前段时间一直在耍docker，为了防止遗忘还是记录一下这些基本命令吧。">
+<meta name="twitter:image" content="https://i.imgur.com/RnTbdGU.png">
   
     <link rel="alternative" href="/atom.xml" title="Err0r" type="application/atom+xml">
   
@@ -163,11 +174,11 @@
         </header>                
     </div>
 </nav>
-      <div class="body-wrap"><article id="post-常用正则表达式" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-docker基本操作" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2017/09/18/常用正则表达式/" class="article-date">
-      <time datetime="2017-09-18T11:44:02.000Z" itemprop="datePublished">2017-09-18</time>
+      <a href="/2017/12/20/docker基本操作/" class="article-date">
+      <time datetime="2017-12-20T09:13:13.000Z" itemprop="datePublished">2017-12-20</time>
 </a>
     </div>
   
@@ -180,7 +191,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      常用正则表达式
+      docker基本操作
     </h1>
   
 
@@ -190,6 +201,10 @@
         
 
         
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/docker/">docker</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/基础命令/">基础命令</a></li></ul>
+    </div>
+
         <div class="clearfix"></div>
       </div>
       
@@ -197,24 +212,53 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>挺实用</p>
+        <p>前段时间一直在耍docker，为了防止遗忘还是记录一下这些基本命令吧。</p>
 <a id="more"></a>
-<p><strong><code>.at</code></strong><br>可以匹配 cat sat mat #at<br>点可以匹配任意字符</p>
-<p><strong><code>[a-z]at</code></strong><br><strong><code>[a-zA-Z]</code></strong><br>方括号中匹配一个集合类</p>
-<p><strong><code>[^a-z]</code></strong><br>表示不属于该集合里的字符</p>
-<p><strong><code>\*</code></strong> 表示可以被重复 0 次或更多次<br><strong><code>\+</code></strong> 表示可以被重复 1 次或更多次</p>
-<p><strong><code>[[:alnum:]]+</code></strong><br>表示至少有一个字母字符</p>
-<p><strong><code>()</code></strong><br>圆括号用于分割子表达式</p>
-<p><strong><code>(very )*large</code></strong><br>可以匹配 very large、very very large、large</p>
-<p><strong><code>{}</code></strong><br>花括号表示允许重复的次数<br>{3} 表示重复 3 次，{2,4} 表示重复 2~4 次，{2,} 表示至少重复 2 次</p>
-<p><strong><code>^bob</code></strong><br>表示在字符串开始处匹配 bob</p>
-<p><strong><code>com$</code></strong><br>表示在字符串结尾处匹配 com</p>
-<p><strong><code>^[a-zA-Z]$</code></strong><br>表示只匹配一个字母字符的字符串</p>
-<p>用竖线来表示分支选择<br><strong><code>com|edu|net</code></strong><br>表示匹配 com 或 edu 或 net</p>
-<p>匹配特殊字符时，需要使用反斜杠 \ 来进行转义，在 PHP 中还需要再进行转义一次。<br>匹配电子邮件地址<br><strong><code>^[a-zA-Z0-9_\-.]+@[a-zA-Z0-9\-]+\.[a-zA-Z0-9\-.]+$</code></strong></p>
-<p>正则查找字符串<br><strong><code>ereg(string pattern, string search, array [matches]);</code></strong><br><strong><code>eregi</code></strong> 不区分大小写</p>
-<p>正则替换字符串<br><strong><code>string ereg_replace(string pattern, string replacement, string search);</code></strong></p>
-<p>正则分割字符串<br><strong><code>array split(string pattern, string search [, int max]);</code></strong></p>
+<p><strong>查找镜像：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker search web</div></pre></td></tr></table></figure></p>
+<p><img src="https://i.imgur.com/RnTbdGU.png" alt=""><br><br><br><strong>下载镜像：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker pull php</div></pre></td></tr></table></figure></p>
+<p><br><br><strong>上传镜像：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker push err0r/web</div></pre></td></tr></table></figure></p>
+<p><img src="https://i.imgur.com/sEUoEYz.png" alt=""><br>上传镜像前需要先登录仓库，我这里用的是默认仓库–dockerhub，然后需要打个tag<br><br><br><strong>查看本地镜像：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker images</div></pre></td></tr></table></figure></p>
+<p><img src="https://i.imgur.com/Yu9btFi.png" alt=""><br><br><br><strong>启动docker：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker run [OPTIONS] IMAGE [COMMAND] [ARG...]</div></pre></td></tr></table></figure></p>
+<p>OPTIONS说明：</p>
+<pre><code>-a stdin: 指定标准输入输出内容类型，可选 STDIN/STDOUT/STDERR 三项；
+
+-d: 后台运行容器，并返回容器ID；
+
+-i: 以交互模式运行容器，通常与 -t 同时使用；
+
+-t: 为容器重新分配一个伪输入终端，通常与 -i 同时使用；
+
+--name=&quot;nginx-lb&quot;: 为容器指定一个名称；
+
+--dns 8.8.8.8: 指定容器使用的DNS服务器，默认和宿主一致；
+
+--dns-search example.com: 指定容器DNS搜索域名，默认和宿主一致；
+
+-h &quot;mars&quot;: 指定容器的hostname；
+
+-e username=&quot;ritchie&quot;: 设置环境变量；
+
+--env-file=[]: 从指定文件读入环境变量；
+
+--cpuset=&quot;0-2&quot; or --cpuset=&quot;0,1,2&quot;: 绑定容器到指定CPU运行；
+
+-m :设置容器使用内存最大值；
+
+--net=&quot;bridge&quot;: 指定容器的网络连接类型，支持 bridge/host/none/container: 四种类型；
+
+--link=[]: 添加链接到另一个容器；
+
+--expose=[]: 开放一个端口或一组端口； 
+</code></pre><p>虽然这么多参数，但是我基本上只有<code>-it</code>来启动交互式<code>bash</code>，用<code>-p hostport:dockerport</code>来开启端口映射，<code>--name</code>来指定容器名称<br><img src="https://i.imgur.com/mZJCJnn.png" alt=""><br>image的话，会先搜索本地的image有没有，如果没有的话，再去仓库找。<br><br><br><strong>查看正在运行的docker：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker ps</div></pre></td></tr></table></figure></p>
+<p>后面的话暂时只用过<code>-a</code>来列出所有docker(包括停止了的docker)，<code>-l</code>来查看最新创建的docker，<code>-q</code>只列出docker的id<br><br><br><strong>退出docker：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ctrl+p+q || exit</div></pre></td></tr></table></figure></p>
+<p>安全退出docker，docker仍然在后台运行而不是关闭<br><br><br><strong>重新进入docker：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker exec -it 9d /bin/bash</div></pre></td></tr></table></figure></p>
+<p><img src="https://i.imgur.com/FOjuRQP.png" alt=""><br>值得一提的是，在docker命令中不一定要把id全部都打出来，只要打出能识别唯一的docker的部分就好了，比如9d，电脑就能找到这个docker就ok了。<br><br><br><strong>docker重新变成image：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker commit 9d test</div></pre></td></tr></table></figure></p>
+<p><img src="https://i.imgur.com/5ubzbqQ.png" alt=""><br>先接docker，再接生成的image的名字<br><br><br><strong>docker停止：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker stop 9d</div></pre></td></tr></table></figure></p>
+<p><img src="https://i.imgur.com/ekjYWjv.png" alt=""><br>值得一提的是，不管之后删image还是删docker，都需要先停止全部相关的docker才能删除成功。<br><br><br><strong>docker删除：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker rm 9d</div></pre></td></tr></table></figure></p>
+<p><img src="https://i.imgur.com/UgMplxZ.png" alt=""><br>可以看到连ps -a都看不到这个9d的容器了。<br>这里有个骚操作，如果要想批量启动停止或者删除docker，可以用以下的命令,不过有一点，删除一定要记得先停止。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">docker start $(docker ps -a -q)</div><div class="line">docker stop $(docker ps -a -q)</div><div class="line">docker rm $(docker ps -a -q)</div></pre></td></tr></table></figure></p>
+<p><br><br><strong>镜像删除</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker rmi test</div></pre></td></tr></table></figure></p>
+<p><img src="https://i.imgur.com/8FGvOfl.png" alt=""><br><br></p>
+<p>就先这些吧，以后碰到需要记得再记吧。</p>
 
       
       
@@ -270,13 +314,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2017/09/18/常用正则表达式/">常用正则表达式</a></p>
+        <p><span>本文标题:</span><a href="/2017/12/20/docker基本操作/">docker基本操作</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 Err0r 的个人博客">Err0r</a></p>
-        <p><span>发布时间:</span>2017年09月18日 - 19时44分</p>
-        <p><span>最后更新:</span>2017年09月18日 - 19时56分</p>
+        <p><span>发布时间:</span>2017年12月20日 - 17时13分</p>
+        <p><span>最后更新:</span>2017年12月20日 - 18时07分</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2017/09/18/常用正则表达式/" title="常用正则表达式">http://Err0rzz.github.io/2017/09/18/常用正则表达式/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://Err0rzz.github.io/2017/09/18/常用正则表达式/　　作者: Err0r" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2017/12/20/docker基本操作/" title="docker基本操作">http://Err0rzz.github.io/2017/12/20/docker基本操作/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://Err0rzz.github.io/2017/12/20/docker基本操作/　　作者: Err0r" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script src="/js/clipboard.min.js"></script>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
@@ -289,18 +333,9 @@
 
 <nav id="article-nav">
   
-    <a href="/2017/09/24/问鼎杯决赛/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption"><</strong>
-      <div class="article-nav-title">
-        
-          问鼎杯决赛
-        
-      </div>
-    </a>
   
-  
-    <a href="/2017/09/18/hash长度扩展攻击/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">hash长度扩展攻击</div>
+    <a href="/2017/12/15/CSRF学习/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">CSRF学习</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
@@ -377,13 +412,11 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2017/09/24/问鼎杯决赛/" title="上一篇: 问鼎杯决赛">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
         
-            <a href="/2017/09/18/hash长度扩展攻击/" title="下一篇: hash长度扩展攻击">
+            <a href="/2017/12/15/CSRF学习/" title="下一篇: CSRF学习">
                 <i class="fa fa-angle-right"></i>
             </a>
         

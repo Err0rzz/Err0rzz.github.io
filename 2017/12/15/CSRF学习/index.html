@@ -3,19 +3,23 @@
 <head>
   <meta charset="utf-8">
   
-  <title>常用正则表达式 | Err0r</title>
+  <title>CSRF学习 | Err0r</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="挺实用">
+  <meta name="description" content="最近在看道哥的《白帽子讲web安全》(大学买的第一本书)，觉得物超所值啊~把书上的一些简单的实验给复现一下，记录一下。">
+<meta name="keywords" content="《白帽子讲web安全》,书籍学习">
 <meta property="og:type" content="article">
-<meta property="og:title" content="常用正则表达式">
-<meta property="og:url" content="http://Err0rzz.github.io/2017/09/18/常用正则表达式/index.html">
+<meta property="og:title" content="CSRF学习">
+<meta property="og:url" content="http://Err0rzz.github.io/2017/12/15/CSRF学习/index.html">
 <meta property="og:site_name" content="Err0r">
-<meta property="og:description" content="挺实用">
+<meta property="og:description" content="最近在看道哥的《白帽子讲web安全》(大学买的第一本书)，觉得物超所值啊~把书上的一些简单的实验给复现一下，记录一下。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-09-18T11:56:19.587Z">
+<meta property="og:image" content="https://i.imgur.com/KaIej1a.png">
+<meta property="og:image" content="https://i.imgur.com/3nmFqTW.png">
+<meta property="og:updated_time" content="2017-12-15T11:05:44.791Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="常用正则表达式">
-<meta name="twitter:description" content="挺实用">
+<meta name="twitter:title" content="CSRF学习">
+<meta name="twitter:description" content="最近在看道哥的《白帽子讲web安全》(大学买的第一本书)，觉得物超所值啊~把书上的一些简单的实验给复现一下，记录一下。">
+<meta name="twitter:image" content="https://i.imgur.com/KaIej1a.png">
   
     <link rel="alternative" href="/atom.xml" title="Err0r" type="application/atom+xml">
   
@@ -163,11 +167,11 @@
         </header>                
     </div>
 </nav>
-      <div class="body-wrap"><article id="post-常用正则表达式" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-CSRF学习" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2017/09/18/常用正则表达式/" class="article-date">
-      <time datetime="2017-09-18T11:44:02.000Z" itemprop="datePublished">2017-09-18</time>
+      <a href="/2017/12/15/CSRF学习/" class="article-date">
+      <time datetime="2017-12-15T06:05:12.000Z" itemprop="datePublished">2017-12-15</time>
 </a>
     </div>
   
@@ -180,7 +184,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      常用正则表达式
+      CSRF学习
     </h1>
   
 
@@ -190,6 +194,10 @@
         
 
         
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/《白帽子讲web安全》/">《白帽子讲web安全》</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/书籍学习/">书籍学习</a></li></ul>
+    </div>
+
         <div class="clearfix"></div>
       </div>
       
@@ -197,25 +205,18 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>挺实用</p>
+        <p>最近在看道哥的《白帽子讲web安全》(大学买的第一本书)，觉得物超所值啊~把书上的一些简单的实验给复现一下，记录一下。</p>
 <a id="more"></a>
-<p><strong><code>.at</code></strong><br>可以匹配 cat sat mat #at<br>点可以匹配任意字符</p>
-<p><strong><code>[a-z]at</code></strong><br><strong><code>[a-zA-Z]</code></strong><br>方括号中匹配一个集合类</p>
-<p><strong><code>[^a-z]</code></strong><br>表示不属于该集合里的字符</p>
-<p><strong><code>\*</code></strong> 表示可以被重复 0 次或更多次<br><strong><code>\+</code></strong> 表示可以被重复 1 次或更多次</p>
-<p><strong><code>[[:alnum:]]+</code></strong><br>表示至少有一个字母字符</p>
-<p><strong><code>()</code></strong><br>圆括号用于分割子表达式</p>
-<p><strong><code>(very )*large</code></strong><br>可以匹配 very large、very very large、large</p>
-<p><strong><code>{}</code></strong><br>花括号表示允许重复的次数<br>{3} 表示重复 3 次，{2,4} 表示重复 2~4 次，{2,} 表示至少重复 2 次</p>
-<p><strong><code>^bob</code></strong><br>表示在字符串开始处匹配 bob</p>
-<p><strong><code>com$</code></strong><br>表示在字符串结尾处匹配 com</p>
-<p><strong><code>^[a-zA-Z]$</code></strong><br>表示只匹配一个字母字符的字符串</p>
-<p>用竖线来表示分支选择<br><strong><code>com|edu|net</code></strong><br>表示匹配 com 或 edu 或 net</p>
-<p>匹配特殊字符时，需要使用反斜杠 \ 来进行转义，在 PHP 中还需要再进行转义一次。<br>匹配电子邮件地址<br><strong><code>^[a-zA-Z0-9_\-.]+@[a-zA-Z0-9\-]+\.[a-zA-Z0-9\-.]+$</code></strong></p>
-<p>正则查找字符串<br><strong><code>ereg(string pattern, string search, array [matches]);</code></strong><br><strong><code>eregi</code></strong> 不区分大小写</p>
-<p>正则替换字符串<br><strong><code>string ereg_replace(string pattern, string replacement, string search);</code></strong></p>
-<p>正则分割字符串<br><strong><code>array split(string pattern, string search [, int max]);</code></strong></p>
-
+<h2 id="浏览器的cookie策略"><a href="#浏览器的cookie策略" class="headerlink" title="浏览器的cookie策略"></a>浏览器的cookie策略</h2><p>浏览器的cookie分两种：一种是“<strong>Session Cookie</strong>”，又称“临时Cookie”；另一种是“<strong>Third-party Cookie</strong>”，也称为“本地Cookie”。</p>
+<p>两者的区别在于，<strong>Third-party Cookie</strong>是服务器在<code>Set-Cookie</code>是指定了<code>Expire</code>时间，只有到了时间后Cookie才会失效，所以这种Cookie会保存在本地；而<strong>Session Cookie</strong>则没有指定<code>Expire</code>时间，所以浏览器关闭后，<strong>Session Cookie</strong>就失效了。</p>
+<p>例如在<code>http://67.209.184.30/a.php</code>中，会给浏览器写入两个Cookie：一个是<strong>Session Cookie</strong>，另一个为<strong>Third-party Cookie</strong>。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">header(&apos;set-cookie: cookie1=test1;&apos;);</div><div class="line">header(&apos;set-cookie: cookie2=test2;expires=Thu,01-jan-2030 00:00:01 GMT;&apos;,false);</div><div class="line">?&gt;</div></pre></td></tr></table></figure></p>
+<p>访问该页面，发现浏览器接受了两个Cookie。<br><img src="https://i.imgur.com/KaIej1a.png" alt=""><br><img src="https://i.imgur.com/3nmFqTW.png" alt=""></p>
+<p>此时在另外一个域中，有一个页面<code>http://127.0.0.1/index.html</code>，此页面构造了CSRF以访问<code>67.209.184.30</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;iframe src=&quot;http://67.209.184.30/&quot;&gt;&lt;/iframe&gt;</div></pre></td></tr></table></figure></p>
+<p>此时如果是IE，会默认禁止浏览器在<img>、<iframe>、<script>、<link>等标签中发送第三方Cookie，也就是说只能发送出<strong>Session Cookie</strong>，而<strong>Third-party Cookie</strong>被禁止。</p>
+<p>但是因为我是用的Firefox，所以默认策略是允许发送第三方Cookie的<br><img src="https://i.imgur.com/r4BaRvl.png" alt=""></p>
+<h2 id="P3P头的副作用"><a href="#P3P头的副作用" class="headerlink" title="P3P头的副作用"></a>P3P头的副作用</h2><p>如果网站返回给浏览器的HTTP头中包含有P3P头，则在某种程度上来说，将允许浏览器发送第三方Cookie。在IE下即使是<iframe>、<script>等标签也将不再拦截第三方Cookie的发送。</p>
+<p>假设127.0.0.1/index.html的内容为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"></div></pre></td></tr></table></figure></p>
+</script></iframe></p>
       
       
         <div class="page-reward">
@@ -270,13 +271,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2017/09/18/常用正则表达式/">常用正则表达式</a></p>
+        <p><span>本文标题:</span><a href="/2017/12/15/CSRF学习/">CSRF学习</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 Err0r 的个人博客">Err0r</a></p>
-        <p><span>发布时间:</span>2017年09月18日 - 19时44分</p>
-        <p><span>最后更新:</span>2017年09月18日 - 19时56分</p>
+        <p><span>发布时间:</span>2017年12月15日 - 14时05分</p>
+        <p><span>最后更新:</span>2017年12月15日 - 19时05分</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2017/09/18/常用正则表达式/" title="常用正则表达式">http://Err0rzz.github.io/2017/09/18/常用正则表达式/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://Err0rzz.github.io/2017/09/18/常用正则表达式/　　作者: Err0r" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2017/12/15/CSRF学习/" title="CSRF学习">http://Err0rzz.github.io/2017/12/15/CSRF学习/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://Err0rzz.github.io/2017/12/15/CSRF学习/　　作者: Err0r" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script src="/js/clipboard.min.js"></script>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
@@ -289,18 +290,18 @@
 
 <nav id="article-nav">
   
-    <a href="/2017/09/24/问鼎杯决赛/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2017/12/20/docker基本操作/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption"><</strong>
       <div class="article-nav-title">
         
-          问鼎杯决赛
+          docker基本操作
         
       </div>
     </a>
   
   
-    <a href="/2017/09/18/hash长度扩展攻击/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">hash长度扩展攻击</div>
+    <a href="/2017/12/11/第一届智商杯wp/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">第一届智商杯wp</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
@@ -311,7 +312,7 @@
 
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#浏览器的cookie策略"><span class="toc-number">1.</span> <span class="toc-text">浏览器的cookie策略</span></a></li></ol>
 </div>
 <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
 
@@ -377,13 +378,13 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2017/09/24/问鼎杯决赛/" title="上一篇: 问鼎杯决赛">
+            <a href="/2017/12/20/docker基本操作/" title="上一篇: docker基本操作">
                 <i class="fa fa-angle-left"></i>
             </a>
         
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
         
-            <a href="/2017/09/18/hash长度扩展攻击/" title="下一篇: hash长度扩展攻击">
+            <a href="/2017/12/11/第一届智商杯wp/" title="下一篇: 第一届智商杯wp">
                 <i class="fa fa-angle-right"></i>
             </a>
         
