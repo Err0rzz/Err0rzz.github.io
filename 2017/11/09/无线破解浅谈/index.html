@@ -1,85 +1,11 @@
 <!DOCTYPE html>
-
-
-
-  
-
-
-<html class="theme-next muse use-motion" lang="zh-Hans">
+<html>
 <head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
-<meta name="theme-color" content="#222">
-
-
-
-
-
-
-
-
-
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  <meta charset="utf-8">
   
-  
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
-
-
-
-
-
-
-
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
-
-<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
-
-
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
-
-
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
-
-
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
-
-
-  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
-
-
-
-
-
-  <meta name="keywords" content="Hexo, NexT" />
-
-
-
-
-
-
-
-
-
-
-<meta name="description" content="有幸给学弟学妹们上了一次课，记录一下学习过程以及把ppt转化成blog吧。">
+  <title>无线破解浅谈 | Err0r</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="有幸给学弟学妹们上了一次课，记录一下学习过程以及把ppt转化成blog吧。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="无线破解浅谈">
 <meta property="og:url" content="http://Err0rzz.github.io/2017/11/09/无线破解浅谈/index.html">
@@ -110,235 +36,191 @@
 <meta name="twitter:title" content="无线破解浅谈">
 <meta name="twitter:description" content="有幸给学弟学妹们上了一次课，记录一下学习过程以及把ppt转化成blog吧。">
 <meta name="twitter:image" content="https://i.imgur.com/Dx1VNlA.png">
-
-
-
-<script type="text/javascript" id="hexo.configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '5.1.3',
-    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
-    fancybox: true,
-    tabs: true,
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    duoshuo: {
-      userId: '0',
-      author: '博主'
-    },
-    algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    }
-  };
-</script>
-
-
-
-  <link rel="canonical" href="http://Err0rzz.github.io/2017/11/09/无线破解浅谈/"/>
-
-
-
-
-
-  <title>无线破解浅谈 | Err0r</title>
   
-
-
-
-
-
-
-
-
+    <link rel="alternative" href="/atom.xml" title="Err0r" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/img/favicon.jpg">
+  
+  
+      <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  
+  
+      <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  
+  <!-- 加载特效 -->
+    <script src="/js/pace.js"></script>
+    <link href="/css/pace/pace-theme-flash.css" rel="stylesheet" />
+  <script>
+      var yiliaConfig = {
+          rootUrl: '/',
+          fancybox: true,
+          animate: true,
+          isHome: false,
+          isPost: true,
+          isArchive: false,
+          isTag: false,
+          isCategory: false,
+          open_in_new: false
+      }
+  </script>
 </head>
-
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
-
-  
-  
-    
-  
-
-  <div class="container sidebar-position-left page-post-detail">
-    <div class="headband"></div>
-
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-wrapper">
-  <div class="site-meta ">
-    
-
-    <div class="custom-logo-site-title">
-      <a href="/"  class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">Err0r</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
-    </div>
-      
-        <p class="site-subtitle">壮壮' home</p>
-      
-  </div>
-
-  <div class="site-nav-toggle">
-    <button>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-    </button>
-  </div>
-</div>
-
-<nav class="site-nav">
-  
-
-  
-    <ul id="menu" class="menu">
-      
-        
-        <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            <img lazy-src="/img/head.jpg" class="js-avatar">
             
-            首页
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-about">
-          <a href="/about/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
-            
-            关于
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-archives">
-          <a href="/archives/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
-            
-            归档
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-link">
-          <a href="/links" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
-            
-            link
-          </a>
-        </li>
-      
+        </a>
 
-      
-    </ul>
-  
-
-  
-</nav>
-
-
-
- </div>
-    </header>
-
-    <main id="main" class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          <div id="content" class="content">
-            
-
-  <div id="posts" class="posts-expand">
-    
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://Err0rzz.github.io/2017/11/09/无线破解浅谈/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Err0r">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Err0r">
-    </span>
-
-    
-      <header class="post-header">
+        <hgroup>
+          <h1 class="header-author"><a href="/" title="Hi Mate">Err0r</a></h1>
+        </hgroup>
 
         
+        <p class="header-subtitle">壮壮&#39; home</p>
         
-          <h1 class="post-title" itemprop="name headline">无线破解浅谈</h1>
+        
+            <form>
+                <input type="text" class="st-default-search-input search" id="search" placeholder=" Search...">
+            </form>
+        
         
 
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-09T16:07:34+08:00">
-                2017-11-09
-              </time>
-            
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">博客首页</a></li>
+                        
+                            <li><a href="/archives/">个人档案</a></li>
+                        
+                            <li><a href="/links/">友情链接</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fl github" target="_blank" href="https://github.com/Err0rzz" title="github">github</a>
+                            
+                                <a class="fl weibo" target="_blank" href="http://weibo.com/5693631701/profile?topnav=1&wvr=6" title="weibo">weibo</a>
+                            
+                                <a class="fl linkedin" target="_blank" href="https://betamao.me/" title="linkedin">linkedin</a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                
+                
 
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
+                
+                
+                <section class="switch-part switch-part3">
+                
+                    <div id="js-aboutme">爱游戏爱妹子</div>
+                </section>
+                
+            </div>
         </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="Me">Err0r</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                
+                    <img lazy-src="/img/head.jpg" class="js-avatar">
+                
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="Me">Err0r</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">壮壮&#39; home</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">博客首页</a></li>
+                
+                    <li><a href="/archives/">个人档案</a></li>
+                
+                    <li><a href="/links/">友情链接</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a class="github" target="_blank" href="https://github.com/Err0rzz" title="github">github</a>
+                    
+                        <a class="weibo" target="_blank" href="http://weibo.com/5693631701/profile?topnav=1&wvr=6" title="weibo">weibo</a>
+                    
+                        <a class="linkedin" target="_blank" href="https://betamao.me/" title="linkedin">linkedin</a>
+                    
+                </div>
+            </nav>
+        </header>                
+    </div>
+</nav>
+      <div class="body-wrap"><article id="post-无线破解浅谈" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/11/09/无线破解浅谈/" class="article-date">
+      <time datetime="2017-11-09T08:07:34.000Z" itemprop="datePublished">2017-11-09</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      无线破解浅谈
+    </h1>
+  
+
       </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
       
-      
+      <div class="article-info article-info-post">
+        
 
+        
+        <div class="clearfix"></div>
+      </div>
       
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
         <p>有幸给学弟学妹们上了一次课，记录一下学习过程以及把ppt转化成blog吧。<br><a id="more"></a></p>
 <h2 id="破解原理"><a href="#破解原理" class="headerlink" title="破解原理"></a>破解原理</h2><p>无线网络中信号不会定向的传给每个设备，就是说AP发射的信号每个网卡都能够接收到，但是在正常情况下只有是自己的数据包才会接受，但是如果我们改一下网卡的模式，就能够让它接收周围所有的无线数据包，所以，没有加密的无线是毫无安全性可言的，因为任何在范围内的设备都能获取到包的内容，如果使用加密的无线，即使获取到也只是加密后的数据。<br>然后现在连无线大致就是两种：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">（1）    客户端：我是自己人，要连接你</div><div class="line">服务端：好的，那你连吧|骗我呢，不准连</div><div class="line"></div><div class="line">（2）    客户端：我是自己人，要连接你</div><div class="line">服务端：我不信，自己人都有密码，你把密码发给我看看</div><div class="line">客户端：好吧，密码是12345678</div><div class="line">黑客：得到密码啦</div><div class="line">可能么？在认证时候是信息都是明文传输的，如果直接传密码都能够得到，其实是</div><div class="line">客户端：我是自己人，要连接你</div><div class="line">服务端：我不信，自己人都有密码，你用密码把45212345这个给我加密了</div><div class="line">客户端：好的，加密后的密文是453154312</div><div class="line">服务端：用密码解密后，还是45212345就允许连接，否则不允许</div></pre></td></tr></table></figure></p>
 <p>然后现在的加密就是WEP，WPA，WPA2等等，下面分别介绍：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">WEP，它使用RC4加密，加密数据用的密码是“WiFi的密码+iv”，iv是随机生成的，对方不知道，所以需要通过明文发送，因为iv只有200多种，而加密用的iv可以直接读到，所以如果收到的大量的数据包就会有使用了重复iv的数据包（大于254就绝对会有重复的），那么用那两个加密的数据包去异或就会得到明文的异或。。。最终就能得到密码，所以WEP加密绝对能够被破解。</div><div class="line">WPA，就是针对WEP缺点的改进。使用了更加好的加密算法，iv的取值也变成很多，很难得到重复的，加密数据的密码是“WiFi密码+WiFi名字+其他”，他只能用暴力破解，而且不能跑彩虹表（因为这里面有WiFi名称这个元素），如果你确定目标永远不会改WiFi名称，其实也是可以自己根据名称生成彩虹表来跑的。它有两种，要么使用认证服务器（安全性高，企业用）要么使用预共享秘钥（安全性相对较低，家庭等使用），我们一般也是使用psk这种。</div><div class="line">WPA2，就是wpa的升级版，加密算法使用了更好的。</div><div class="line">WPS，应该是配合前面的加密吧。为了解决前面使用认证复杂而产生的。分两种验证方式，要么使用pin码，就是自己的客户端生成一个pin码，在路由器端输入这个pin码就可以完成认证，还有就是使用按钮，例如手机上点一下那个按钮，然后在路由器上也按一下，就能完成认证。不过它的pin码设计上有缺陷，只要尝试1万多次就能得到，然后通过pin能得到WiFi密码。</div></pre></td></tr></table></figure></p>
@@ -381,369 +263,335 @@
 <p>主要其实还是找到对方的登陆cookie来替换自己的，从而获得权限</p>
 
       
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
       
-
-      
-      
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2017/11/07/浅谈php安全/" rel="next" title="浅谈php安全">
-                <i class="fa fa-chevron-left"></i> 浅谈php安全
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/11/13/ctf命令执行与绕过/" rel="prev" title="ctf命令执行与绕过">
-                ctf命令执行与绕过 <i class="fa fa-chevron-right"></i>
-              </a>
-            
+        <div class="page-reward">
+          <p><a href="javascript:void(0)" onclick="dashangToggle()" class="dashang">赏</a></p>
+          <div class="hide_box"></div>
+          <div class="shang_box">
+            <a class="shang_close" href="javascript:void(0)" onclick="dashangToggle()">×</a>
+            <div class="shang_tit">
+              <p>纯属好玩</p>
+            </div>
+            <div class="shang_payimg">
+              <img src="/img/alipayimg.jpg" alt="扫码支持" title="扫一扫" />
+            </div>
+              <div class="pay_explain">扫码打赏，你说多少就多少</div>
+            <div class="shang_payselect">
+              
+                <div class="pay_item checked" data-id="alipay">
+                  <span class="radiobox"></span>
+                  <span class="pay_logo"><img src="/img/alipay.png" alt="支付宝" /></span>
+                </div>
+              
+              
+                <div class="pay_item" data-id="wechat">
+                  <span class="radiobox"></span>
+                  <span class="pay_logo"><img src="/img/weixin.png" alt="微信" /></span>
+                </div>
+              
+            </div>
+            <div class="shang_info">
+              <p>打开<span id="shang_pay_txt">支付宝</span>扫一扫，即可进行扫码打赏哦</p>
+            </div>
           </div>
         </div>
-      
-
-      
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-
-    <div class="post-spread">
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/zepto/1.2.0/zepto.min.js"></script>
+        <script type="text/javascript">
+          $(".pay_item").click(function(){
+            $(this).addClass('checked').siblings('.pay_item').removeClass('checked');
+            var dataid=$(this).attr('data-id');
+            $(".shang_payimg img").attr("src","/img/"+dataid+"img.jpg");
+            $("#shang_pay_txt").text(dataid=="alipay"?"支付宝":"微信");
+          });
+          function dashangToggle(){
+            
+            $(".hide_box").fadeToggle();
+            $(".shang_box").fadeToggle();
+          }
+        </script>
       
     </div>
+    
   </div>
-
-
-          </div>
-          
-
-
-          
-
   
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2017/11/09/无线破解浅谈/">无线破解浅谈</a></p>
+        <p><span>文章作者:</span><a href="/" title="访问 Err0r 的个人博客">Err0r</a></p>
+        <p><span>发布时间:</span>2017年11月09日 - 16时07分</p>
+        <p><span>最后更新:</span>2017年11月09日 - 17时53分</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2017/11/09/无线破解浅谈/" title="无线破解浅谈">http://Err0rzz.github.io/2017/11/09/无线破解浅谈/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://Err0rzz.github.io/2017/11/09/无线破解浅谈/　　作者: Err0r" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script src="/js/clipboard.min.js"></script>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" title="中国大陆 (CC BY-NC-SA 3.0 CN)" target = "_blank">"署名-非商用-相同方式共享 3.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
 
 
 
-        </div>
+<nav id="article-nav">
+  
+    <a href="/2017/11/13/ctf命令执行与绕过/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
         
-          
-  
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
-  </div>
-
-  <aside id="sidebar" class="sidebar">
-    
-    <div class="sidebar-inner">
-
-      
-
-      
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
-
-      <section class="site-overview-wrap sidebar-panel">
-        <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-            
-              <p class="site-author-name" itemprop="name">Err0r</p>
-              <p class="site-description motion-element" itemprop="description">信息安全</p>
-          </div>
-
-          <nav class="site-state motion-element">
-
-            
-              <div class="site-state-item site-state-posts">
-              
-                <a href="/archives/">
-              
-                  <span class="site-state-item-count">26</span>
-                  <span class="site-state-item-name">日志</span>
-                </a>
-              </div>
-            
-
-            
-
-            
-              
-              
-              <div class="site-state-item site-state-tags">
-                
-                  <span class="site-state-item-count">8</span>
-                  <span class="site-state-item-name">标签</span>
-                
-              </div>
-            
-
-          </nav>
-
-          
-
-          <div class="links-of-author motion-element">
-            
-          </div>
-
-          
-          
-
-          
-          
-
-          
-
-        </div>
-      </section>
-
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#破解原理"><span class="nav-number">1.</span> <span class="nav-text">破解原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#WEP"><span class="nav-number">2.</span> <span class="nav-text">WEP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#WPA"><span class="nav-number">3.</span> <span class="nav-text">WPA</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#钓鱼wifi"><span class="nav-number">4.</span> <span class="nav-text">钓鱼wifi</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#wifi-pumpkin"><span class="nav-number"></span> <span class="nav-text">wifi-pumpkin</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#中间人攻击"><span class="nav-number">1.</span> <span class="nav-text">中间人攻击</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#内网断网攻击"><span class="nav-number"></span> <span class="nav-text">内网断网攻击</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#截取照片"><span class="nav-number"></span> <span class="nav-text">截取照片</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#截取https账号"><span class="nav-number"></span> <span class="nav-text">截取https账号</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#截取cookie"><span class="nav-number"></span> <span class="nav-text">截取cookie</span></a></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
-      
-
-      
-
-    </div>
-  </aside>
-
-
+          ctf命令执行与绕过
         
       </div>
-    </main>
-
-    <footer id="footer" class="footer">
-      <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
-  <span class="with-love">
-    <i class="fa fa-user"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">Err0r</span>
+    </a>
+  
+  
+    <a href="/2017/11/07/浅谈php安全/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">浅谈php安全</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
 
   
+</article>
+
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#破解原理"><span class="toc-number">1.</span> <span class="toc-text">破解原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#WEP"><span class="toc-number">2.</span> <span class="toc-text">WEP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#WPA"><span class="toc-number">3.</span> <span class="toc-text">WPA</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#钓鱼wifi"><span class="toc-number">4.</span> <span class="toc-text">钓鱼wifi</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#wifi-pumpkin"><span class="toc-number"></span> <span class="toc-text">wifi-pumpkin</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#中间人攻击"><span class="toc-number">1.</span> <span class="toc-text">中间人攻击</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#内网断网攻击"><span class="toc-number"></span> <span class="toc-text">内网断网攻击</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#截取照片"><span class="toc-number"></span> <span class="toc-text">截取照片</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#截取https账号"><span class="toc-number"></span> <span class="toc-text">截取https账号</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#截取cookie"><span class="toc-number"></span> <span class="toc-text">截取cookie</span></a>
 </div>
+<input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
 
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script>
+    var valueHide = "隐藏目录";
+    var valueShow = "显示目录";
 
-  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
-
-
-
-  <span class="post-meta-divider">|</span>
-
-
-
-  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.3</div>
-
-
-
-
-        
-
-
-
-
-
-
-
-        
-      </div>
-    </footer>
-
-    
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-        
-      </div>
-    
-
-    
-
-  </div>
-
-  
-
-<script type="text/javascript">
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
-  }
+    if ($(".left-col").is(":hidden")) {
+        $("#tocButton").attr("value", valueShow);
+    }
+    $("#tocButton").click(function() {
+        if ($("#toc").is(":hidden")) {
+            $("#tocButton").attr("value", valueHide);
+            $("#toc").slideDown(320);
+        }
+        else {
+            $("#tocButton").attr("value", valueShow);
+            $("#toc").slideUp(350);
+        }
+    })
+    if ($(".toc").length < 1) {
+        $("#toc, #tocButton").hide();
+    }
 </script>
 
 
 
 
 
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-  
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
-
-
-
-  
-  
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
-
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
-
-
-
-  
-
-
-  
-
-
-
-
-	
-
-
-
-
-
-  
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-
-
-
-  
-
-  
-
-  
-
-  
-  
-
-  
-
-  
-
-  
-
+<div class="bdsharebuttonbox">
+	<a href="#" class="fx fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+	<a href="#" class="fx fa-weixin bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+	<a href="#" class="fx fa-qq bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+	<a href="#" class="fx fa-facebook-official bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+	<a href="#" class="fx fa-twitter bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+	<a href="#" class="fx fa-linkedin bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+	<a href="#" class="fx fa-files-o bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+</div>
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"2","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+
+
+
+    
+        <div id="gitments"></div>
+<script src="/js/gitment.browser.js"></script>
+<script>
+    var gitment = new Gitment({
+      id: window.location.pathname,
+      owner: 'Err0rzz',
+      repo: 'Err0rzz.github.io',
+      oauth: {
+        client_id: 'd9c845fbbbb51d243003',
+        client_secret: 'b8310696d39906b802cc7f1f594f21501cb4e9d6',
+      },
+    })
+    gitment.render('gitments')
+</script>
+    
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2017/11/13/ctf命令执行与绕过/" title="上一篇: ctf命令执行与绕过">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+        
+            <a href="/2017/11/07/浅谈php安全/" title="下一篇: 浅谈php安全">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/12/21/iptables的简单使用/">iptables的简单使用</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/20/docker基本操作/">docker基本操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/15/CSRF学习/">CSRF学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/11/第一届智商杯wp/">第一届智商杯wp</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/26/linux下的mysql使用/">linux下的mysql使用</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/23/Padding-Oracle-攻击/">Padding_Oracle 攻击</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/23/爆破脚本/">爆破脚本</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/16/OOB注入/">OOB注入</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/16/sage安装/">sage安装</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/14/CTF中RSA套路/">CTF中RSA套路</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/14/GET的命令执行漏洞/">GET的命令执行漏洞</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/13/ctf命令执行与绕过/">ctf命令执行与绕过</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/09/无线破解浅谈/">无线破解浅谈</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/07/浅谈php安全/">浅谈php安全</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/31/updatexml-mysql显错注入/">mysql显错注入</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/26/typecho-backdoor/">typecho backdoor</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/24/问鼎杯决赛/">问鼎杯决赛</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/18/常用正则表达式/">常用正则表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/18/hash长度扩展攻击/">hash长度扩展攻击</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/16/问鼎杯线上/">问鼎杯writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/11/jarvisoj/">javrisoj的web题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/04/injection/">各种注入姿势</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/31/file_include/">文件包含一些常识</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/31/XMAN/">xman个人排位赛(纪念第一个xss)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/31/ZJGSCTF/">ZJGSCTF</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/25/blind-SQL-injection-script/">blind_SQL_injection script</a></li></ul>
+    <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+    <script>
+        $(".post-list").addClass("toc-article");
+        $(".post-list-item a").attr("target","_blank");
+        $("#post-nav-button > a:nth-child(2)").click(function() {
+            $(".fa-bars, .fa-times").toggle();
+            $(".post-list").toggle(300);
+            if ($(".toc").length > 0) {
+                $("#toc, #tocButton").toggle(200, function() {
+                    if ($(".switch-area").is(":visible")) {
+                        $("#tocButton").attr("value", valueHide);
+                        }
+                    })
+            }
+            else {
+            }
+        })
+    </script>
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                &copy; 2017 Err0r
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/luuman/hexo-theme-spfk" target="_blank">spfk</a> by luuman
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" >海贼到访数: 
+                            <span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>, </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit">本页阅读量: 
+                            <span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+
+    </div>
+    <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var backgroundnum = 31;
+            var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+            $("#mobile-nav").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+            $(".left-col").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+        })
+    </script>
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<div class="scroll" id="scroll">
+    <a href="#"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    $(document).ready(function() {
+        if ($("#comments").length < 1) {
+            $("#scroll > a:nth-child(2)").hide();
+        };
+    })
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+  <script language="javascript">
+    $(function() {
+        $("a[title]").each(function() {
+            var a = $(this);
+            var title = a.attr('title');
+            if (title == undefined || title == "") return;
+            a.data('title', title).removeAttr('title').hover(
+
+            function() {
+                var offset = a.offset();
+                $("<div id=\"anchortitlecontainer\"></div>").appendTo($("body")).html(title).css({
+                    top: offset.top - a.outerHeight() - 15,
+                    left: offset.left + a.outerWidth()/2 + 1
+                }).fadeIn(function() {
+                    var pop = $(this);
+                    setTimeout(function() {
+                        pop.remove();
+                    }, pop.text().length * 800);
+                });
+            }, function() {
+                $("#anchortitlecontainer").remove();
+            });
+        });
+    });
+</script>
+
+
+    <script type="text/javascript">
+      window.onload = function(){
+        document.getElementById("search").onclick = function(){
+            console.log("search")
+            search();
+        }
+      }
+      function search(){
+        (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+        (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+        e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+        })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+        _st('install','A1Pz-LKMXbrzcFg2FWi6','2.0.0');
+      }
+    </script>
+
+  </div>
 </body>
 </html>
