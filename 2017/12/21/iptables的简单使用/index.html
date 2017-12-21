@@ -19,7 +19,7 @@
 <meta property="og:image" content="https://i.imgur.com/qcS5mBH.png">
 <meta property="og:image" content="https://i.imgur.com/YQntQJ1.png">
 <meta property="og:image" content="https://i.imgur.com/eDFSTfF.png">
-<meta property="og:updated_time" content="2017-12-21T05:52:09.421Z">
+<meta property="og:updated_time" content="2017-12-21T05:54:15.728Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iptables的简单使用">
 <meta name="twitter:description" content="作为出题人，考虑到学弟们不会肝通宵猝死，就需要关闭web题目。当时百度说用iptables结果华丽的失败了，最后还是潇洒的断网来拒绝服务。后来还是重新看了一下这个命令，发现还真是好用啊…">
@@ -335,50 +335,50 @@
 </li>
 </ul>
 <p>说明：注意要把拒绝的放在前面不然就不起作用了啊。<br><br></p>
-<ol>
-<li>封堵网段(192.168.1.0/24)，两小时后解封<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"># iptables -I INPUT -s 192.168.1.0/24 -j DROP </div><div class="line"># iptables -I FORWARD -s 192.168.1.0/24 -j DROP </div><div class="line"># at now 2 hours at&gt; iptables -D INPUT 1 at&gt; iptables -D FORWARD 1</div></pre></td></tr></table></figure>
+<ul>
+<li><strong>封堵网段(192.168.1.0/24)，两小时后解封</strong><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"># iptables -I INPUT -s 192.168.1.0/24 -j DROP </div><div class="line"># iptables -I FORWARD -s 192.168.1.0/24 -j DROP </div><div class="line"># at now 2 hours at&gt; iptables -D INPUT 1 at&gt; iptables -D FORWARD 1</div></pre></td></tr></table></figure>
 </li>
-</ol>
+</ul>
 <p><br></p>
-<ol>
-<li>只允许管理员从202.13.0.0/16网段使用SSH远程登录防火墙主机。<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">iptables -A INPUT -p tcp --dport 22 -s 202.13.0.0/16 -j ACCEPT</div><div class="line">iptables -A INPUT -p tcp --dport 22 -j DROP</div></pre></td></tr></table></figure>
+<ul>
+<li><strong>只允许管理员从202.13.0.0/16网段使用SSH远程登录防火墙主机。</strong><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">iptables -A INPUT -p tcp --dport 22 -s 202.13.0.0/16 -j ACCEPT</div><div class="line">iptables -A INPUT -p tcp --dport 22 -j DROP</div></pre></td></tr></table></figure>
 </li>
-</ol>
+</ul>
 <p><br></p>
-<ol>
-<li>允许本机开放从TCP端口20-1024提供的应用服务。<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">iptables -A INPUT -p tcp --dport 20:1024 -j ACCEPT</div><div class="line">iptables -A OUTPUT -p tcp --sport 20:1024 -j ACCEPT</div></pre></td></tr></table></figure>
+<ul>
+<li><strong>允许本机开放从TCP端口20-1024提供的应用服务。</strong><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">iptables -A INPUT -p tcp --dport 20:1024 -j ACCEPT</div><div class="line">iptables -A OUTPUT -p tcp --sport 20:1024 -j ACCEPT</div></pre></td></tr></table></figure>
 </li>
-</ol>
+</ul>
 <p><br></p>
-<ol>
-<li>允许转发来自192.168.0.0/24局域网段的DNS解析请求数据包。<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">iptables -A FORWARD -s 192.168.0.0/24 -p udp --dport 53 -j ACCEPT </div><div class="line">iptables -A FORWARD -d 192.168.0.0/24 -p udp --sport 53 -j ACCEPT</div></pre></td></tr></table></figure>
+<ul>
+<li><strong>允许转发来自192.168.0.0/24局域网段的DNS解析请求数据包。</strong><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">iptables -A FORWARD -s 192.168.0.0/24 -p udp --dport 53 -j ACCEPT </div><div class="line">iptables -A FORWARD -d 192.168.0.0/24 -p udp --sport 53 -j ACCEPT</div></pre></td></tr></table></figure>
 </li>
-</ol>
+</ul>
 <p><br></p>
-<ol>
-<li>禁止转发来自MAC地址为00：0C：29：27：55：3F的和主机的数据包<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">iptables -A FORWARD -m mac --mac-source 00:0c:29:27:55:3F -j DROP</div></pre></td></tr></table></figure>
+<ul>
+<li><strong>禁止转发来自MAC地址为00：0C：29：27：55：3F的和主机的数据包</strong><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">iptables -A FORWARD -m mac --mac-source 00:0c:29:27:55:3F -j DROP</div></pre></td></tr></table></figure>
 </li>
-</ol>
+</ul>
 <p>说明：iptables中使用“-m 模块关键字”的形式调用显示匹配。咱们这里用“-m mac –mac-source”来表示数据包的源MAC地址。<br><br></p>
-<ol>
-<li>允许防火墙本机对外开放TCP端口20、21、25、110以及被动模式FTP端口1250-1280<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">iptables -A INPUT -p tcp -m multiport --dport 20,21,25,110,1250:1280 -j ACCEPT</div></pre></td></tr></table></figure>
+<ul>
+<li><strong>允许防火墙本机对外开放TCP端口20、21、25、110以及被动模式FTP端口1250-1280</strong><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">iptables -A INPUT -p tcp -m multiport --dport 20,21,25,110,1250:1280 -j ACCEPT</div></pre></td></tr></table></figure>
 </li>
-</ol>
+</ul>
 <p>说明：这里用“-m multiport –dport”来指定目的端口及范围<br><br></p>
-<ol>
-<li>禁止转发源IP地址为192.168.1.20-192.168.1.99的TCP数据包。<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">iptables -A FORWARD -p tcp -m iprange --src-range 192.168.1.20-192.168.1.99 -j DROP</div></pre></td></tr></table></figure>
+<ul>
+<li><strong>禁止转发源IP地址为192.168.1.20-192.168.1.99的TCP数据包。</strong><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">iptables -A FORWARD -p tcp -m iprange --src-range 192.168.1.20-192.168.1.99 -j DROP</div></pre></td></tr></table></figure>
 </li>
-</ol>
+</ul>
 <p>说明：此处用“-m –iprange –src-range”指定IP范围。<br><br></p>
-<ol>
-<li>禁止转发与正常TCP连接无关的非—syn请求数据包。<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">iptables -A FORWARD -p tcp -m state --state NEW ! --syn -j DROP</div></pre></td></tr></table></figure>
+<ul>
+<li><strong>禁止转发与正常TCP连接无关的非—syn请求数据包。</strong><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">iptables -A FORWARD -p tcp -m state --state NEW ! --syn -j DROP</div></pre></td></tr></table></figure>
 </li>
-</ol>
+</ul>
 <p>说明：“-m state”表示数据包的连接状态，“NEW”表示与任何连接无关的，新的嘛！<br><br></p>
-<ol>
-<li>拒绝访问防火墙的新数据包，但允许响应连接或与已有连接相关的数据包<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">iptables -A INPUT -p tcp -m state --state NEW -j DROP</div><div class="line">iptalbes -A INPUT -p tcp -m state --state ESTABLISHED,RELATED -j ACCEPT</div></pre></td></tr></table></figure>
+<ul>
+<li><strong>拒绝访问防火墙的新数据包，但允许响应连接或与已有连接相关的数据包</strong><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">iptables -A INPUT -p tcp -m state --state NEW -j DROP</div><div class="line">iptalbes -A INPUT -p tcp -m state --state ESTABLISHED,RELATED -j ACCEPT</div></pre></td></tr></table></figure>
 </li>
-</ol>
+</ul>
 <p>说明：“ESTABLISHED”表示已经响应请求或者已经建立连接的数据包，“RELATED”表示与已建立的连接有相关性的，比如FTP数据连接等。<br><br></p>
 
       
@@ -438,7 +438,7 @@
         <p><span>本文标题:</span><a href="/2017/12/21/iptables的简单使用/">iptables的简单使用</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 Err0r 的个人博客">Err0r</a></p>
         <p><span>发布时间:</span>2017年12月21日 - 10时06分</p>
-        <p><span>最后更新:</span>2017年12月21日 - 13时52分</p>
+        <p><span>最后更新:</span>2017年12月21日 - 13时54分</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2017/12/21/iptables的简单使用/" title="iptables的简单使用">http://Err0rzz.github.io/2017/12/21/iptables的简单使用/</a>
             <span class="copy-path" data-clipboard-text="原文: http://Err0rzz.github.io/2017/12/21/iptables的简单使用/　　作者: Err0r" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
