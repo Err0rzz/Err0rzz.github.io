@@ -14,7 +14,7 @@
 <meta property="og:description" content="作为出题人，考虑到学弟们不会肝通宵猝死，就需要关闭web题目。当时百度说用iptables结果华丽的失败了，最后还是潇洒的断网来拒绝服务。后来还是重新看了一下这个命令，发现还真是好用啊…">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://i.imgur.com/waGZsEP.jpg">
-<meta property="og:updated_time" content="2017-12-21T05:18:10.885Z">
+<meta property="og:updated_time" content="2017-12-21T05:22:39.385Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iptables的简单使用">
 <meta name="twitter:description" content="作为出题人，考虑到学弟们不会肝通宵猝死，就需要关闭web题目。当时百度说用iptables结果华丽的失败了，最后还是潇洒的断网来拒绝服务。后来还是重新看了一下这个命令，发现还真是好用啊…">
@@ -245,7 +245,7 @@
 <ol>
 <li>当一个数据包进入网卡时，它首先进入<strong>PREROUTING</strong>链，内核根据路由表和数据包目的IP判断是否需要<strong>转送</strong>出去。</li>
 <li>如果数据包就是<strong>进入本机</strong>的，它就会沿着图向下移动，到达<strong>INPUT</strong>链。数据包到了INPUT链后，任何进程都会收到它。本机上运行的程序可以发送数据包，这些数据包会经过<strong>OUTPUT</strong>链，然后到达POSTROUTING链输出。</li>
-<li>如果数据包是要<strong>转发</strong>出去的，且内核允许转发，数据包就会如图所示向右移动，经过<strong>FORWARD</strong>链，然后到达<strong>POSTROUTING</strong>链输出。</li>
+<li>如果数据包是要<strong>转发</strong>出去的，且内核允许转发，数据包就会如图所示向右移动，经过<strong>FORWARD</strong>链，然后到达<strong>POSTROUTING</strong>链输出。<br><br></li>
 </ol>
 <h1 id="iptables操作"><a href="#iptables操作" class="headerlink" title="iptables操作"></a>iptables操作</h1><h2 id="规则写法："><a href="#规则写法：" class="headerlink" title="规则写法："></a>规则写法：</h2><p>格式：iptables [-t table] COMMAND chain CRETIRIA -j ACTION</p>
 <ul>
@@ -257,12 +257,12 @@
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">比如：不允许172.16.0.0/24的进行访问。</div><div class="line">iptables -t filter -A INPUT -s 172.16.0.0/16 -p udp --dport 53 -j DROP</div><div class="line">当然你如果想拒绝的更彻底：</div><div class="line">iptables -t filter -R INPUT 1 -s 172.16.0.0/16 -p udp --dport 53 -j REJECT</div><div class="line">查看定义规则的详细信息:</div><div class="line">iptables -L -n -v</div></pre></td></tr></table></figure>
 <p><br></p>
-<h2 id="COMMAND详解："><a href="#COMMAND详解：" class="headerlink" title="COMMAND详解："></a>COMMAND详解：</h2><h3 id="chains管理："><a href="#chains管理：" class="headerlink" title="chains管理："></a><code>chains</code>管理：</h3><ol>
-<li>-P :设置默认策略的<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">默认策略一般只有两种</div><div class="line">iptables -P INPUT (DROP|ACCEPT)  默认是关的/默认是开的</div><div class="line">比如：</div><div class="line">iptables -P INPUT DROP 这就把默认规则给拒绝了。并且没有定义哪个动作，所以关于外界连接的所有规则包括Xshell连接之类的，远程连接都被拒绝了。</div></pre></td></tr></table></figure>
+<h2 id="COMMAND详解："><a href="#COMMAND详解：" class="headerlink" title="COMMAND详解："></a>COMMAND详解：</h2><h3 id="chains管理："><a href="#chains管理：" class="headerlink" title="chains管理："></a>chains管理：</h3><ul>
+<li><p>-P :设置默认策略的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">默认策略一般只有两种</div><div class="line">iptables -P INPUT (DROP|ACCEPT)  默认是关的/默认是开的</div><div class="line">比如：</div><div class="line">iptables -P INPUT DROP 这就把默认规则给拒绝了。并且没有定义哪个动作，所以关于外界连接的所有规则包括Xshell连接之类的，远程连接都被拒绝了。</div></pre></td></tr></table></figure>
 </li>
-</ol>
-<ul>
-<li>-F: FLASH，<br>清空规则链的(注意每个链的管理权限)<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">iptables -t nat -F PREROUTING</div><div class="line">iptables -t nat -F 清空nat表的所有链</div></pre></td></tr></table></figure>
+<li><p>-F: FLASH，<br>清空规则链的(注意每个链的管理权限)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">iptables -t nat -F PREROUTING</div><div class="line">iptables -t nat -F 清空nat表的所有链</div></pre></td></tr></table></figure>
 </li>
 </ul>
 <ul>
@@ -282,14 +282,11 @@
 </li>
 </ul>
 <p><br></p>
-<h3 id="rules管理："><a href="#rules管理：" class="headerlink" title="rules管理："></a><code>rules</code>管理：</h3><ul>
+<h3 id="rules管理："><a href="#rules管理：" class="headerlink" title="rules管理："></a>rules管理：</h3><ul>
 <li><p>-A：追加规则</p>
 </li>
-<li><p>-I num : 插入规则。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">-I 3 :插入为第三条</div></pre></td></tr></table></figure>
+<li><p>-I num : 插入规则。<br><code>-I 3 :插入为第三条</code></p>
 </li>
-</ul>
-<ul>
 <li><p>-R num：替换/修改第几条规则</p>
 </li>
 <li><p>-D num：删除第几条规则<br><br></p>
@@ -401,7 +398,7 @@
         <p><span>本文标题:</span><a href="/2017/12/21/iptables的简单使用/">iptables的简单使用</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 Err0r 的个人博客">Err0r</a></p>
         <p><span>发布时间:</span>2017年12月21日 - 10时06分</p>
-        <p><span>最后更新:</span>2017年12月21日 - 13时18分</p>
+        <p><span>最后更新:</span>2017年12月21日 - 13时22分</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2017/12/21/iptables的简单使用/" title="iptables的简单使用">http://Err0rzz.github.io/2017/12/21/iptables的简单使用/</a>
             <span class="copy-path" data-clipboard-text="原文: http://Err0rzz.github.io/2017/12/21/iptables的简单使用/　　作者: Err0r" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
