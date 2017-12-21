@@ -309,7 +309,7 @@
     <link itemprop="mainEntityOfPage" href="http://Err0rzz.github.io/2017/10/26/typecho-backdoor/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Err0r">
+      <meta itemprop="name" content="Err0rzz">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/images/avatar.gif">
     </span>
@@ -348,6 +348,16 @@
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/10/26/typecho-backdoor/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2017/10/26/typecho-backdoor/" itemprop="commentsCount"></span>
+                </a>
+              </span>
             
           
 
@@ -474,7 +484,8 @@
   
     <div class="comments" id="comments">
       
-        <div id="gitment-container"></div>
+        <div onclick="showGitment()" id="gitment-display-button">显示 Gitment 评论</div>
+        <div id="gitment-container" style="display:none"></div>
       
     </div>
 
@@ -506,7 +517,7 @@
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
-              <p class="site-author-name" itemprop="name">Err0r</p>
+              <p class="site-author-name" itemprop="name">Err0rzz</p>
               <p class="site-description motion-element" itemprop="description">信息安全</p>
           </div>
 
@@ -580,7 +591,7 @@
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">Err0r</span>
+  <span class="author" itemprop="copyrightHolder">Err0rzz</span>
 
   
     <span class="post-meta-divider">|</span>
@@ -754,33 +765,44 @@
 <!-- LOCAL: You can save these files to your site and update links -->
     
         
-        <link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
-        <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+        <link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css">
+        <script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script>
     
 <!-- END LOCAL -->
 
+    
+      <style>
+        a.gitment-editor-footer-tip { display: none; }
+        .gitment-container.gitment-footer-container { display: none; }
+      </style>
     
 
     
       <script type="text/javascript">
       function renderGitment(){
-        var gitment = new Gitment({
+        var gitment = new Gitmint({
             id: window.location.pathname, 
-            owner: '',
-            repo: '',
+            owner: 'Err0rzz# MUST HAVE, Your Github ID',
+            repo: 'Err0rzz.github.io# MUST HAVE, The repo you use to store Gitment comments',
+            
+            lang: "" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
             
             oauth: {
             
             
-                client_secret: 'b8310696d39906b802cc7f1f594f21501cb4e9d6',
+                client_secret: 'b8310696d39906b802cc7f1f594f21501cb4e9d6# EITHER this or proxy_gateway, Github access secret token for the Gitment',
             
-                client_id: 'd9c845fbbbb51d243003'
+                client_id: 'd9c845fbbbb51d243003# MUST HAVE, Github client id for the Gitment'
             }});
         gitment.render('gitment-container');
       }
 
       
-      renderGitment();
+      function showGitment(){
+        document.getElementById("gitment-display-button").style.display = "none";
+        document.getElementById("gitment-container").style.display = "block";
+        renderGitment();
+      }
       
       </script>
     
