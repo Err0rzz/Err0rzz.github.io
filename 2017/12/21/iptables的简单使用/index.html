@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>iptables的简单使用 | Err0r</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="作为出题人，考虑到学弟们不会肝通宵猝死，就需要关闭web题目。当时百度说用iptables结果华丽的失败了，最后还是潇洒的断网来拒绝服务。后来还是重新看了一下这个命令，发现还真是好用啊…">
+<meta name="keywords" content="运维,防火墙">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iptables的简单使用">
+<meta property="og:url" content="http://Err0rzz.github.io/2017/12/21/iptables的简单使用/index.html">
+<meta property="og:site_name" content="Err0r">
+<meta property="og:description" content="作为出题人，考虑到学弟们不会肝通宵猝死，就需要关闭web题目。当时百度说用iptables结果华丽的失败了，最后还是潇洒的断网来拒绝服务。后来还是重新看了一下这个命令，发现还真是好用啊…">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://i.imgur.com/waGZsEP.jpg">
+<meta property="og:updated_time" content="2017-12-21T04:58:48.903Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iptables的简单使用">
+<meta name="twitter:description" content="作为出题人，考虑到学弟们不会肝通宵猝死，就需要关闭web题目。当时百度说用iptables结果华丽的失败了，最后还是潇洒的断网来拒绝服务。后来还是重新看了一下这个命令，发现还真是好用啊…">
+<meta name="twitter:image" content="https://i.imgur.com/waGZsEP.jpg">
+  
+    <link rel="alternative" href="/atom.xml" title="Err0r" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/img/favicon.png">
+  
+  
+      <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  
+  
+      <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  
+  <!-- 加载特效 -->
+    <script src="/js/pace.js"></script>
+    <link href="/css/pace/pace-theme-flash.css" rel="stylesheet" />
+  <script>
+      var yiliaConfig = {
+          rootUrl: '/',
+          fancybox: true,
+          animate: true,
+          isHome: false,
+          isPost: true,
+          isArchive: false,
+          isTag: false,
+          isCategory: false,
+          open_in_new: false
+      }
+  </script>
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            
+            <img lazy-src="/img/head.jpg" class="js-avatar">
+            
+        </a>
+
+        <hgroup>
+          <h1 class="header-author"><a href="/" title="Hi Mate">Err0r</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">壮壮&#39; home</p>
+        
+        
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">博客首页</a></li>
+                        
+                            <li><a href="/archives/">个人档案</a></li>
+                        
+                            <li><a href="/links/">友情链接</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fl github" target="_blank" href="https://github.com/Err0rzz" title="github">github</a>
+                            
+                                <a class="fl weibo" target="_blank" href="http://weibo.com/5693631701/profile?topnav=1&wvr=6" title="weibo">weibo</a>
+                            
+                                <a class="fl linkedin" target="_blank" href="https://betamao.me/" title="linkedin">linkedin</a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                
+                
+
+                
+                
+                <section class="switch-part switch-part3">
+                
+                    <div id="js-aboutme">爱游戏爱妹子</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="Me">Err0r</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                
+                    <img lazy-src="/img/head.jpg" class="js-avatar">
+                
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="Me">Err0r</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">壮壮&#39; home</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">博客首页</a></li>
+                
+                    <li><a href="/archives/">个人档案</a></li>
+                
+                    <li><a href="/links/">友情链接</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a class="github" target="_blank" href="https://github.com/Err0rzz" title="github">github</a>
+                    
+                        <a class="weibo" target="_blank" href="http://weibo.com/5693631701/profile?topnav=1&wvr=6" title="weibo">weibo</a>
+                    
+                        <a class="linkedin" target="_blank" href="https://betamao.me/" title="linkedin">linkedin</a>
+                    
+                </div>
+            </nav>
+        </header>                
+    </div>
+</nav>
+      <div class="body-wrap"><article id="post-iptables的简单使用" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/12/21/iptables的简单使用/" class="article-date">
+      <time datetime="2017-12-21T02:06:31.000Z" itemprop="datePublished">2017-12-21</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      iptables的简单使用
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/运维/">运维</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/防火墙/">防火墙</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>作为出题人，考虑到学弟们不会肝通宵猝死，就需要关闭web题目。当时百度说用<code>iptables</code>结果华丽的失败了，最后还是潇洒的断网来拒绝服务。后来还是重新看了一下这个命令，发现还真是好用啊…</p>
+<a id="more"></a>
+<p>原理来自老师ppt，命令详解转自<a href="http://blog.chinaunix.net/uid-26495963-id-3279216.html" target="_blank" rel="external">http://blog.chinaunix.net/uid-26495963-id-3279216.html</a><br><br></p>
+<h1 id="基本原理"><a href="#基本原理" class="headerlink" title="基本原理"></a>基本原理</h1><p>先回顾一下防火墙的原理吧</p>
+<ul>
+<li>防火墙通过<strong>审查</strong>经过的每一个数据包，判断它是否有相<strong>匹配</strong>的<strong>过滤规则</strong>，根据规则的先后顺序进行<strong>一一比较</strong>，直到满足其中的一条规则为止，然后依据控制机制做出相应的动作。如果都不满足，则将数据包丢弃，从而保护网络的安全。</li>
+<li>包过滤分为：静态包过滤、状态包过滤.</li>
+<li>静态包过滤：在<strong>IP</strong>层只根据IP包的<code>源及目的地址，协议类型，端口号</code>进行过滤，安全性较差，不能应对现在复杂的网络应用</li>
+</ul>
+<p><br><br><code>iptables</code>相关概念：</p>
+<ul>
+<li>netfilter/iptabels是与Linux内核集成的包过滤防火墙系统，简称iptables。</li>
+<li>几乎所有的linux发行版本都会包含iptables的功能，它可以代替昂贵的商业防火墙解决方案，<strong>完成封包过滤、封包重定向和网络地址转换NAT等</strong>功能。</li>
+<li>在linux 内核中的模块被称为 netfilter。</li>
+</ul>
+<p><br><br><code>tables</code>相关概念：<br>iptables内置了filter，nat和mangle三张表,分别用于实现包过滤，网络地址转换和包重构的功能。</p>
+<ul>
+<li>filter负责过滤数据包，包括的规则链有input，output和forward。</li>
+<li>nat则涉及到网络地址转换，包括的规则链有prerouting，postrouting和output；</li>
+<li>mangle表则主要应用在修改数据包内容上，用来做流量整形的，默认的规则链有：INPUT，OUTPUT，NAT，POSTROUTING，PREROUTING</li>
+<li>input匹配目的IP是本机的数据包。</li>
+<li>output匹配源IP是本机的数据包。</li>
+<li>forward匹配流经本机的数据包。</li>
+<li>prerouting用来修改目的地址用来做DNAT。</li>
+<li>postrouting用来修改源地址用来做SNAT。</li>
+</ul>
+<p><br><br><code>chains</code>相关概念：</p>
+<ul>
+<li>链（chains）是数据包<strong>传播的路径</strong>，每一条链其实就是众多规则中的一个<strong>检查清单</strong>，每一条链中可以有<strong>一条或数条</strong>规则。当一个数据包到达一个链时，iptables就会从链中<strong>第一条规则开始</strong>检查，看该数据包是否满足规则所定义的条件。</li>
+<li>如果满足，系统就会根据该条规则所定义的方法处理该数据包；否则iptables将<strong>继续检查下一条</strong>规则，如果该数据包不符合链中任一条规则，iptables就会根据该链<strong>预先定义的默认策略</strong>来处理数据包。</li>
+</ul>
+<p><br><br><code>rules</code>相关概念：</p>
+<ul>
+<li>规则（rules）其实就是网络管理员预定义的<strong>条件</strong>，规则一般的定义为“<strong>如果数据包头符合这样的条件，就这样处理这个数据包</strong>”。规则存储在内核空间的信息包<strong>过滤表</strong>中，这些规则分别指定了<strong>源地址、目的地址、传输协议（如TCP、UDP、ICMP）和服务类型（如HTTP、FTP和SMTP）</strong>等。当数据包与规则匹配时，iptables就根据规则所定义的方法来处理这些数据包，如<code>放行（accept）</code>、<code>拒绝（reject）</code>和<code>丢弃（drop）</code>等。</li>
+<li>配置防火墙的主要工作就是<strong>添加、修改和删除</strong>这些规则。</li>
+<li><strong>注意：规则的次序非常关键，谁的规则越严格，应该放的越靠前，而检查规则的时候，是按照从上往下的方式进行检查的。</strong><br><br><br>iptables传输数据包的过程：<br><img src="https://i.imgur.com/waGZsEP.jpg" alt=""></li>
+</ul>
+<ol>
+<li>当一个数据包进入网卡时，它首先进入<strong>PREROUTING</strong>链，内核根据路由表和数据包目的IP判断是否需要<strong>转送</strong>出去。</li>
+<li>如果数据包就是<strong>进入本机</strong>的，它就会沿着图向下移动，到达<strong>INPUT</strong>链。数据包到了INPUT链后，任何进程都会收到它。本机上运行的程序可以发送数据包，这些数据包会经过<strong>OUTPUT</strong>链，然后到达POSTROUTING链输出。</li>
+<li>如果数据包是要<strong>转发</strong>出去的，且内核允许转发，数据包就会如图所示向右移动，经过<strong>FORWARD</strong>链，然后到达<strong>POSTROUTING</strong>链输出。</li>
+</ol>
+<h1 id="iptables操作"><a href="#iptables操作" class="headerlink" title="iptables操作"></a>iptables操作</h1><h2 id="规则写法："><a href="#规则写法：" class="headerlink" title="规则写法："></a>规则写法：</h2><p>格式：iptables [-t table] COMMAND chain CRETIRIA -j ACTION</p>
+<ul>
+<li>-t table ：3个filter nat mangle，默认是filter</li>
+<li>COMMAND：定义如何对规则进行管理</li>
+<li>chain：指定你接下来的规则到底是在哪个链上操作的，当定义策略的时候，是可以省略的</li>
+<li>CRETIRIA:指定匹配标准</li>
+<li>-j ACTION :指定如何进行处理</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">比如：不允许172.16.0.0/24的进行访问。</div><div class="line">iptables -t filter -A INPUT -s 172.16.0.0/16 -p udp --dport 53 -j DROP</div><div class="line">当然你如果想拒绝的更彻底：</div><div class="line">iptables -t filter -R INPUT 1 -s 172.16.0.0/16 -p udp --dport 53 -j REJECT</div><div class="line">查看定义规则的详细信息:</div><div class="line">iptables -L -n -v</div></pre></td></tr></table></figure>
+<p><br></p>
+<h2 id="COMMAND详解："><a href="#COMMAND详解：" class="headerlink" title="COMMAND详解："></a>COMMAND详解：</h2><h3 id="chains管理："><a href="#chains管理：" class="headerlink" title="chains管理："></a><code>chains</code>管理：</h3><ul>
+<li><p>-P :设置默认策略的（设定默认门是关着的还是开着的）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">默认策略一般只有两种</div><div class="line">iptables -P INPUT (DROP|ACCEPT)  默认是关的/默认是开的</div><div class="line">比如：</div><div class="line">iptables -P INPUT DROP 这就把默认规则给拒绝了。并且没有定义哪个动作，所以关于外界连接的所有规则包括Xshell连接之类的，远程连接都被拒绝了。</div></pre></td></tr></table></figure>
+</li>
+<li><p>-F: FLASH，清空规则链的(注意每个链的管理权限)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">iptables -t nat -F PREROUTING</div><div class="line">iptables -t nat -F 清空nat表的所有链</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li>-N:NEW 支持用户新建一个链<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">iptables -N inbound_tcp_web 表示附在tcp表上用于检查web的。</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li>-X: 用于删除用户自定义的空链<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">使用方法跟-N相同，但是在删除之前必须要将里面的链给清空昂了</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li>-E：用来Rename chain主要是用来给用户自定义的链重命名<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">-E oldname newname</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li>-Z：清空链，及链中默认规则的计数器的（有两个计数器，被匹配到多少个数据包，多少个字节）<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">iptables -Z :清空</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><br></p>
+<h3 id="rules管理："><a href="#rules管理：" class="headerlink" title="rules管理："></a><code>rules</code>管理：</h3><ul>
+<li><p>-A：追加，在当前链的最后新增一个规则</p>
+</li>
+<li><p>-I num : 插入，把当前规则插入为第几条。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">-I 3 :插入为第三条</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li><p>-R num：Replays替换/修改第几条规则</p>
+</li>
+<li><p>-D num：删除，明确指定删除第几条规则</p>
+</li>
+</ul>
+<h3 id="查看管理："><a href="#查看管理：" class="headerlink" title="查看管理："></a>查看管理：</h3><p>参数是<code>-L</code>，子命令如下：</p>
+<ul>
+<li><p>-n：以数字的方式显示ip，它会将ip直接显示出来，如果不加-n，则会将ip反向解析成主机名。</p>
+</li>
+<li><p>-v：显示详细信息</p>
+</li>
+<li><p>-vv</p>
+</li>
+<li><p>-vvv :越多越详细</p>
+</li>
+<li><p>-x：在计数器上显示精确值，不做单位换算</p>
+</li>
+<li><p>–line-numbers : 显示规则的行号</p>
+</li>
+<li><p>-t nat：显示所有的关卡的信息</p>
+</li>
+</ul>
+<h2 id="CRETIRIA详解："><a href="#CRETIRIA详解：" class="headerlink" title="CRETIRIA详解："></a>CRETIRIA详解：</h2><h3 id="地址匹配："><a href="#地址匹配：" class="headerlink" title="地址匹配："></a>地址匹配：</h3><ul>
+<li>-s：指定作为源地址匹配，这里不能指定主机名称，必须是IP<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">IP | IP/MASK | 0.0.0.0/0.0.0.0</div><div class="line">而且地址可以取反，加一个“!”表示除了哪个IP之外</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li>-d：表示匹配目标地址<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">同-s</div><div class="line">```	 </div><div class="line"></div><div class="line">- -p：用于匹配协议的（这里的协议通常有3种，TCP/UDP/ICMP）</div><div class="line">	 </div><div class="line">- -i eth0：从这块网卡流入的数据</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>流入一般用在INPUT和PREROUTING上<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"> </div><div class="line">- -o eth0：从这块网卡流出的数据</div></pre></td></tr></table></figure></p>
+<p>流出一般在OUTPUT和POSTROUTING上<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">### 协议扩展：</div><div class="line">- -p tcp :TCP协议的扩展。一般有三种扩展</div></pre></td></tr></table></figure></p>
+<p>–dport XX-XX：指定目标端口,不能指定多个非连续端口,只能指定单个端口，比如:–dport 21  或者 –dport 21-23 (此时表示21,22,23)<br>–sport：指定源端口<br>–tcp-fiags：TCP的标志位（SYN,ACK，FIN,PSH，RST,URG）<br>        对于它，一般要跟两个参数：<br>        1.检查的标志位<br>        2.必须为1的标志位<br>        –tcp-flags syn,ack,fin,rst syn   =    –syn<br>        表示检查这4个位，这4个位中syn必须为1，其他的必须为0。所以这个意思就是用于检测三次握手的第一次包的。对于这种专门匹配第一包的SYN为1的包，还有一种简写方式，叫做–syn<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">  </div><div class="line">- -p udp：UDP协议的扩展</div></pre></td></tr></table></figure></p>
+<p>–dport<br>–sport<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">    </div><div class="line">- -p icmp：icmp数据报文的扩展</div></pre></td></tr></table></figure></p>
+<p>–icmp-type：<br>echo-request(请求回显)，一般用8 来表示<br>所以 –icmp-type 8 匹配请求回显数据包<br>echo-reply （响应的数据包）一般用0来表示<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;/br&gt;</div><div class="line">### 显式扩展(-m)</div><div class="line">扩展各种模块</div><div class="line">- -m multiport:表示启用多端口扩展</div></pre></td></tr></table></figure></p>
+<p>打开21，23,80这三个不连续端口<br>-m multiport –dports 21,23,80<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">- -m mac –mac-source:表示mac源地址</div></pre></td></tr></table></figure></p>
+<p>源mac地址为00:0c:29:27:55:3F<br>-m mac –mac-source 00:0c:29:27:55:3F<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">- -m –iprange –src-range:表示源IP范围</div></pre></td></tr></table></figure></p>
+<p>源IP地址为192.168.1.20-192.168.1.99<br>-m iprange –src-range 192.168.1.20-192.168.1.99<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">- -m state --state：表示数据包连接状态</div></pre></td></tr></table></figure></p>
+<p>新的数据包<br>-m state –state NEW<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">&lt;/br&gt;</div><div class="line"></div><div class="line"></div><div class="line">## ACTION详解：</div><div class="line">常用的ACTION：</div><div class="line">- DROP：悄悄丢弃，一般我们多用DROP来隐藏我们的身份，以及隐藏我们的链表</div><div class="line">- REJECT：明示拒绝</div><div class="line">- ACCEPT：接受</div><div class="line">- custom_chain：转向一个自定义的链</div><div class="line">- MASQUERADE：源地址伪装</div><div class="line">- REDIRECT：重定向：主要用于实现端口重定向</div><div class="line">- MARK：打防火墙标记的</div><div class="line">- RETURN：返回，在自定义链执行完毕后使用返回，来返回原规则链</div><div class="line"></div><div class="line"># 记录一下常见的命令：</div><div class="line">1. **只要是来自于172.16.0.0/16网段的都允许访问我本机的172.16.100.1的SSHD服务**</div><div class="line">分析：首先肯定是在允许表中定义的。因为不需要做NAT地址转换之类的，然后查看我们SSHD服务，在22号端口上，处理机制是接受，对于这个表，需要有一来一回两个规则，如果我们允许也好，拒绝也好，对于访问本机服务，我们最好是定义在INPUT链上，而OUTPUT再予以定义就好。(会话的初始端先定义)，所以加规则就是：</div></pre></td></tr></table></figure></p>
+<p>定义进来的： iptables -t filter -A INPUT -s 172.16.0.0/16 -d 172.16.100.1 -p tcp –dport 22 -j ACCEPT<br>定义出去的： iptables -t filter -A OUTPUT -s 172.16.100.1 -d 172.16.0.0/16 -p tcp –dport 22 -j ACCEPT<br>将默认策略改成DROP:<br>    iptables -P INPUT DROP<br>    iptables -P OUTPUT DROP<br>    iptables -P FORWARD DROP<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&lt;/br&gt;</div><div class="line">2. **假如我们允许自己ping别人，但是别人ping自己ping不通如何实现呢？**</div><div class="line">分析：对于ping这个协议，进来的为8（ping），出去的为0(响应).我们为了达到目的，需要8出去,允许0进来，也就相当于我们要求我们只发送请求包，接收响应包(符合ping别人的要求，不符合别人ping自己的要求)</div></pre></td></tr></table></figure></p>
+<p>在出去的端口上：iptables -A OUTPUT -p icmp –icmp-type 8 -j ACCEPT<br>在进来的端口上：iptables -A INPUT -p icmp –icmp-type 0 -j ACCEPT<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">结果如下：</div><div class="line">没设规则之前，双方都能ping通</div><div class="line">![](https://i.imgur.com/ala3qws.png)</div><div class="line">![](https://i.imgur.com/4s6hrIn.png)</div><div class="line">设了规则</div><div class="line">![](https://i.imgur.com/qcS5mBH.png)</div><div class="line">此时只能ping别人，别人ping不到了</div><div class="line">![](https://i.imgur.com/YQntQJ1.png)</div><div class="line">![](https://i.imgur.com/eDFSTfF.png)</div><div class="line">&lt;/br&gt;</div><div class="line">3. **拒绝进入防火墙的所有ICMP协议数据包**</div></pre></td></tr></table></figure></p>
+<p>iptables -I INPUT -p icmp -j REJECT<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&lt;/br&gt;</div><div class="line">4. **允许防火墙转发出ICMP协议外所有数据包**</div></pre></td></tr></table></figure></p>
+<p>iptables -A FORWARD -p !icmp -j ACCEPT<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&lt;/br&gt;</div><div class="line">5. **拒绝转发来自192.168.1.10主机的数据，允许转发来自192.168.0.0/24网段**</div></pre></td></tr></table></figure></p>
+<p>iptables -A FORWARD -s 192.168.1.11 -j REJECT<br>iptables -A FORWARD -s 192.168.0.0/24 -j ACCEPT<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">说明：注意要把拒绝的放在前面不然就不起作用了啊。</div><div class="line">&lt;/br&gt;</div><div class="line">6. 封堵网段(192.168.1.0/24)，两小时后解封</div></pre></td></tr></table></figure></p>
+<h1 id="iptables-I-INPUT-s-192-168-1-0-24-j-DROP"><a href="#iptables-I-INPUT-s-192-168-1-0-24-j-DROP" class="headerlink" title="iptables -I INPUT -s 192.168.1.0/24 -j DROP"></a>iptables -I INPUT -s 192.168.1.0/24 -j DROP</h1><h1 id="iptables-I-FORWARD-s-192-168-1-0-24-j-DROP"><a href="#iptables-I-FORWARD-s-192-168-1-0-24-j-DROP" class="headerlink" title="iptables -I FORWARD -s 192.168.1.0/24 -j DROP"></a>iptables -I FORWARD -s 192.168.1.0/24 -j DROP</h1><h1 id="at-now-2-hours-at-gt-iptables-D-INPUT-1-at-gt-iptables-D-FORWARD-1"><a href="#at-now-2-hours-at-gt-iptables-D-INPUT-1-at-gt-iptables-D-FORWARD-1" class="headerlink" title="at now 2 hours at&gt; iptables -D INPUT 1 at&gt; iptables -D FORWARD 1"></a>at now 2 hours at&gt; iptables -D INPUT 1 at&gt; iptables -D FORWARD 1</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&lt;/br&gt;</div><div class="line">7. 只允许管理员从202.13.0.0/16网段使用SSH远程登录防火墙主机。</div></pre></td></tr></table></figure>
+<p>iptables -A INPUT -p tcp –dport 22 -s 202.13.0.0/16 -j ACCEPT<br>iptables -A INPUT -p tcp –dport 22 -j DROP<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&lt;/br&gt;</div><div class="line">8. 允许本机开放从TCP端口20-1024提供的应用服务。</div></pre></td></tr></table></figure></p>
+<p>iptables -A INPUT -p tcp –dport 20:1024 -j ACCEPT<br>iptables -A OUTPUT -p tcp –sport 20:1024 -j ACCEPT<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&lt;/br&gt;</div><div class="line">9. 允许转发来自192.168.0.0/24局域网段的DNS解析请求数据包。</div></pre></td></tr></table></figure></p>
+<p>iptables -A FORWARD -s 192.168.0.0/24 -p udp –dport 53 -j ACCEPT<br>iptables -A FORWARD -d 192.168.0.0/24 -p udp –sport 53 -j ACCEPT<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&lt;/br&gt;</div><div class="line">10. 禁止转发来自MAC地址为00：0C：29：27：55：3F的和主机的数据包</div></pre></td></tr></table></figure></p>
+<p>iptables -A FORWARD -m mac –mac-source 00:0c:29:27:55:3F -j DROP<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">说明：iptables中使用“-m 模块关键字”的形式调用显示匹配。咱们这里用“-m mac –mac-source”来表示数据包的源MAC地址。</div><div class="line">&lt;/br&gt;</div><div class="line">11. 允许防火墙本机对外开放TCP端口20、21、25、110以及被动模式FTP端口1250-1280</div></pre></td></tr></table></figure></p>
+<p>iptables -A INPUT -p tcp -m multiport –dport 20,21,25,110,1250:1280 -j ACCEPT<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">说明：这里用“-m multiport –dport”来指定目的端口及范围</div><div class="line">&lt;/br&gt;</div><div class="line">12. 禁止转发源IP地址为192.168.1.20-192.168.1.99的TCP数据包。</div></pre></td></tr></table></figure></p>
+<p>iptables -A FORWARD -p tcp -m iprange –src-range 192.168.1.20-192.168.1.99 -j DROP<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">说明：此处用“-m –iprange –src-range”指定IP范围。</div><div class="line">&lt;/br&gt;</div><div class="line">13. 禁止转发与正常TCP连接无关的非—syn请求数据包。</div></pre></td></tr></table></figure></p>
+<p>iptables -A FORWARD -p tcp -m state –state NEW ! –syn -j DROP<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">说明：“-m state”表示数据包的连接状态，“NEW”表示与任何连接无关的，新的嘛！</div><div class="line">&lt;/br&gt;</div><div class="line">14. 拒绝访问防火墙的新数据包，但允许响应连接或与已有连接相关的数据包</div></pre></td></tr></table></figure></p>
+<p>iptables -A INPUT -p tcp -m state –state NEW -j DROP<br>iptalbes -A INPUT -p tcp -m state –state ESTABLISHED,RELATED -j ACCEPT<br>```<br>说明：“ESTABLISHED”表示已经响应请求或者已经建立连接的数据包，“RELATED”表示与已建立的连接有相关性的，比如FTP数据连接等。<br><br></p>
+
+      
+      
+        <div class="page-reward">
+          <p><a href="javascript:void(0)" onclick="dashangToggle()" class="dashang">赏</a></p>
+          <div class="hide_box"></div>
+          <div class="shang_box">
+            <a class="shang_close" href="javascript:void(0)" onclick="dashangToggle()">×</a>
+            <div class="shang_tit">
+              <p>纯属好玩</p>
+            </div>
+            <div class="shang_payimg">
+              <img src="/img/alipayimg.jpg" alt="扫码支持" title="扫一扫" />
+            </div>
+              <div class="pay_explain">扫码打赏，你说多少就多少</div>
+            <div class="shang_payselect">
+              
+                <div class="pay_item checked" data-id="alipay">
+                  <span class="radiobox"></span>
+                  <span class="pay_logo"><img src="/img/alipay.png" alt="支付宝" /></span>
+                </div>
+              
+              
+                <div class="pay_item" data-id="wechat">
+                  <span class="radiobox"></span>
+                  <span class="pay_logo"><img src="/img/weixin.png" alt="微信" /></span>
+                </div>
+              
+            </div>
+            <div class="shang_info">
+              <p>打开<span id="shang_pay_txt">支付宝</span>扫一扫，即可进行扫码打赏哦</p>
+            </div>
+          </div>
+        </div>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/zepto/1.2.0/zepto.min.js"></script>
+        <script type="text/javascript">
+          $(".pay_item").click(function(){
+            $(this).addClass('checked').siblings('.pay_item').removeClass('checked');
+            var dataid=$(this).attr('data-id');
+            $(".shang_payimg img").attr("src","/img/"+dataid+"img.jpg");
+            $("#shang_pay_txt").text(dataid=="alipay"?"支付宝":"微信");
+          });
+          function dashangToggle(){
+            
+            $(".hide_box").fadeToggle();
+            $(".shang_box").fadeToggle();
+          }
+        </script>
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2017/12/21/iptables的简单使用/">iptables的简单使用</a></p>
+        <p><span>文章作者:</span><a href="/" title="访问 Err0r 的个人博客">Err0r</a></p>
+        <p><span>发布时间:</span>2017年12月21日 - 10时06分</p>
+        <p><span>最后更新:</span>2017年12月21日 - 12时58分</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2017/12/21/iptables的简单使用/" title="iptables的简单使用">http://Err0rzz.github.io/2017/12/21/iptables的简单使用/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://Err0rzz.github.io/2017/12/21/iptables的简单使用/　　作者: Err0r" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script src="/js/clipboard.min.js"></script>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" title="中国大陆 (CC BY-NC-SA 3.0 CN)" target = "_blank">"署名-非商用-相同方式共享 3.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+<nav id="article-nav">
+  
+  
+    <a href="/2017/12/20/docker基本操作/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">docker基本操作</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#基本原理"><span class="toc-number">1.</span> <span class="toc-text">基本原理</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#iptables操作"><span class="toc-number">2.</span> <span class="toc-text">iptables操作</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#规则写法："><span class="toc-number">2.1.</span> <span class="toc-text">规则写法：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#COMMAND详解："><span class="toc-number">2.2.</span> <span class="toc-text">COMMAND详解：</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#chains管理："><span class="toc-number">2.2.1.</span> <span class="toc-text">chains管理：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#rules管理："><span class="toc-number">2.2.2.</span> <span class="toc-text">rules管理：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#查看管理："><span class="toc-number">2.2.3.</span> <span class="toc-text">查看管理：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CRETIRIA详解："><span class="toc-number">2.3.</span> <span class="toc-text">CRETIRIA详解：</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#地址匹配："><span class="toc-number">2.3.1.</span> <span class="toc-text">地址匹配：</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#iptables-I-INPUT-s-192-168-1-0-24-j-DROP"><span class="toc-number">3.</span> <span class="toc-text">iptables -I INPUT -s 192.168.1.0/24 -j DROP</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#iptables-I-FORWARD-s-192-168-1-0-24-j-DROP"><span class="toc-number">4.</span> <span class="toc-text">iptables -I FORWARD -s 192.168.1.0/24 -j DROP</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#at-now-2-hours-at-gt-iptables-D-INPUT-1-at-gt-iptables-D-FORWARD-1"><span class="toc-number">5.</span> <span class="toc-text">at now 2 hours at> iptables -D INPUT 1 at> iptables -D FORWARD 1</span></a></li></ol>
+</div>
+<input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script>
+    var valueHide = "隐藏目录";
+    var valueShow = "显示目录";
+
+    if ($(".left-col").is(":hidden")) {
+        $("#tocButton").attr("value", valueShow);
+    }
+    $("#tocButton").click(function() {
+        if ($("#toc").is(":hidden")) {
+            $("#tocButton").attr("value", valueHide);
+            $("#toc").slideDown(320);
+        }
+        else {
+            $("#tocButton").attr("value", valueShow);
+            $("#toc").slideUp(350);
+        }
+    })
+    if ($(".toc").length < 1) {
+        $("#toc, #tocButton").hide();
+    }
+</script>
+
+
+
+
+
+<div class="bdsharebuttonbox">
+	<a href="#" class="fx fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+	<a href="#" class="fx fa-weixin bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+	<a href="#" class="fx fa-qq bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+	<a href="#" class="fx fa-facebook-official bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+	<a href="#" class="fx fa-twitter bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+	<a href="#" class="fx fa-linkedin bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+	<a href="#" class="fx fa-files-o bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+</div>
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"2","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+
+
+
+    
+        <div id="gitments"></div>
+<script src="/js/gitment.browser.js"></script>
+<script>
+    var gitment = new Gitment({
+      id: window.location.pathname,
+      owner: 'Err0rzz',
+      repo: 'Err0rzz.github.io',
+      oauth: {
+        client_id: '',
+        client_secret: '',
+      },
+    })
+    gitment.render('gitments')
+</script>
+    
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+        
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+        
+            <a href="/2017/12/20/docker基本操作/" title="下一篇: docker基本操作">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/12/21/iptables的简单使用/">iptables的简单使用</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/20/docker基本操作/">docker基本操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/15/CSRF学习/">CSRF学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/11/第一届智商杯wp/">第一届智商杯wp</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/26/linux下的mysql使用/">linux下的mysql使用</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/23/Padding-Oracle-攻击/">Padding_Oracle 攻击</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/23/爆破脚本/">爆破脚本</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/16/OOB注入/">OOB注入</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/16/sage安装/">sage安装</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/14/CTF中RSA套路/">CTF中RSA套路</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/14/GET的命令执行漏洞/">GET的命令执行漏洞</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/13/ctf命令执行与绕过/">ctf命令执行与绕过</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/09/无线破解浅谈/">无线破解浅谈</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/07/浅谈php安全/">浅谈php安全</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/31/updatexml-mysql显错注入/">mysql显错注入</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/26/typecho-backdoor/">typecho backdoor</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/24/问鼎杯决赛/">问鼎杯决赛</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/18/常用正则表达式/">常用正则表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/18/hash长度扩展攻击/">hash长度扩展攻击</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/16/问鼎杯线上/">问鼎杯writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/11/jarvisoj/">javrisoj的web题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/04/injection/">各种注入姿势</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/31/file_include/">文件包含一些常识</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/31/XMAN/">xman个人排位赛(纪念第一个xss)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/31/ZJGSCTF/">ZJGSCTF</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/25/blind-SQL-injection-script/">blind_SQL_injection script</a></li></ul>
+    <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+    <script>
+        $(".post-list").addClass("toc-article");
+        $(".post-list-item a").attr("target","_blank");
+        $("#post-nav-button > a:nth-child(2)").click(function() {
+            $(".fa-bars, .fa-times").toggle();
+            $(".post-list").toggle(300);
+            if ($(".toc").length > 0) {
+                $("#toc, #tocButton").toggle(200, function() {
+                    if ($(".switch-area").is(":visible")) {
+                        $("#tocButton").attr("value", valueHide);
+                        }
+                    })
+            }
+            else {
+            }
+        })
+    </script>
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                &copy; 2017 Err0r
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/luuman/hexo-theme-spfk" target="_blank">spfk</a> by luuman
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" >海贼到访数: 
+                            <span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>, </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit">本页阅读量: 
+                            <span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+
+    </div>
+    <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var backgroundnum = 24;
+            var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+            $("#mobile-nav").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+            $(".left-col").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+        })
+    </script>
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<div class="scroll" id="scroll">
+    <a href="#"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    $(document).ready(function() {
+        if ($("#comments").length < 1) {
+            $("#scroll > a:nth-child(2)").hide();
+        };
+    })
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+  <script language="javascript">
+    $(function() {
+        $("a[title]").each(function() {
+            var a = $(this);
+            var title = a.attr('title');
+            if (title == undefined || title == "") return;
+            a.data('title', title).removeAttr('title').hover(
+
+            function() {
+                var offset = a.offset();
+                $("<div id=\"anchortitlecontainer\"></div>").appendTo($("body")).html(title).css({
+                    top: offset.top - a.outerHeight() - 15,
+                    left: offset.left + a.outerWidth()/2 + 1
+                }).fadeIn(function() {
+                    var pop = $(this);
+                    setTimeout(function() {
+                        pop.remove();
+                    }, pop.text().length * 800);
+                });
+            }, function() {
+                $("#anchortitlecontainer").remove();
+            });
+        });
+    });
+</script>
+
+
+  </div>
+</body>
+</html>
