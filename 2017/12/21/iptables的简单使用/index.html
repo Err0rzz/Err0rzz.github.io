@@ -19,7 +19,7 @@
 <meta property="og:image" content="https://i.imgur.com/qcS5mBH.png">
 <meta property="og:image" content="https://i.imgur.com/YQntQJ1.png">
 <meta property="og:image" content="https://i.imgur.com/eDFSTfF.png">
-<meta property="og:updated_time" content="2017-12-21T05:46:34.537Z">
+<meta property="og:updated_time" content="2017-12-21T05:50:19.433Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iptables的简单使用">
 <meta name="twitter:description" content="作为出题人，考虑到学弟们不会肝通宵猝死，就需要关闭web题目。当时百度说用iptables结果华丽的失败了，最后还是潇洒的断网来拒绝服务。后来还是重新看了一下这个命令，发现还真是好用啊…">
@@ -308,7 +308,7 @@
 <li>MASQUERADE：源地址伪装</li>
 <li>REDIRECT：重定向：主要用于实现端口重定向</li>
 <li>MARK：打防火墙标记的</li>
-<li>RETURN：返回，在自定义链执行完毕后使用返回，来返回原规则链</li>
+<li>RETURN：返回，在自定义链执行完毕后使用返回，来返回原规则链<br><br></li>
 </ul>
 <h1 id="记录一下常见的命令："><a href="#记录一下常见的命令：" class="headerlink" title="记录一下常见的命令："></a>记录一下常见的命令：</h1><ol>
 <li><strong>只要是来自于172.16.0.0/16网段的都允许访问我本机的172.16.100.1的SSHD服务</strong><br>分析：首先肯定是在允许表中定义的。因为不需要做NAT地址转换之类的，然后查看我们SSHD服务，在22号端口上，处理机制是接受，对于这个表，需要有一来一回两个规则，如果我们允许也好，拒绝也好，对于访问本机服务，我们最好是定义在INPUT链上，而OUTPUT再予以定义就好。(会话的初始端先定义)，所以加规则就是：<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">定义进来的： iptables -t filter -A INPUT -s 172.16.0.0/16 -d 172.16.100.1 -p tcp --dport 22 -j ACCEPT</div><div class="line">定义出去的： iptables -t filter -A OUTPUT -s 172.16.100.1 -d 172.16.0.0/16 -p tcp --dport 22 -j ACCEPT</div><div class="line">将默认策略改成DROP:</div><div class="line">	iptables -P INPUT DROP</div><div class="line">	iptables -P OUTPUT DROP</div><div class="line">	iptables -P FORWARD DROP</div></pre></td></tr></table></figure>
@@ -438,7 +438,7 @@
         <p><span>本文标题:</span><a href="/2017/12/21/iptables的简单使用/">iptables的简单使用</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 Err0r 的个人博客">Err0r</a></p>
         <p><span>发布时间:</span>2017年12月21日 - 10时06分</p>
-        <p><span>最后更新:</span>2017年12月21日 - 13时46分</p>
+        <p><span>最后更新:</span>2017年12月21日 - 13时50分</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2017/12/21/iptables的简单使用/" title="iptables的简单使用">http://Err0rzz.github.io/2017/12/21/iptables的简单使用/</a>
             <span class="copy-path" data-clipboard-text="原文: http://Err0rzz.github.io/2017/12/21/iptables的简单使用/　　作者: Err0r" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
