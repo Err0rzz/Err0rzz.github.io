@@ -2,16 +2,30 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://Err0rzz.github.io/2017/12/26/UDF-mysql/</loc>
+    <loc>http://Err0rzz.github.io/2018/02/01/SQL%E6%88%AA%E6%96%AD%E6%94%BB%E5%87%BB/</loc>
     
-    <lastmod>2018-01-28T07:10:47.192Z</lastmod>
+    <lastmod>2018-02-01T10:20:45.397Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://Err0rzz.github.io/2017/09/04/injection/</loc>
+    
+    <lastmod>2018-02-01T06:08:53.615Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://Err0rzz.github.io/2017/09/11/jarvisoj/</loc>
     
-    <lastmod>2018-01-09T06:51:54.399Z</lastmod>
+    <lastmod>2018-01-30T09:31:05.816Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://Err0rzz.github.io/2017/12/26/UDF-mysql/</loc>
+    
+    <lastmod>2018-01-28T07:10:47.192Z</lastmod>
     
   </url>
   
@@ -26,13 +40,6 @@
     <loc>http://Err0rzz.github.io/2017/10/31/updatexml-mysql%E6%98%BE%E9%94%99%E6%B3%A8%E5%85%A5/</loc>
     
     <lastmod>2017-12-26T07:47:40.763Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://Err0rzz.github.io/2017/09/04/injection/</loc>
-    
-    <lastmod>2017-12-26T07:47:15.980Z</lastmod>
     
   </url>
   
