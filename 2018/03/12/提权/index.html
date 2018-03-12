@@ -3,20 +3,30 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Ubuntu安装Apache2+php7+mysql | Err0r</title>
+  <title>提权 | Err0r</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="简单的搭建一个Apache2+php7+mysql的web环境">
-<meta name="keywords" content="环境配置">
+  <meta name="description" content="该文章参考安全牛课堂：https://edu.aqniu.com/my/course/415 admin提升为system先查看一下目前系统所有用户的身份：1net user  at命令这是一个admin才能使用的命令，普通用户无法使用。且系统不适用于win7及以上版本查看命令：1at /? 然后使用time参数来使得系统在特定的时间执行一条命令，且系统会以system权限执行，来达到提权的目的：">
+<meta name="keywords" content="渗透">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Ubuntu安装Apache2+php7+mysql">
-<meta property="og:url" content="http://Err0rzz.github.io/2017/10/08/Ubuntu安装Apache2-php7-mysql/index.html">
+<meta property="og:title" content="提权">
+<meta property="og:url" content="http://Err0rzz.github.io/2018/03/12/提权/index.html">
 <meta property="og:site_name" content="Err0r">
-<meta property="og:description" content="简单的搭建一个Apache2+php7+mysql的web环境">
+<meta property="og:description" content="该文章参考安全牛课堂：https://edu.aqniu.com/my/course/415 admin提升为system先查看一下目前系统所有用户的身份：1net user  at命令这是一个admin才能使用的命令，普通用户无法使用。且系统不适用于win7及以上版本查看命令：1at /? 然后使用time参数来使得系统在特定的时间执行一条命令，且系统会以system权限执行，来达到提权的目的：">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-03-08T09:14:43.566Z">
+<meta property="og:image" content="https://i.imgur.com/tQa4uW8.png">
+<meta property="og:image" content="https://i.imgur.com/qXT13kQ.png">
+<meta property="og:image" content="https://i.imgur.com/1aR3bIK.png">
+<meta property="og:image" content="https://i.imgur.com/2P8RWlu.png">
+<meta property="og:image" content="https://i.imgur.com/cD5yW31.png">
+<meta property="og:image" content="https://i.imgur.com/YEv70hx.png">
+<meta property="og:image" content="https://i.imgur.com/Rg66DEl.png">
+<meta property="og:image" content="https://i.imgur.com/dwGProC.png">
+<meta property="og:image" content="https://i.imgur.com/7ROXTGw.png">
+<meta property="og:updated_time" content="2018-03-12T06:52:15.407Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Ubuntu安装Apache2+php7+mysql">
-<meta name="twitter:description" content="简单的搭建一个Apache2+php7+mysql的web环境">
+<meta name="twitter:title" content="提权">
+<meta name="twitter:description" content="该文章参考安全牛课堂：https://edu.aqniu.com/my/course/415 admin提升为system先查看一下目前系统所有用户的身份：1net user  at命令这是一个admin才能使用的命令，普通用户无法使用。且系统不适用于win7及以上版本查看命令：1at /? 然后使用time参数来使得系统在特定的时间执行一条命令，且系统会以system权限执行，来达到提权的目的：">
+<meta name="twitter:image" content="https://i.imgur.com/tQa4uW8.png">
   
     <link rel="alternative" href="/atom.xml" title="Err0r" type="application/atom+xml">
   
@@ -175,11 +185,11 @@
         </header>                
     </div>
 </nav>
-      <div class="body-wrap"><article id="post-Ubuntu安装Apache2-php7-mysql" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-提权" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2017/10/08/Ubuntu安装Apache2-php7-mysql/" class="article-date">
-      <time datetime="2017-10-08T09:04:31.000Z" itemprop="datePublished">2017-10-08</time>
+      <a href="/2018/03/12/提权/" class="article-date">
+      <time datetime="2018-03-12T05:14:01.000Z" itemprop="datePublished">2018-03-12</time>
 </a>
     </div>
   
@@ -192,7 +202,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      Ubuntu安装Apache2+php7+mysql
+      提权
     </h1>
   
 
@@ -203,7 +213,7 @@
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/环境配置/">环境配置</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/渗透/">渗透</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -213,30 +223,24 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>简单的搭建一个Apache2+php7+mysql的web环境</p>
-<a id="more"></a>
-<h1 id="安装mysql"><a href="#安装mysql" class="headerlink" title="安装mysql"></a>安装mysql</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">apt-get install mysql-server mysql-client</div></pre></td></tr></table></figure>
-<p>弹出界面输入mysql的root用户的密码，如123456<br><br></p>
-<p>#安装apache2<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">apt-get install apache2</div></pre></td></tr></table></figure></p>
-<p>在浏览器里输入 <a href="http://localhost" target="_blank" rel="external">http://localhost</a><br>能打开测试页则说明安装成功,apache2默认的站点根目录在 /var/www/html,配置文件是 / etc/apache2/apache2.conf，/var/www/html默认是只读的，为了能在里面新建文件夹或者文件，修改访问的权限<br><br></p>
-<h1 id="安装php7"><a href="#安装php7" class="headerlink" title="安装php7"></a>安装php7</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">apt-get install php7.0 libapache2-mod-php7.0</div></pre></td></tr></table></figure>
-<p>在 /var/www/html里新建文件 index.php<br>内容为<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">phpinfo()</div><div class="line">?&gt;</div></pre></td></tr></table></figure></p>
-<p>重新启动apache2<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/etc/init.d/apache2 restart</div></pre></td></tr></table></figure></p>
-<p>在浏览器里输入 <a href="http://localhost/index.php，测试是否安装成功" target="_blank" rel="external">http://localhost/index.php，测试是否安装成功</a><br><br></p>
-<h1 id="增加php7对mysql的支持"><a href="#增加php7对mysql的支持" class="headerlink" title="增加php7对mysql的支持"></a>增加php7对mysql的支持</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">apt-cache search php7</div></pre></td></tr></table></figure>
-<p>重新启动apache2<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/etc/init.d/apache2 restart</div></pre></td></tr></table></figure></p>
-<p>打开<a href="http://localhost/index.php，可以看见增加的mysql相关的模块" target="_blank" rel="external">http://localhost/index.php，可以看见增加的mysql相关的模块</a><br><br></p>
-<h1 id="安装phpmyadmin"><a href="#安装phpmyadmin" class="headerlink" title="安装phpmyadmin"></a>安装phpmyadmin</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">apt-get install phpmyadmin</div></pre></td></tr></table></figure>
-<p>默认安装到 /usr/share/phpMyAdmin<br>将phpMyAdmin文件夹复制到 /var/www/html里，<br>打开<a href="http://localhost/phpmyadmin/index.php" target="_blank" rel="external">http://localhost/phpmyadmin/index.php</a><br>语言选择中文<br>密码为上面mysql root的密码 123456，就可以管理mysql数据库了。<br>至此全部安装完成<br><br></p>
-<h1 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h1><p>如果要使用phpStorm进行php开发，可能会报错<br>php-cgi not found<br>就是提示没有安装php-cgi，通过下面命令进行安装<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">apt-get install php7.0-cgi</div></pre></td></tr></table></figure></p>
-<p><br></p>
-<h1 id="新建站点"><a href="#新建站点" class="headerlink" title="新建站点"></a>新建站点</h1><p>在apache2的配置目录(/etc/apache2/)中有两个目录是与新建站点有关的</p>
-<p>sites-availables包含所有站点文件，即有启用的与非启用的</p>
-<p>sites-enabled包含启用了的站点，一般来说sites-enabled里的文件是sites-availables链接</p>
-<p>在/etc/apache2/apache2.conf文件中包含一句：IncludeOptional sites-enabled/*.conf，所以只有在sites-enabled目录中加了站点文件才会生效</p>
-<p>在sites-availables里添加文件test.conf<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ln -s /etc/apache2/sites-availables/test.conf /etc/apache2/sites-enabled/test.conf</div></pre></td></tr></table></figure></p>
-<p>编辑站点文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">&lt;VirtualHost *:80&gt;</div><div class="line">　　ServerName test.com</div><div class="line">　　ServerAlias www.test.com</div><div class="line">　　ServerAlias a.test.com</div><div class="line"></div><div class="line">　　ServerAdmin webmaster@localhost</div><div class="line">　　DocumentRoot /var/www/test</div><div class="line"></div><div class="line">&lt;/VirtualHost&gt;</div></pre></td></tr></table></figure></p>
-<p>本机测试添加hosts记录，即可访问。</p>
+        <p>该文章参考安全牛课堂：<a href="https://edu.aqniu.com/my/course/415" target="_blank" rel="external">https://edu.aqniu.com/my/course/415</a></p>
+<h1 id="admin提升为system"><a href="#admin提升为system" class="headerlink" title="admin提升为system"></a>admin提升为system</h1><p>先查看一下目前系统所有用户的身份：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">net user</div></pre></td></tr></table></figure></p>
+<p><img src="https://i.imgur.com/tQa4uW8.png" alt=""></p>
+<h2 id="at命令"><a href="#at命令" class="headerlink" title="at命令"></a>at命令</h2><p>这是一个admin才能使用的命令，普通用户无法使用。且系统不适用于win7及以上版本<br>查看命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">at /?</div></pre></td></tr></table></figure></p>
+<p>然后使用<strong>time</strong>参数来使得系统在特定的时间执行一条命令，且系统会以<strong>system</strong>权限执行，来达到提权的目的：</p>
+<p>例如，先用zz这个admin的身份来打开一个cmd<br><img src="https://i.imgur.com/qXT13kQ.png" alt=""></p>
+<p>当前系统时间为13:33，然后输入：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">at 13：35 /interactive cmd</div></pre></td></tr></table></figure></p>
+<p>interactive是表示交互式运行。</p>
+<p>然后输入<code>at</code>即可查看当前的任务<br><img src="https://i.imgur.com/1aR3bIK.png" alt=""></p>
+<p>然后时间一到，就弹出了一个system运行的cmd框<br><img src="https://i.imgur.com/2P8RWlu.png" alt=""></p>
+<p>如果觉得只是弹个cmd对于使用来说还是不方便的话，可以用cmd输入:<code>taskmgr</code>命令来打开任务管理器，然后kill进程explorer，再重新打开任务explorer，使得整个桌面系统都是system权限：<br><img src="https://i.imgur.com/cD5yW31.png" alt=""></p>
+<h2 id="sc命令"><a href="#sc命令" class="headerlink" title="sc命令"></a>sc命令</h2><p>上面讲到at命令不能用于win7及以上版本，那我们就用sc命令来创建service，因为service的启动默认情况下是system权限的，所以就可以达到提权的目的。</p>
+<p>我们可以先通过运行<code>services.msc</code>来看一下系统中既有哪些服务<br><img src="https://i.imgur.com/YEv70hx.png" alt=""></p>
+<p>然后查看一下sc命令，输入以下命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&gt;sc create syscmd binPath= &quot;cmd /K start&quot; type= own type= interact</div><div class="line">create:创建一个服务</div><div class="line">syscmd:随便创建的别称</div><div class="line">binPath:命令路径，&quot;cmd /K start&quot;表示该service是用来打开一个cmd命令</div><div class="line">type:表示该服务类型，&quot;interact&quot;表示交互式的命令</div></pre></td></tr></table></figure></p>
+<p><img src="https://i.imgur.com/Rg66DEl.png" alt=""></p>
+<p>然后就可以看到刚创建的syscmd服务：<br><img src="https://i.imgur.com/dwGProC.png" alt=""></p>
+<p>然后启动该服务：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&gt;sc start syscmd</div></pre></td></tr></table></figure></p>
+<p><img src="https://i.imgur.com/7ROXTGw.png" alt=""><br>就获得了system的cmd了</p>
 
       
       
@@ -292,13 +296,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2017/10/08/Ubuntu安装Apache2-php7-mysql/">Ubuntu安装Apache2+php7+mysql</a></p>
+        <p><span>本文标题:</span><a href="/2018/03/12/提权/">提权</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 Err0rzz 的个人博客">Err0rzz</a></p>
-        <p><span>发布时间:</span>2017年10月08日 - 17时04分</p>
-        <p><span>最后更新:</span>2018年03月08日 - 17时14分</p>
+        <p><span>发布时间:</span>2018年03月12日 - 13时14分</p>
+        <p><span>最后更新:</span>2018年03月12日 - 14时52分</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2017/10/08/Ubuntu安装Apache2-php7-mysql/" title="Ubuntu安装Apache2+php7+mysql">http://Err0rzz.github.io/2017/10/08/Ubuntu安装Apache2-php7-mysql/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://Err0rzz.github.io/2017/10/08/Ubuntu安装Apache2-php7-mysql/　　作者: Err0rzz" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2018/03/12/提权/" title="提权">http://Err0rzz.github.io/2018/03/12/提权/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://Err0rzz.github.io/2018/03/12/提权/　　作者: Err0rzz" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script src="/js/clipboard.min.js"></script>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
@@ -311,18 +315,9 @@
 
 <nav id="article-nav">
   
-    <a href="/2017/10/26/typecho-backdoor/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption"><</strong>
-      <div class="article-nav-title">
-        
-          typecho backdoor
-        
-      </div>
-    </a>
   
-  
-    <a href="/2017/09/24/问鼎杯决赛/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">问鼎杯决赛</div>
+    <a href="/2018/03/09/Ubuntu下Apache2开启-关闭模板方法/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Ubuntu下Apache2开启/关闭模板方法</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
@@ -333,7 +328,7 @@
 
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#安装mysql"><span class="toc-number">1.</span> <span class="toc-text">安装mysql</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#安装php7"><span class="toc-number">2.</span> <span class="toc-text">安装php7</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#增加php7对mysql的支持"><span class="toc-number">3.</span> <span class="toc-text">增加php7对mysql的支持</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#安装phpmyadmin"><span class="toc-number">4.</span> <span class="toc-text">安装phpmyadmin</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#补充"><span class="toc-number">5.</span> <span class="toc-text">补充</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#新建站点"><span class="toc-number">6.</span> <span class="toc-text">新建站点</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#admin提升为system"><span class="toc-number">1.</span> <span class="toc-text">admin提升为system</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#at命令"><span class="toc-number">1.1.</span> <span class="toc-text">at命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#sc命令"><span class="toc-number">1.2.</span> <span class="toc-text">sc命令</span></a></li></ol></li></ol>
 </div>
 <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
 
@@ -399,13 +394,11 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2017/10/26/typecho-backdoor/" title="上一篇: typecho backdoor">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
         
-            <a href="/2017/09/24/问鼎杯决赛/" title="下一篇: 问鼎杯决赛">
+            <a href="/2018/03/09/Ubuntu下Apache2开启-关闭模板方法/" title="下一篇: Ubuntu下Apache2开启/关闭模板方法">
                 <i class="fa fa-angle-right"></i>
             </a>
         
