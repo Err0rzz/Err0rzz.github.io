@@ -23,7 +23,7 @@
 <meta property="og:image" content="https://i.imgur.com/wbZGGZc.png">
 <meta property="og:image" content="https://i.imgur.com/5qlhV9l.png">
 <meta property="og:image" content="https://i.imgur.com/70uVZSA.png">
-<meta property="og:updated_time" content="2018-05-08T14:18:22.787Z">
+<meta property="og:updated_time" content="2018-05-23T02:31:54.780Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="第二届ZJGSCTFWP">
 <meta name="twitter:description" content="趁着测试题目的机会，把wp一起写掉了吧，如果有大佬黑进来就可以拿到所有的题目了~">
@@ -257,8 +257,8 @@
 <p><br></p>
 <h2 id="贝斯家族永不言败"><a href="#贝斯家族永不言败" class="headerlink" title="贝斯家族永不言败"></a>贝斯家族永不言败</h2><p>第一关在线随便找个网站base64</p>
 <p>第二关根据base16.32.64不同的特征以及尝试，可以试出来先base64解密，再base16解密，再base32解密可以进去下一关</p>
-<p>第三关比较难一点，使用了php的种子密钥来随机加密，题目如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">import base64 as bs </div><div class="line">import random</div><div class="line"></div><div class="line">#壮壮表示他很生气，然后他发疯似的竟然用了&apos;随机数&apos;!!!</div><div class="line"></div><div class="line">flag = &quot;ZJGSCTF&#123;******&#125;&quot;</div><div class="line">random.seed(****) #len(seed)==4</div><div class="line">for i in range(20):</div><div class="line">	rand = int(random.random()*10)%3</div><div class="line">	if(rand == 0):</div><div class="line">		flag = bs.b64encode(flag)</div><div class="line">	elif(rand == 1):</div><div class="line">		flag = bs.b32encode(flag)</div><div class="line">	else :</div><div class="line">		flag = bs.b16encode(flag)</div><div class="line"></div><div class="line">open(&apos;password.txt&apos;,&apos;w&apos;).write(flag)</div><div class="line"></div><div class="line">```	</div><div class="line">爆破seed就好了，其实也很快的。</div><div class="line">三关的payload分别如下：</div></pre></td></tr></table></figure></p>
-<p>#level 2<br>import base64 as bs<br>print bs.b32decode(bs.b16decode(bs.b64decode(open(‘password.txt’,’r’).read())))<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"></div></pre></td></tr></table></figure></p>
+<p>第三关比较难一点，使用了php的种子密钥来随机加密，题目如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">import base64 as bs </div><div class="line">import random</div><div class="line"></div><div class="line">flag = &quot;ZJGSCTF&#123;******&#125;&quot;</div><div class="line">random.seed(****) #len(seed)==4</div><div class="line">for i in range(20):</div><div class="line">	rand = int(random.random()*10)%3</div><div class="line">	if(rand == 0):</div><div class="line">		flag = bs.b64encode(flag)</div><div class="line">	elif(rand == 1):</div><div class="line">		flag = bs.b32encode(flag)</div><div class="line">	else :</div><div class="line">		flag = bs.b16encode(flag)</div><div class="line"></div><div class="line">open(&apos;password.txt&apos;,&apos;w&apos;).write(flag)</div><div class="line"></div><div class="line">```	</div><div class="line">爆破seed就好了，其实也很快的。</div><div class="line">三关的payload分别如下：</div><div class="line">第二关</div></pre></td></tr></table></figure></p>
+<p>#level 2<br>import base64 as bs<br>print bs.b32decode(bs.b16decode(bs.b64decode(open(‘password.txt’,’r’).read())))<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">第三关</div></pre></td></tr></table></figure></p>
 <p>#level 3<br>import base64 as bs<br>import random</p>
 <p>key = open(‘password.txt’).read()<br>for seed in range(10000):<br>    flag = key<br>    random.seed(seed)<br>    print seed</p>
 <pre><code>rands=[]
@@ -390,7 +390,7 @@ return d,p,q
         <p><span>本文标题:</span><a href="/2018/05/04/第二届ZJGSCTFWP/">第二届ZJGSCTFWP</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 Err0rzz 的个人博客">Err0rzz</a></p>
         <p><span>发布时间:</span>2018年05月04日 - 19时14分</p>
-        <p><span>最后更新:</span>2018年05月08日 - 22时18分</p>
+        <p><span>最后更新:</span>2018年05月23日 - 10时31分</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2018/05/04/第二届ZJGSCTFWP/" title="第二届ZJGSCTFWP">http://Err0rzz.github.io/2018/05/04/第二届ZJGSCTFWP/</a>
             <span class="copy-path" data-clipboard-text="原文: http://Err0rzz.github.io/2018/05/04/第二届ZJGSCTFWP/　　作者: Err0rzz" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
